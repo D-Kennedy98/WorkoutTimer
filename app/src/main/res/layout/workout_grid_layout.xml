@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardView"
     android:layout_width="100dp"
     android:layout_height="130dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center_horizontal"
     app:cardCornerRadius="10sp"
     app:cardElevation="4dp"
-   >
+    android:clickable="true"
+    android:focusable="true">
 
 
     <LinearLayout
@@ -20,11 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Press Ups" />
-
-        <EditText
-            android:layout_width="30sp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
 
 
     </LinearLayout>

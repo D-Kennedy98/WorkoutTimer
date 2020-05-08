@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -16,93 +14,58 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText mDurationInput;
-    RecyclerView recyclerView;
-    List<String> exercises;
-    RecyclerAdapter adapter;
+    private ArrayList<Workout> mWorkoutList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
 
-        exercises = new ArrayList<>();
-        exercises.add("Press Ups");
-        exercises.add("Sit Ups");
-        exercises.add("Yoga");
-        exercises.add("Squats");
-        exercises.add("Plank");
-        exercises.add("Burpees");
+        // create workout data
+        Workout pressUps = new Workout("Press Ups", 0);
+        Workout sitUps = new Workout("Sit Ups", 0);
+        Workout yoga = new Workout("Yoga", 0);
+        Workout squats = new Workout("Squats", 0);
+        Workout run = new Workout("Run", 0);
+        Workout burpees = new Workout("Burpees", 0);
+
+        // add workouts to list
+        mWorkoutList.add(pressUps);
+        mWorkoutList.add(sitUps);
+        mWorkoutList.add(yoga);
+        mWorkoutList.add(squats);
+        mWorkoutList.add(run);
+        mWorkoutList.add(burpees);
 
 
-        adapter = new RecyclerAdapter(this, exercises);
-
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, mWorkoutList);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(adapter);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.setAdapter(recyclerAdapter);
 
-//        mDurationInput = findViewById(R.id.durationInput);
-//
-//        final Workout w = new Workout("run", 8);
-//
-//
-//        Button pressUpsBtn = findViewById(R.id.startTimer);
-//        pressUpsBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//               Workout workout = createWorkout("Press ups");
-//                openTimerActivity(workout);
-//            }
-//        });
-
-
-
+        recyclerAdapter.setOnItemClickListener(onItemClickListener);
 
     }
 
 
-    // get duration from user input
-    // TODO: Check if value has been inputted
-    private int getDuration() {
-        int duration = parseInt(String.valueOf(mDurationInput.getText()));
-        return duration;
-    }
+    // allows individual recycler view items to be retrieved
+    private View.OnClickListener onItemClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v.getTag();
+            int pos = holder.getAdapterPosition();
+            Workout workout = mWorkoutList.get(pos);
+            launchWorkoutActivity(workout);
 
-
-    // error checks parsing from editText
-    private Integer parseInt(Object obj) {
-        int value;
-        try {
-            value = Integer.parseInt((String) obj);
-        } catch (NumberFormatException e) {
-            value = 0;
         }
-        return value;
-    }
-
-
-    private Workout createWorkout(String exercise) {
-        Workout workout = new Workout();
-
-        switch (exercise) {
-            case "Press ups":
-                workout.setExercise(exercise);
-                workout.setDuration(parseInt(String.valueOf(mDurationInput.getText())));
-                break;
-        }
-        return workout;
-    }
+    };
 
 
 
-
-
-
-
-    private void openTimerActivity(Workout workout) {
-        Intent intent = new Intent(this, TimerActivity.class);
+    private void launchWorkoutActivity(Workout workout) {
+        Intent intent = new Intent(this, WorkoutActivity.class);
         intent.putExtra("workout", workout);
         startActivity(intent);
     }

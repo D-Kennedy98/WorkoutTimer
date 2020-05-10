@@ -7,50 +7,42 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Workout> mWorkoutList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
-
-        // create workout data
-        Workout pressUps = new Workout("Press Ups", 0);
-        Workout sitUps = new Workout("Sit Ups", 0);
-        Workout yoga = new Workout("Yoga", 0);
-        Workout squats = new Workout("Squats", 0);
-        Workout run = new Workout("Run", 0);
-        Workout burpees = new Workout("Burpees", 0);
-
-        // add workouts to list
-        mWorkoutList.add(pressUps);
-        mWorkoutList.add(sitUps);
-        mWorkoutList.add(yoga);
-        mWorkoutList.add(squats);
-        mWorkoutList.add(run);
-        mWorkoutList.add(burpees);
+        // create workout data and add to list
+        mWorkoutList.add(new Workout("Press Ups", R.drawable.ic_press_up,  0));
+        mWorkoutList.add(new Workout("Plank", R.drawable.ic_plank, 0));
+        mWorkoutList.add(new Workout("High Knees", R.drawable.ic_high_knees, 0));
+        mWorkoutList.add(new Workout("Yoga", R.drawable.ic_yoga, 0));
+        mWorkoutList.add(new Workout("Burpees", R.drawable.ic_burpees, 0));
+        mWorkoutList.add(new Workout("Squats", R.drawable.ic_squats, 0));
 
 
+
+        // create the UI view
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, mWorkoutList);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(gridLayoutManager);
-        mRecyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(recyclerAdapter);
 
         recyclerAdapter.setOnItemClickListener(onItemClickListener);
 
     }
 
 
-    // allows individual recycler view items to be retrieved
+    // click on individual recycler view items to launch workout activity
     private View.OnClickListener onItemClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -61,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-
 
 
     private void launchWorkoutActivity(Workout workout) {

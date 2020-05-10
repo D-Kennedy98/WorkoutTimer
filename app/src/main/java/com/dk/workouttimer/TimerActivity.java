@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 public class TimerActivity extends AppCompatActivity {
 
     private TextView mTimerValueText, mWorkoutText;

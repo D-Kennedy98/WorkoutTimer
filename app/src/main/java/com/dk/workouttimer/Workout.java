@@ -4,14 +4,28 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Workout implements Parcelable {
-    private String exercise;
-    private int duration;
+    private String mExercise;
+    private int mIconResource;
+    private int mDuration;
 
     private Workout(Parcel in) {
-        exercise = in.readString();
-        duration = in.readInt();
+        mExercise = in.readString();
+        mDuration = in.readInt();
     }
 
+    // TODO: Better way of setting initial dur?
+    Workout(String mExercise, int mIconResource, int mDuration) {
+        this.mExercise = mExercise;
+        this.mIconResource = mIconResource;
+        this.mDuration = mDuration;
+    }
+
+    Workout() {
+        mExercise = "run";
+        mDuration = 10;
+    }
+
+    /** implements parcelable **/
     public static final Creator<Workout> CREATOR = new Creator<Workout>() {
         @Override
         public Workout createFromParcel(Parcel in) {
@@ -24,16 +38,6 @@ public class Workout implements Parcelable {
         }
     };
 
-    Workout(String exercise, int duration) {
-        this.exercise = exercise;
-        this.duration = duration;
-    }
-
-    Workout() {
-        exercise = "run";
-        duration = 10;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -41,24 +45,32 @@ public class Workout implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(exercise);
-        dest.writeInt(duration);
+        dest.writeString(mExercise);
+        dest.writeInt(mDuration);
     }
 
     public String getExercise() {
-        return exercise;
+        return mExercise;
     }
 
-    public void setExercise(String exercise) {
-        this.exercise = exercise;
+    public void setExercise(String mExercise) {
+        this.mExercise = mExercise;
+    }
+
+    public int getIconResource() {
+        return mIconResource;
+    }
+
+    public void setIconResource(int iconResource) {
+        this.mIconResource = iconResource;
     }
 
     public int getDuration() {
-        return duration;
+        return mDuration;
     }
 
     public void setDuration(int duration) {
-        this.duration = duration;
+        this.mDuration = duration;
     }
 
 }

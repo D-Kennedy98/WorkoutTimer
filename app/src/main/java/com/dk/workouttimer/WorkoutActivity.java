@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class WorkoutActivity extends AppCompatActivity {
-    TextView mExerciseTitle;
+    TextView mExerciseTitle, mDescription;
     EditText mDurationInput;
     Button mStartBtn;
 
@@ -25,10 +25,12 @@ public class WorkoutActivity extends AppCompatActivity {
 
 
         mExerciseTitle = findViewById(R.id.exerciseTitle);
+        mDescription = findViewById(R.id.description);
         mDurationInput = findViewById(R.id.durationInput);
         mStartBtn = findViewById(R.id.startBtn);
 
         mExerciseTitle.setText(workout.getExercise());
+        updateDescription(workout);
 
         mStartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +43,19 @@ public class WorkoutActivity extends AppCompatActivity {
 
     }
 
+
+    private void updateDescription(Workout w) {
+        switch (w.getExercise()) {
+            case "Press Ups":
+                mDescription.setText(getResources().getString(R.string.descrPH));
+            break;
+            case "2":
+                mDescription.setText(getResources().getString(R.string.descrPH));
+
+
+        }
+
+    }
 
     // get duration from user input
     // TODO: Check if value has been inputted

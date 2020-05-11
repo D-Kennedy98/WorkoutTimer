@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import java.util.ArrayList;
 
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerAdapter.setOnItemClickListener(onItemClickListener);
 
+       // animation(recyclerView);
+
     }
 
 
@@ -60,5 +64,11 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("workout", workout);
         startActivity(intent);
     }
+
+//    public void animation(View view) {
+//        Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animate_from_bottom);
+//        view.startAnimation(a);
+//
+//    }
 
 }

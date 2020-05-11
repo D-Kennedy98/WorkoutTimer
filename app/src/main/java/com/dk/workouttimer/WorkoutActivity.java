@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class WorkoutActivity extends AppCompatActivity {
-    TextView mExerciseTitle, mDescription;
+    TextView mExerciseTitle;
+    ImageView mExerciseImg;
     EditText mDurationInput;
     Button mStartBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +28,9 @@ public class WorkoutActivity extends AppCompatActivity {
 
 
         mExerciseTitle = findViewById(R.id.exerciseTitle);
-        mDescription = findViewById(R.id.description);
         mDurationInput = findViewById(R.id.durationInput);
-        mStartBtn = findViewById(R.id.startBtn);
+        mStartBtn = findViewById(R.id.StartBtn);
+        mExerciseImg = findViewById(R.id.exerciseImg);
 
         mExerciseTitle.setText(workout.getExercise());
         updateDescription(workout);
@@ -35,8 +38,7 @@ public class WorkoutActivity extends AppCompatActivity {
         mStartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int duration = getDuration();
-                workout.setDuration(duration);
+                workout.setDuration(getDuration());
                 launchTimerActivity(workout);
             }
         });
@@ -47,12 +49,24 @@ public class WorkoutActivity extends AppCompatActivity {
     private void updateDescription(Workout w) {
         switch (w.getExercise()) {
             case "Press Ups":
-                mDescription.setText(getResources().getString(R.string.descrPH));
-            break;
-            case "2":
-                mDescription.setText(getResources().getString(R.string.descrPH));
-
-
+                mExerciseImg.setImageResource(R.drawable.press_upp);
+                break;
+            case "Plank":
+                mExerciseImg.setImageResource(R.drawable.plankk);
+                break;
+            case "High Knees":
+                mExerciseImg.setImageResource(R.drawable.high_knees);
+                break;
+            case "Yoga":
+                mExerciseImg.setImageResource(R.drawable.yoga);
+                break;
+            case "Burpees":
+                mExerciseImg.setImageResource(R.drawable.burpeess);
+                break;
+            case "Squats":
+                // TODO: Image with more white bg
+                mExerciseImg.setImageResource(R.drawable.squat_example);
+                break;
         }
 
     }
@@ -60,8 +74,7 @@ public class WorkoutActivity extends AppCompatActivity {
     // get duration from user input
     // TODO: Check if value has been inputted
     private int getDuration() {
-        int duration = parseInt(String.valueOf(mDurationInput.getText()));
-        return duration;
+        return parseInt(String.valueOf(mDurationInput.getText()));
     }
 
 

@@ -15,11 +15,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:id="@+id/backBtn"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
-            android:src="@drawable/ic_information" />
+            android:src="@drawable/ic_back" />
 
         <ImageView
             android:layout_width="40dp"
@@ -44,9 +45,7 @@
         android:id="@+id/exerciseTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="170dp"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="180dp"
         android:text="Press Ups"
         android:textColor="#000000"
         android:textSize="27sp"
@@ -59,12 +58,10 @@
         android:id="@+id/categoryTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="170dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="180dp"
-        android:text="Category: Arms / Chest"
+        android:text="Arms / Chest"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp"
+        android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.458"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,10 +71,8 @@
         android:id="@+id/exerciseImg"
         android:layout_width="325dp"
         android:layout_height="247dp"
-        android:layout_marginStart="76dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="75dp"
-        android:src="@drawable/burpeess"
+        android:src="@drawable/burpees"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,33 +83,30 @@
         android:id="@+id/durationLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="170dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="180dp"
         android:text="Workout Duration (seconds)"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exerciseImg"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/exerciseImg" />
 
     <EditText
         android:id="@+id/durationInput"
         android:layout_width="135dp"
         android:layout_height="39dp"
-        android:layout_marginStart="96dp"
+        android:layout_marginStart="99dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="102dp"
+        android:layout_marginEnd="99dp"
         android:autofillHints="Workout Duration (secs)"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:ems="10"
         android:inputType="number"
-        android:textSize="17sp"
         android:labelFor="@id/durationLabel"
         android:textAlignment="center"
         android:textColor="#000000"
-        android:backgroundTint="@color/colorPrimaryDark"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.629"
         app:layout_constraintStart_toStartOf="parent"
@@ -123,20 +115,21 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/StartBtn"
-        app:cornerRadius="8dp"
-        app:strokeColor="#000000"
-        app:strokeWidth="0.75dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/begin_workout"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/raleway"
+        android:text="@string/begin_workout"
         android:textAllCaps="false"
         android:textSize="15sp"
+        app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/durationInput" />
-
+        app:layout_constraintTop_toBottomOf="@+id/durationInput"
+        app:strokeColor="#000000"
+        app:strokeWidth="0.75dp"
+  />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

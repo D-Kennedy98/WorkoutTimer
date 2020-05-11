@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import java.util.ArrayList;
 
@@ -23,12 +21,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // create workout data and add to list
-        mWorkoutList.add(new Workout("Press Ups", R.drawable.ic_press_up,  0));
-        mWorkoutList.add(new Workout("Plank", R.drawable.ic_plank, 0));
-        mWorkoutList.add(new Workout("High Knees", R.drawable.ic_high_knees, 0));
-        mWorkoutList.add(new Workout("Yoga", R.drawable.ic_yoga, 0));
-        mWorkoutList.add(new Workout("Burpees", R.drawable.ic_burpees, 0));
-        mWorkoutList.add(new Workout("Squats", R.drawable.ic_squats, 0));
+        mWorkoutList.add(new Workout("Press Ups",R.drawable.ic_press_up, R.drawable.press_up, "Arms / Chest", 0));
+        mWorkoutList.add(new Workout("Plank",R.drawable.ic_plank, R.drawable.plank, "Core", 0));
+        mWorkoutList.add(new Workout("High Knees",R.drawable.ic_high_knees, R.drawable.high_knees, "Cardio", 0));
+        mWorkoutList.add(new Workout("Yoga", R.drawable.ic_yoga, R.drawable.yoga, "Full Body / Stretch", 0));
+        mWorkoutList.add(new Workout("Burpees", R.drawable.ic_burpees, R.drawable.burpees, "Cardio", 0));
+        mWorkoutList.add(new Workout("Squats", R.drawable.ic_squat, R.drawable.squat, "Legs", 0));
 
 
 
@@ -51,10 +49,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v.getTag();
-            int pos = holder.getAdapterPosition();
-            Workout workout = mWorkoutList.get(pos);
+            Workout workout = mWorkoutList.get(holder.getAdapterPosition());
             launchWorkoutActivity(workout);
-
         }
     };
 

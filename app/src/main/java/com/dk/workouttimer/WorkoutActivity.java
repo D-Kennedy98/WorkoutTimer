@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class WorkoutActivity extends AppCompatActivity {
-    TextView mExerciseTitle;
-    ImageView mExerciseImg;
+    TextView mExerciseTitle, mCategoryTxt;
+    ImageView mExerciseImg, mBackBtn;
     EditText mDurationInput;
     Button mStartBtn;
 
@@ -28,12 +28,17 @@ public class WorkoutActivity extends AppCompatActivity {
 
 
         mExerciseTitle = findViewById(R.id.exerciseTitle);
+        mCategoryTxt = findViewById(R.id.categoryTxt);
         mDurationInput = findViewById(R.id.durationInput);
-        mStartBtn = findViewById(R.id.StartBtn);
         mExerciseImg = findViewById(R.id.exerciseImg);
+        mStartBtn = findViewById(R.id.StartBtn);
+        mBackBtn = findViewById(R.id.backBtn);
+
 
         mExerciseTitle.setText(workout.getExercise());
-        updateDescription(workout);
+        mCategoryTxt.setText(workout.getCategory());
+        mExerciseImg.setImageResource(workout.getmImageResource());
+        //updateDescription(workout);
 
         mStartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,33 +48,42 @@ public class WorkoutActivity extends AppCompatActivity {
             }
         });
 
-    }
 
 
-    private void updateDescription(Workout w) {
-        switch (w.getExercise()) {
-            case "Press Ups":
-                mExerciseImg.setImageResource(R.drawable.press_upp);
-                break;
-            case "Plank":
-                mExerciseImg.setImageResource(R.drawable.plankk);
-                break;
-            case "High Knees":
-                mExerciseImg.setImageResource(R.drawable.high_knees);
-                break;
-            case "Yoga":
-                mExerciseImg.setImageResource(R.drawable.yoga);
-                break;
-            case "Burpees":
-                mExerciseImg.setImageResource(R.drawable.burpeess);
-                break;
-            case "Squats":
-                // TODO: Image with more white bg
-                mExerciseImg.setImageResource(R.drawable.squat_example);
-                break;
-        }
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    finish();
+            }
+        });
 
     }
+
+
+//    private void updateDescription(Workout workout) {
+//        switch (workout.getExercise()) {
+//            case "Press Ups":
+//                mExerciseImg.setImageResource(R.drawable.press_up);
+//                break;
+//            case "Plank":
+//                mExerciseImg.setImageResource(R.drawable.plank);
+//                break;
+//            case "High Knees":
+//                mExerciseImg.setImageResource(R.drawable.high_knees);
+//                break;
+//            case "Yoga":
+//                mExerciseImg.setImageResource(R.drawable.yoga);
+//                break;
+//            case "Burpees":
+//                mExerciseImg.setImageResource(R.drawable.burpees);
+//                break;
+//            case "Squats":
+//                // TODO: Image with more white bg
+//                mExerciseImg.setImageResource(R.drawable.squat);
+//                break;
+//        }
+//
+//    }
 
     // get duration from user input
     // TODO: Check if value has been inputted
@@ -94,6 +108,9 @@ public class WorkoutActivity extends AppCompatActivity {
         intent.putExtra("workout", w);
         startActivity(intent);
     }
+
+
+
 
 
 

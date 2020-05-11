@@ -6,17 +6,23 @@ import android.os.Parcelable;
 public class Workout implements Parcelable {
     private String mExercise;
     private int mIconResource;
+    private int mImageResource;
+    private String mCategory;
     private int mDuration;
 
     private Workout(Parcel in) {
         mExercise = in.readString();
+        mCategory = in.readString();
         mDuration = in.readInt();
+        mImageResource = in.readInt();
     }
 
     // TODO: Better way of setting initial dur?
-    Workout(String mExercise, int mIconResource, int mDuration) {
+    Workout(String mExercise, int mIconResource, int mImageResource, String mCategory, int mDuration) {
         this.mExercise = mExercise;
         this.mIconResource = mIconResource;
+        this.mImageResource = mImageResource;
+        this.mCategory = mCategory;
         this.mDuration = mDuration;
     }
 
@@ -46,15 +52,17 @@ public class Workout implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mExercise);
+        dest.writeString(mCategory);
         dest.writeInt(mDuration);
+        dest.writeInt(mImageResource);
     }
 
     public String getExercise() {
         return mExercise;
     }
 
-    public void setExercise(String mExercise) {
-        this.mExercise = mExercise;
+    public void setExercise(String exercise) {
+        this.mExercise = exercise;
     }
 
     public int getIconResource() {
@@ -63,6 +71,22 @@ public class Workout implements Parcelable {
 
     public void setIconResource(int iconResource) {
         this.mIconResource = iconResource;
+    }
+
+    public int getmImageResource() {
+        return mImageResource;
+    }
+
+    public void setmImageResource(int mImageResource) {
+        this.mImageResource = mImageResource;
+    }
+
+    public String getCategory() {
+        return mCategory;
+    }
+
+    public void setCategory(String mCategory) {
+        this.mCategory = mCategory;
     }
 
     public int getDuration() {

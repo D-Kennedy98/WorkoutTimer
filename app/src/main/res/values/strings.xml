@@ -31,8 +31,18 @@
         Squat Image: Ultimate You\n
         Yoga Image: Howcast
 </string>
-
-
+    <string name="exercises">Exercises</string>
+    <string name="information_button">Information Button</string>
+    <string name="timer_icon">Timer Icon</string>
+    <string name="workouts">Workouts</string>
+    <string name="back_button">back button</string>
+    <string name="arms_chest">Arms / Chest</string>
+    <string name="image_of_workout">Image of workout</string>
+    <string name="workout_duration_seconds">Workout Duration</string>
+    <string name="enter_workout_duration">seconds</string>
+    <string name="workout_complete">Workout Complete!</string>
+    <string name="start">Start</string>
+    <string name="workout_icon">Workout Icon</string>
 
 
 </resources>

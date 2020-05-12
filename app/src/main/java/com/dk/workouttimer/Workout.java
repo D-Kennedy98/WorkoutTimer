@@ -1,7 +1,9 @@
+// Author: Dominic Kennedy 160304253
+
 package com.dk.workouttimer;
 
-import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.Parcel;
 
 public class Workout implements Parcelable {
     private String mExercise;
@@ -17,21 +19,15 @@ public class Workout implements Parcelable {
         mImageResource = in.readInt();
     }
 
-    // TODO: Better way of setting initial dur?
-    Workout(String mExercise, int mIconResource, int mImageResource, String mCategory, int mDuration) {
+    Workout(String mExercise, int mIconResource, int mImageResource, String mCategory) {
         this.mExercise = mExercise;
         this.mIconResource = mIconResource;
         this.mImageResource = mImageResource;
         this.mCategory = mCategory;
-        this.mDuration = mDuration;
+        this.mDuration = 0;
     }
 
-    Workout() {
-        mExercise = "run";
-        mDuration = 10;
-    }
-
-    /** implements parcelable **/
+    // implements parcelable
     public static final Creator<Workout> CREATOR = new Creator<Workout>() {
         @Override
         public Workout createFromParcel(Parcel in) {
@@ -57,43 +53,27 @@ public class Workout implements Parcelable {
         dest.writeInt(mImageResource);
     }
 
-    public String getExercise() {
+    String getExercise() {
         return mExercise;
     }
 
-    public void setExercise(String exercise) {
-        this.mExercise = exercise;
-    }
-
-    public int getIconResource() {
+    int getIconResource() {
         return mIconResource;
     }
 
-    public void setIconResource(int iconResource) {
-        this.mIconResource = iconResource;
-    }
-
-    public int getmImageResource() {
+    int getImageResource() {
         return mImageResource;
     }
 
-    public void setmImageResource(int mImageResource) {
-        this.mImageResource = mImageResource;
-    }
-
-    public String getCategory() {
+    String getCategory() {
         return mCategory;
     }
 
-    public void setCategory(String mCategory) {
-        this.mCategory = mCategory;
-    }
-
-    public int getDuration() {
+    int getDuration() {
         return mDuration;
     }
 
-    public void setDuration(int duration) {
+    void setDuration(int duration) {
         this.mDuration = duration;
     }
 

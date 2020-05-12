@@ -1,6 +1,6 @@
-package com.dk.workouttimer;
+// Author: Dominic Kennedy 160304253
 
-import androidx.appcompat.app.AppCompatActivity;
+package com.dk.workouttimer;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,12 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class WorkoutActivity extends AppCompatActivity {
-    TextView mExerciseTitle, mCategoryTxt;
-    ImageView mExerciseImg, mBackBtn;
-    EditText mDurationInput;
-    Button mStartBtn;
+import androidx.appcompat.app.AppCompatActivity;
 
+public class WorkoutActivity extends AppCompatActivity {
+   private EditText mDurationInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,83 +26,74 @@ public class WorkoutActivity extends AppCompatActivity {
         Intent mainIntent = getIntent();
         final Workout workout = mainIntent.getParcelableExtra("workout");
 
+        // init views
+        mDurationInput = findViewById(R.id.duration_et);
+        TextView exerciseTitle = findViewById(R.id.workout_title);
+        TextView categoryTxt = findViewById(R.id.category_Txt);
+        ImageView exerciseImg = findViewById(R.id.workout_img);
+        Button startBtn = findViewById(R.id.start_btn);
+        ImageView backBtn = findViewById(R.id.back_btn);
 
-        mExerciseTitle = findViewById(R.id.exerciseTitle);
-        mCategoryTxt = findViewById(R.id.categoryTxt);
-        mDurationInput = findViewById(R.id.durationInput);
-        mExerciseImg = findViewById(R.id.exerciseImg);
-        mStartBtn = findViewById(R.id.StartBtn);
-        mBackBtn = findViewById(R.id.backBtn);
+        // set views
+        exerciseTitle.setText(workout.getExercise());
+        categoryTxt.setText(workout.getCategory());
+        exerciseImg.setImageResource(workout.getImageResource());
 
-
-        mExerciseTitle.setText(workout.getExercise());
-        mCategoryTxt.setText(workout.getCategory());
-        mExerciseImg.setImageResource(workout.getmImageResource());
-        //updateDescription(workout);
-
-        mStartBtn.setOnClickListener(new View.OnClickListener() {
+        // set on click listeners
+        startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 workout.setDuration(getDuration());
                 durationInputCheck(workout);
-                //launchTimerActivity(workout);
             }
         });
 
-
-
-        mBackBtn.setOnClickListener(new View.OnClickListener() {
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    //finish();
                 launchMainActivity();
 
             }
         });
-
     }
 
-
     // get duration from user input
-    // TODO: Check if value has been inputted
     private int getDuration() {
         return parseInt(String.valueOf(mDurationInput.getText()));
     }
 
-
-    // error checks parsing from editText
-    private Integer parseInt(Object obj) {
+    // error check parsing from et
+    private Integer parseInt(String input) {
         int value;
         try {
-            value = Integer.parseInt((String) obj);
+            value = Integer.parseInt(input);
         } catch (NumberFormatException e) {
             value = 0;
         }
         return value;
     }
 
-    private void launchTimerActivity(Workout w) {
-        Intent intent = new Intent(this, TimerActivity.class);
-        intent.putExtra("workout", w);
-        startActivity(intent);
-    }
-
-    private void durationInputCheck(Workout w) {
+    // check a duration input has been entered
+    private void durationInputCheck(Workout workout) {
         if (getDuration() != 0) {
-            launchTimerActivity(w);
+            launchTimerActivity(workout);
         } else {
             Context context = getApplicationContext();
-            int dur = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context,"Enter a duration!", dur);
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context,"Enter a duration!", duration);
             toast.show();
         }
     }
 
+    private void launchTimerActivity(Workout workout) {
+        Intent intent = new Intent(this, TimerActivity.class);
+        intent.putExtra("workout", workout);
+        startActivity(intent);
+    }
 
     private void launchMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
 
 }

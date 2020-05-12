@@ -1,26 +1,28 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/infoHeader"
+            android:id="@+id/header"
+            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="53dp"
-            android:background="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/backBtn"
+                android:id="@+id/back_btn"
+                android:contentDescription="@string/back_button"
                 android:layout_width="35dp"
                 android:layout_height="25dp"
                 android:layout_centerVertical="true"
@@ -28,6 +30,8 @@
                 android:src="@drawable/ic_back" />
 
             <ImageView
+                android:id="@+id/timer_img"
+                android:contentDescription="@string/timer_icon"
                 android:layout_width="35dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
@@ -36,47 +40,48 @@
                 android:src="@drawable/ic_stopwatch_rush" />
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/heading_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/workout_timer"
-                android:textColor="@color/colourSnow"
-                android:textSize="35sp" />
+                android:textColor="@color/snow"
+                android:textSize="35sp"
+                tools:ignore="RelativeOverlap" />
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/infoDK"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/info_dk"
+            android:gravity="center"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="20dp"
-            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:lines="3"
             android:text="@string/dk_info"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="27sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/infoHeader" />
+            app:layout_constraintTop_toBottomOf="@+id/header" />
 
         <TextView
-            android:id="@+id/userManual"
+            android:id="@+id/user_manual"
+            android:layout_marginTop="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:text="@string/user_manual"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/infoDK" />
+            app:layout_constraintTop_toBottomOf="@+id/info_dk" />
 
         <TextView
-            android:id="@+id/attributionsTitle"
+            android:id="@+id/attributions_title"
+            android:layout_marginTop="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:text="@string/info_attributions"
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
@@ -85,38 +90,37 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userManual" />
+            app:layout_constraintTop_toBottomOf="@+id/user_manual" />
 
         <TextView
-            android:id="@+id/favIcons"
+            android:id="@+id/fav_icons"
+            android:layout_marginStart="74dp"
+            android:layout_marginEnd="73dp"
+            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="74dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="73dp"
             android:text="@string/info_icons"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/attributionsTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/attributions_title" />
 
         <TextView
-            android:id="@+id/imageSources"
+            android:id="@+id/image_sources"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:text="@string/image_sources"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/favIcons" />
-
+            app:layout_constraintTop_toBottomOf="@+id/fav_icons" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

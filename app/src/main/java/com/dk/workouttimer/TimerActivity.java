@@ -1,6 +1,6 @@
-package com.dk.workouttimer;
+// Author: Dominic Kennedy 160304253
 
-import androidx.appcompat.app.AppCompatActivity;
+package com.dk.workouttimer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,16 +10,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.Locale;
 
 public class TimerActivity extends AppCompatActivity {
 
-    private TextView mTimerValueText;
-    private int mDuration;
     private Button mStartPauseBtn;
     private boolean mIsTimerRunning;
     private CountDownTimer mTimer;
-
+    private int mDuration;
+    private TextView mTimerValueText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,19 +30,22 @@ public class TimerActivity extends AppCompatActivity {
         // retrieve duration intent
         final Intent mainIntent = getIntent();
         Workout workout = mainIntent.getParcelableExtra("workout");
-
-        mTimerValueText = findViewById(R.id.timerValue);
-        TextView workoutText = findViewById(R.id.exercise);
-        mStartPauseBtn = findViewById(R.id.pauseBtn);
-        mStartPauseBtn.setText("Pause");
-        Button restartBtn = findViewById(R.id.restartBtn);
-        ImageView mBackBtn = findViewById(R.id.backBtn);
-
-        workoutText.setText(workout.getExercise());
         mDuration = workout.getDuration() * 1000;
+
+        // init views
+        mTimerValueText = findViewById(R.id.timer_value);
+        TextView workoutText = findViewById(R.id.workout_title);
+        mStartPauseBtn = findViewById(R.id.pause_btn);
+        Button restartBtn = findViewById(R.id.restart_btn);
+        ImageView mBackBtn = findViewById(R.id.back_btn);
+
+        // set views
+        mStartPauseBtn.setText(R.string.pause);
+        workoutText.setText(workout.getExercise());
 
         startCountdown();
 
+        // set on click listeners
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,13 +58,12 @@ public class TimerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!mIsTimerRunning) {
                     startCountdown();
-                    mStartPauseBtn.setText("Pause");
+                    mStartPauseBtn.setText(R.string.pause);
                 } else {
                     pauseTimer();
                 }
             }
         });
-
 
         restartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,33 +75,32 @@ public class TimerActivity extends AppCompatActivity {
 
     }
 
+    // create count down timer
     private void startCountdown() {
         mTimer = new CountDownTimer(mDuration, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 mDuration = (int) millisUntilFinished;
-               // mTimerValueText.setText(String.valueOf(millisUntilFinished / 1000));
                 updateTimerText(millisUntilFinished);
             }
 
             @Override
             public void onFinish() {
                 mTimerValueText.setTextSize(72);
-                mTimerValueText.setText("Workout Complete!");
+                mTimerValueText.setText(R.string.workout_complete);
             }
         }.start();
 
         mIsTimerRunning = true;
     }
 
-
     private void pauseTimer() {
         mTimer.cancel();
         mIsTimerRunning = false;
-        mStartPauseBtn.setText("Start");
+        mStartPauseBtn.setText(R.string.start);
     }
 
-
+    // format time to mm:ss and set value of timer
     private void updateTimerText(long timeRemaining) {
         int mins = (int) (timeRemaining / 1000) / 60;
         int secs = (int) (timeRemaining / 1000) % 60;
@@ -106,6 +108,5 @@ public class TimerActivity extends AppCompatActivity {
         mTimerValueText.setText(formTimeRemaining);
 
     }
-
 
 }

@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
+        android:id="@+id/header"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="53dp"
-        android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/backBtn"
+            android:id="@+id/back_btn"
+            android:contentDescription="@string/back_button"
             android:layout_width="35dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
@@ -22,6 +24,8 @@
             android:src="@drawable/ic_back" />
 
         <ImageView
+            android:id="@+id/timer_img"
+            android:contentDescription="@string/timer_icon"
             android:layout_width="35dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
@@ -30,31 +34,32 @@
             android:src="@drawable/ic_stopwatch_rush" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/heading_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/workout_timer"
-            android:textColor="@color/colourSnow"
-            android:textSize="35sp" />
+            android:textColor="@color/snow"
+            android:textSize="35sp"
+            tools:ignore="RelativeOverlap" />
 
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/exercise"
+        android:id="@+id/workout_title"
+        android:layout_marginTop="12dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:gravity="center"
         android:text="@string/press_ups"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <TextView
-        android:id="@+id/timerValue"
+        android:id="@+id/timer_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/time"
@@ -67,28 +72,28 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/pauseBtn"
+        android:id="@+id/pause_btn"
+        android:fontFamily="@font/raleway"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginBottom="60dp"
-        android:fontFamily="@font/raleway"
         android:text="@string/pause"
         android:textAllCaps="false"
         android:textSize="15sp"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:strokeColor="#000000"
+        app:strokeColor="@color/black"
         app:strokeWidth="0.75dp" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/restartBtn"
+        android:id="@+id/restart_btn"
+        android:fontFamily="@font/raleway"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="60dp"
-        android:fontFamily="@font/raleway"
         android:text="@string/restart"
         android:textAllCaps="false"
         android:textSize="15sp"
@@ -97,6 +102,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:strokeColor="#000000"
         app:strokeWidth="0.75dp" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

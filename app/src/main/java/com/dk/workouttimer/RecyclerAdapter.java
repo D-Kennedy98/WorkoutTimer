@@ -1,3 +1,5 @@
+// Author: Dominic Kennedy 160304253
+
 package com.dk.workouttimer;
 
 import android.content.Context;
@@ -6,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.ArrayList;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
@@ -16,7 +20,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private LayoutInflater layoutInflater;
     private View.OnClickListener mOnItemClickListener;
 
-    public RecyclerAdapter(Context context, ArrayList<Workout> workoutList) {
+    RecyclerAdapter(Context context, ArrayList<Workout> workoutList) {
         this.mWorkoutList = workoutList;
         this.layoutInflater = LayoutInflater.from(context);
     }
@@ -28,7 +32,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return new ViewHolder(view);
     }
 
-    @Override
+    @Override // bind data to views
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
         Workout workout = mWorkoutList.get(position);
         holder.exerciseTxt.setText(workout.getExercise());
@@ -41,25 +45,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     // set view listener
-    public void setOnItemClickListener(View.OnClickListener itemClickListener) {
+    void setOnItemClickListener(View.OnClickListener itemClickListener) {
         mOnItemClickListener = itemClickListener;
     }
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView exerciseTxt;
         ImageView exerciseIcon;
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
-            exerciseTxt = itemView.findViewById(R.id.exerciseTxt);
-            exerciseIcon = itemView.findViewById(R.id.exerciseIcon);
+            exerciseTxt = itemView.findViewById(R.id.workout_txt);
+            exerciseIcon = itemView.findViewById(R.id.workout_img);
 
             // for recycler onItemClick
             itemView.setTag(this);
             itemView.setOnClickListener(mOnItemClickListener);
         }
-
-
-
     }
+
 }

@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".WorkoutActivity">
 
     <RelativeLayout
-        android:id="@+id/relativeLayout2"
+        android:id="@+id/header"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="53dp"
-        android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/backBtn"
+            android:id="@+id/back_btn"
+            android:contentDescription="@string/back_button"
             android:layout_width="35dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
@@ -24,6 +25,8 @@
             android:src="@drawable/ic_back" />
 
         <ImageView
+            android:id="@+id/timer_img"
+            android:contentDescription="@string/timer_icon"
             android:layout_width="35dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
@@ -32,97 +35,97 @@
             android:src="@drawable/ic_stopwatch_rush" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/heading_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/workout_timer"
-            android:textColor="@color/colourSnow"
-            android:textSize="35sp" />
+            android:textColor="@color/snow"
+            android:textSize="35sp"
+            tools:ignore="RelativeOverlap" />
 
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/exerciseTitle"
+        android:id="@+id/workout_title"
+        android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Press Ups"
-        android:textColor="#000000"
+        android:text="@string/press_ups"
+        android:textColor="@color/black"
         android:textSize="27sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <TextView
-        android:id="@+id/categoryTxt"
+        android:id="@+id/category_Txt"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Arms / Chest"
+        android:text="@string/arms_chest"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="23sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exerciseTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/workout_title" />
 
     <ImageView
-        android:id="@+id/exerciseImg"
+        android:id="@+id/workout_img"
+        android:contentDescription="@string/image_of_workout"
+        android:layout_marginTop="20dp"
         android:layout_width="325dp"
         android:layout_height="247dp"
-        android:layout_marginTop="20dp"
         android:src="@drawable/press_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoryTxt" />
-
+        app:layout_constraintTop_toBottomOf="@+id/category_Txt" />
 
     <TextView
-        android:id="@+id/durationLabel"
+        android:id="@+id/duration_txt"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Workout Duration (seconds)"
+        android:text="@string/workout_duration_seconds"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exerciseImg" />
-
+        app:layout_constraintTop_toBottomOf="@+id/workout_img" />
 
     <EditText
-        android:id="@+id/durationInput"
-        android:layout_width="135dp"
-        android:layout_height="39dp"
+        android:id="@+id/duration_et"
         android:autofillHints="Workout Duration (secs)"
         android:backgroundTint="@color/colorPrimaryDark"
         android:ems="10"
+        android:hint="@string/enter_workout_duration"
         android:inputType="number"
-        android:labelFor="@id/durationLabel"
+        android:labelFor="@id/duration_txt"
+        android:layout_width="135dp"
+        android:layout_height="39dp"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/durationLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/duration_txt" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/StartBtn"
+        android:id="@+id/start_btn"
+        android:fontFamily="@font/raleway"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/raleway"
         android:text="@string/begin_workout"
         android:textAllCaps="false"
         android:textSize="15sp"
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/durationInput"
-        app:strokeColor="#000000"
+        app:layout_constraintTop_toBottomOf="@+id/duration_et"
+        app:strokeColor="@color/black"
         app:strokeWidth="0.75dp" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

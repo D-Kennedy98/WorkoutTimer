@@ -1,9 +1,38 @@
 <resources>
     <string name="app_name">WorkoutTimer</string>
 
-    <string name="descrPH">Lorem Ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </string>
     <string name="workout_timer">WorkoutTimer</string>
     <string name="begin_workout">Begin Workout</string>
+    <string name="time">01:30</string>
+    <string name="press_ups">Press Ups</string>
+    <string name="pause">Pause</string>
+    <string name="restart">Restart</string>
+    <string name="title_activity_information">InformationActivity</string>
+
+
+    <!-- Information Activity -->
+    <string name="dk_info">Developed by:\nDominic Kennedy\n
+        Newcastle University</string>
+
+    <string name="user_manual">WorkoutTimer is a fitness application that allows users to time their workouts.
+        Six workouts are provided which collectively target all the major muscle groups.\n\nFrom the home screen, choose a workout to be navigated to the workout screen.
+        In the workout screen, an image demonstrates the exercise. Enter a duration for the exercise and tap the start workout button.
+        You will be directed to the timer screen where the countdown timer will begin.</string>
+
+    <string name="info_attributions">Attributions</string>
+
+    <string name="info_icons">Icons made by Pixel perfect from\n
+        www.flaticon.com</string>
+
+    <string name="image_sources">Burpees Image: Blogspot\n
+        High Knees Image: India Times\n
+        Press Up Image: Healthifyme Blog\n
+        Plank Image: PopSugar\n
+        Squat Image: Ultimate You\n
+        Yoga Image: Howcast
+</string>
+
+
+
+
 </resources>

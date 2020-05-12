@@ -7,12 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Workout> mWorkoutList = new ArrayList<>();
+    private ImageView infoBtn;
 
 
     @Override
@@ -39,7 +41,13 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerAdapter.setOnItemClickListener(onItemClickListener);
 
-       // animation(recyclerView);
+        infoBtn = findViewById(R.id.infoBtn);
+        infoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchInformationActivity();
+            }
+        });
 
     }
 
@@ -61,10 +69,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    public void animation(View view) {
-//        Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animate_from_bottom);
-//        view.startAnimation(a);
-//
-//    }
-
+    public void launchInformationActivity() {
+        Intent intent = new Intent(this, InformationActivity.class);
+        startActivity(intent);
+    }
 }

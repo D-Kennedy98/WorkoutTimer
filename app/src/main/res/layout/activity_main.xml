@@ -14,9 +14,10 @@
     >
 
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="10dp"
+        android:id="@+id/infoBtn"
+        android:layout_width="35dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="13dp"
         android:src="@drawable/ic_information"
         android:layout_centerVertical="true"
         />
@@ -32,10 +33,10 @@
     />
 
     <ImageView
-        android:layout_width="40dp"
-        android:layout_height="35dp"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="13dp"
         android:src="@drawable/ic_stopwatch_rush"
         android:layout_centerVertical="true" />
 

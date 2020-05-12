@@ -2,6 +2,7 @@ package com.dk.workouttimer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class WorkoutActivity extends AppCompatActivity {
     TextView mExerciseTitle, mCategoryTxt;
@@ -44,7 +46,8 @@ public class WorkoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 workout.setDuration(getDuration());
-                launchTimerActivity(workout);
+                durationInputCheck(workout);
+                //launchTimerActivity(workout);
             }
         });
 
@@ -53,37 +56,14 @@ public class WorkoutActivity extends AppCompatActivity {
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    finish();
+                    //finish();
+                launchMainActivity();
+
             }
         });
 
     }
 
-
-//    private void updateDescription(Workout workout) {
-//        switch (workout.getExercise()) {
-//            case "Press Ups":
-//                mExerciseImg.setImageResource(R.drawable.press_up);
-//                break;
-//            case "Plank":
-//                mExerciseImg.setImageResource(R.drawable.plank);
-//                break;
-//            case "High Knees":
-//                mExerciseImg.setImageResource(R.drawable.high_knees);
-//                break;
-//            case "Yoga":
-//                mExerciseImg.setImageResource(R.drawable.yoga);
-//                break;
-//            case "Burpees":
-//                mExerciseImg.setImageResource(R.drawable.burpees);
-//                break;
-//            case "Squats":
-//                // TODO: Image with more white bg
-//                mExerciseImg.setImageResource(R.drawable.squat);
-//                break;
-//        }
-//
-//    }
 
     // get duration from user input
     // TODO: Check if value has been inputted
@@ -109,9 +89,22 @@ public class WorkoutActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void durationInputCheck(Workout w) {
+        if (getDuration() != 0) {
+            launchTimerActivity(w);
+        } else {
+            Context context = getApplicationContext();
+            int dur = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context,"Enter a duration!", dur);
+            toast.show();
+        }
+    }
 
 
-
+    private void launchMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
 
 }

@@ -10,11 +10,9 @@
         <item name="buttonStyle">@style/ralewayBtn</item>
     </style>
 
-
     <style name="ralewayText" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/raleway</item>
     </style>
-
 
     <style name="ralewayBtn" parent="android:Widget.Button">
         <item name="android:fontFamily">@font/raleway</item>
@@ -28,6 +26,5 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
 
 </resources>

@@ -1,5 +1,7 @@
-// Author: Dominic Kennedy 160304243
-
+/*
+Author: Dominic Kennedy 160304243
+Purpose: Implements home screen where users choose a workout
+*/
 package com.dk.workouttimer;
 
 import android.content.Intent;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         mWorkoutList.add(new Workout("Burpees", R.drawable.ic_burpees, R.drawable.burpees, "Cardio"));
         mWorkoutList.add(new Workout("Squats", R.drawable.ic_squat, R.drawable.squat, "Legs"));
 
+        // init views
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         ImageView infoBtn = findViewById(R.id.info_btn);
 

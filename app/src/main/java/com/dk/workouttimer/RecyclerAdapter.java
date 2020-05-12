@@ -1,4 +1,7 @@
-// Author: Dominic Kennedy 160304253
+/*
+ Author: Dominic Kennedy 160304253
+ Purpose: Creates view holders and binds data to them
+ */
 
 package com.dk.workouttimer;
 

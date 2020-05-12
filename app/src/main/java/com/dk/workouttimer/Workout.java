@@ -1,4 +1,7 @@
-// Author: Dominic Kennedy 160304253
+/*
+Author: Dominic Kennedy 160304253
+Purpose: Defines workout class used to store data
+*/
 
 package com.dk.workouttimer;
 

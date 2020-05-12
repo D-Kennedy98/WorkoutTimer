@@ -1,4 +1,7 @@
-// Author: Dominic Kennedy 160304243
+/*
+ Author: Dominic Kennedy 160304243
+ Purpose: Implements information screen which provides users with info about the application
+ */
 
 package com.dk.workouttimer;
 

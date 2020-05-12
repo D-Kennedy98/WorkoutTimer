@@ -1,4 +1,7 @@
-// Author: Dominic Kennedy 160304253
+/*
+Author: Dominic Kennedy 160304253
+Purpose: Implements workout screen where users enters the duration they wish to perform the workout for
+ */
 
 package com.dk.workouttimer;
 
@@ -22,7 +25,7 @@ public class WorkoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
 
-        // retrieve duration intent
+        // retrieve intent from main
         Intent mainIntent = getIntent();
         final Workout workout = mainIntent.getParcelableExtra("workout");
 

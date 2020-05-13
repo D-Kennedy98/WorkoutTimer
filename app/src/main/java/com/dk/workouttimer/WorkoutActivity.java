@@ -76,14 +76,19 @@ public class WorkoutActivity extends AppCompatActivity {
         return value;
     }
 
-    // check a duration input has been entered
+    // check duration input is valid and within appropriate range
     private void durationInputCheck(Workout workout) {
-        if (getDuration() != 0) {
+        if (getDuration() != 0 && getDuration() <= 6000) {
             launchTimerActivity(workout);
-        } else {
+        } else if (getDuration() == 0) {
             Context context = getApplicationContext();
             int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context,"Enter a duration!", duration);
+            Toast toast = Toast.makeText(context,R.string.enter_valid_duration, duration);
+            toast.show();
+        } else if (getDuration() > 6000) {
+            Context context = getApplicationContext();
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context,R.string.value_too_high, duration);
             toast.show();
         }
     }

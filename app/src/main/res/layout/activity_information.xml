@@ -110,9 +110,9 @@
 
         <TextView
             android:id="@+id/image_sources"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="@string/image_sources"
             android:textAlignment="center"
             android:textColor="@color/black"

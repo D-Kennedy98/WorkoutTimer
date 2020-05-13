@@ -1,5 +1,6 @@
 <resources>
 
+    <!-- General -->
     <string name="app_name">WorkoutTimer</string>
     <string name="arms_chest">Arms / Chest</string>
     <string name="back_button">back button</string>
@@ -27,7 +28,8 @@
 
     <string name="user_manual">WorkoutTimer is a fitness application that allows users to time their workouts.
         Six workouts are provided which collectively target all the major muscle groups.\n\nFrom the home screen, choose a workout to be navigated to the workout screen.
-        In the workout screen, an image demonstrates the exercise. Enter a duration for the exercise and tap the start workout button.
+        In the workout screen, an image demonstrates the exercise.
+        Enter a duration for the exercise <b>(value can not be above 6000 seconds / 100 minutes)</b> and tap the start workout button.
         You will be directed to the timer screen where the countdown timer will begin.</string>
 
     <string name="info_attributions">Attributions</string>
@@ -41,5 +43,9 @@
         Plank Image: PopSugar\n
         Squat Image: Ultimate You\n
         Yoga Image: Howcast</string>
+
+    <!-- Error check duration et -->
+    <string name="enter_valid_duration">Enter a valid duration!</string>
+    <string name="value_too_high">Duration can\'t be above 6000s (100mins)</string>
 
 </resources>

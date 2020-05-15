@@ -93,6 +93,20 @@
             app:layout_constraintTop_toBottomOf="@+id/user_manual" />
 
         <TextView
+            android:id="@+id/image_sources"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/image_sources"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/attributions_title" />
+
+        <TextView
             android:id="@+id/fav_icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -106,20 +120,6 @@
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_sources" />
-
-        <TextView
-            android:id="@+id/image_sources"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/image_sources"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/attributions_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

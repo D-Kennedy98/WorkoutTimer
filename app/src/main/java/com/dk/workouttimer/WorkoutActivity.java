@@ -65,7 +65,7 @@ public class WorkoutActivity extends AppCompatActivity {
         return parseInt(String.valueOf(mDurationInput.getText()));
     }
 
-    // error check parsing from et
+    // error check parsing from editText
     private Integer parseInt(String input) {
         int value;
         try {

@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:layout_gravity="center_horizontal"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
     android:padding="7dp">
 
     <com.google.android.material.card.MaterialCardView
@@ -22,25 +22,25 @@
         app:strokeWidth="2dp">
 
         <LinearLayout
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical"
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/workout_img"
-                android:contentDescription="@string/workout_icon"
                 android:layout_width="94dp"
                 android:layout_height="67dp"
                 android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/workout_icon"
                 app:srcCompat="@drawable/ic_press_up" />
 
             <TextView
                 android:id="@+id/workout_txt"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:text="@string/press_ups"
                 android:textColor="@color/black"
                 android:textSize="20sp" />

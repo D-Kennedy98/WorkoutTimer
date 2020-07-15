@@ -22,12 +22,12 @@ public class Workout implements Parcelable {
         mImageResource = in.readInt();
     }
 
-    Workout(String mExercise, int mIconResource, int mImageResource, String mCategory) {
+    Workout(String mExercise, int mIconResource, int mImageResource, String mCategory, int mDuration) {
         this.mExercise = mExercise;
         this.mIconResource = mIconResource;
         this.mImageResource = mImageResource;
         this.mCategory = mCategory;
-        this.mDuration = 0;
+        this.mDuration = mDuration * 1000;
     }
 
     // implements parcelable
@@ -77,7 +77,7 @@ public class Workout implements Parcelable {
     }
 
     void setDuration(int duration) {
-        this.mDuration = duration;
+        this.mDuration = duration * 1000;
     }
 
 }

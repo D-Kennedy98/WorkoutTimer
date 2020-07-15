@@ -7,8 +7,10 @@
     <string name="begin_workout">Begin Workout</string>
     <string name="enter_workout_duration">seconds</string>
     <string name="exercises">Exercises</string>
+    <string name="final_exercise">Final Exercise</string>
     <string name="image_of_workout">Image of workout</string>
     <string name="information_button">Information Button</string>
+    <string name="next_exercise">Next Exercise</string>
     <string name="pause">Pause</string>
     <string name="press_ups">Press Ups</string>
     <string name="restart">Restart</string>
@@ -21,6 +23,8 @@
     <string name="workout_duration_seconds">Workout Duration</string>
     <string name="workout_icon">Workout Icon</string>
     <string name="workout_timer">WorkoutTimer</string>
+    <string name="yoga">Yoga</string>
+
 
     <!-- App Information -->
     <string name="dk_info">Developed by:\nDominic Kennedy\n
@@ -43,8 +47,9 @@
         Squat Image: Ultimate You\n
         Yoga Image: Howcast</string>
 
-    <!-- Error check duration et -->
+    <!-- Error check duration edit text -->
     <string name="enter_valid_duration">Enter a valid duration!</string>
     <string name="value_too_high">Duration can\'t be above 6000s (100mins)</string>
+
 
 </resources>

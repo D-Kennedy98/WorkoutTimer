@@ -1,9 +1,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,30 +13,30 @@
 
         <RelativeLayout
             android:id="@+id/header"
-            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="53dp"
+            android:background="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/back_btn"
-                android:contentDescription="@string/back_button"
                 android:layout_width="35dp"
                 android:layout_height="25dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="13dp"
+                android:contentDescription="@string/back_button"
                 android:src="@drawable/ic_back" />
 
             <ImageView
                 android:id="@+id/timer_img"
-                android:contentDescription="@string/timer_icon"
                 android:layout_width="35dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="13dp"
+                android:contentDescription="@string/timer_icon"
                 android:src="@drawable/ic_stopwatch_rush" />
 
             <TextView
@@ -53,11 +53,11 @@
 
         <TextView
             android:id="@+id/info_dk"
-            android:gravity="center"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
             android:lines="3"
             android:text="@string/dk_info"
             android:textColor="@color/colorPrimaryDark"
@@ -68,9 +68,9 @@
 
         <TextView
             android:id="@+id/user_manual"
-            android:layout_marginTop="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@string/user_manual"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -79,9 +79,9 @@
 
         <TextView
             android:id="@+id/attributions_title"
-            android:layout_marginTop="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@string/info_attributions"
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"

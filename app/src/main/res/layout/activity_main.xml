@@ -6,49 +6,49 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-<RelativeLayout
-    android:id="@+id/main_heading"
-    android:background="@color/colorPrimary"
-    android:layout_width="match_parent"
-    android:layout_height="53dp">
+    <RelativeLayout
+        android:id="@+id/main_heading"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="@color/colorPrimary">
 
-    <ImageView
-        android:id="@+id/info_btn"
-        android:contentDescription="@string/information_button"
-        android:layout_width="35dp"
-        android:layout_height="25dp"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="13dp"
-        android:src="@drawable/ic_information" />
+        <ImageView
+            android:id="@+id/info_btn"
+            android:layout_width="35dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="13dp"
+            android:contentDescription="@string/information_button"
+            android:src="@drawable/ic_information" />
 
-    <TextView
-        android:id="@+id/heading_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/workout_timer"
-        android:textColor="@color/snow"
-        android:textSize="35sp"
-        tools:ignore="RelativeOverlap" />
+        <TextView
+            android:id="@+id/heading_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/workout_timer"
+            android:textColor="@color/snow"
+            android:textSize="35sp"
+            tools:ignore="RelativeOverlap" />
 
-    <ImageView
-        android:id="@+id/timer_img"
-        android:contentDescription="@string/timer_icon"
-        android:layout_width="35dp"
-        android:layout_height="30dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="13dp"
-        android:src="@drawable/ic_stopwatch_rush"
-        android:layout_centerVertical="true" />
+        <ImageView
+            android:id="@+id/timer_img"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="13dp"
+            android:contentDescription="@string/timer_icon"
+            android:src="@drawable/ic_stopwatch_rush" />
 
-</RelativeLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/workout_title"
-        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:paddingTop="7dp"
         android:text="@string/workouts"
         android:textColor="@color/black"
@@ -56,11 +56,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:clickable="true"
-        android:focusable="true"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:clickable="true"
+        android:focusable="true"
         android:layoutAnimation="@anim/layout_animate_from_bottom" />
 
 </LinearLayout>

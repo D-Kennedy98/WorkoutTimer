@@ -39,7 +39,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
         Workout workout = mWorkoutList.get(position);
         holder.exerciseTxt.setText(workout.getExercise());
-        holder.exerciseIcon.setImageResource(workout.getIconResource());
     }
 
     @Override
@@ -54,11 +53,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView exerciseTxt;
-        ImageView exerciseIcon;
+       // ImageView exerciseIcon;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             exerciseTxt = itemView.findViewById(R.id.workout_txt);
-            exerciseIcon = itemView.findViewById(R.id.workout_img);
+           // exerciseIcon = itemView.findViewById(R.id.workout_img);
 
             // for recycler onItemClick
             itemView.setTag(this);

@@ -30,7 +30,7 @@ public class InformationActivity extends AppCompatActivity {
     }
 
     private void launchMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, RoutinesActivity.class);
         startActivity(intent);
     }
 

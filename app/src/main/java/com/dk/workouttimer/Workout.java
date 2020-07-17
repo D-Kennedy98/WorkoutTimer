@@ -10,23 +10,18 @@ import android.os.Parcel;
 
 public class Workout implements Parcelable {
     private String mExercise;
-    private int mIconResource;
-    private int mImageResource;
-    private String mCategory;
+//    private String mCategory;
     private int mDuration;
 
     private Workout(Parcel in) {
         mExercise = in.readString();
-        mCategory = in.readString();
+     //   mCategory = in.readString();
         mDuration = in.readInt();
-        mImageResource = in.readInt();
     }
 
-    Workout(String mExercise, int mIconResource, int mImageResource, String mCategory, int mDuration) {
+    Workout(String mExercise, int mDuration) {
         this.mExercise = mExercise;
-        this.mIconResource = mIconResource;
-        this.mImageResource = mImageResource;
-        this.mCategory = mCategory;
+     //   this.mCategory = mCategory;
         this.mDuration = mDuration * 1000;
     }
 
@@ -51,26 +46,17 @@ public class Workout implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mExercise);
-        dest.writeString(mCategory);
+      //  dest.writeString(mCategory);
         dest.writeInt(mDuration);
-        dest.writeInt(mImageResource);
     }
 
     String getExercise() {
         return mExercise;
     }
 
-    int getIconResource() {
-        return mIconResource;
-    }
-
-    int getImageResource() {
-        return mImageResource;
-    }
-
-    String getCategory() {
-        return mCategory;
-    }
+//    String getCategory() {
+//        return mCategory;
+//    }
 
     int getDuration() {
         return mDuration;

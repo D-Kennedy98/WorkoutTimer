@@ -28,11 +28,15 @@ public class TimerActivity extends AppCompatActivity {
     private int mDuration;
 
     private TextView mTimerValueTxt;
+    private TextView mCurrentExerciseTxt;
     private TextView mNextExerciseTxt;
     private TextView mNextExerciseTitleTxt;
 
     private ArrayList<Workout> workoutArrayList;
 
+    /**
+     * keep count of onTick calls for logging
+     */
     static int tickCount;
 
     /**
@@ -49,26 +53,17 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
-        // retrieve duration intent
-//        final Intent mainIntent = getIntent();
-//        Workout workout = mainIntent.getParcelableExtra("workout");
-//        mDuration = workout.getDuration() * 1000;
 
-
-        /*
-            new implementation
-         */
-
+        // get arrayList of workout objects to be passed to CDT
         final Intent workoutIntent = getIntent();
-        workoutArrayList = workoutIntent.getParcelableArrayListExtra("workoutList");
+        workoutArrayList = workoutIntent.getParcelableArrayListExtra("workoutArrayList");
         mDuration = workoutArrayList.get(0).getDuration();
 
-
-
-
+        Log.i(TAG, String.valueOf(workoutArrayList.size()));
 
         // init views
         mTimerValueTxt = findViewById(R.id.timer_value);
+        mCurrentExerciseTxt = findViewById(R.id.current_exercise_title);
         mNextExerciseTxt = findViewById(R.id.next_exercise);
         mNextExerciseTitleTxt = findViewById(R.id.next_exercise_title);
         TextView workoutText = findViewById(R.id.workout_title);
@@ -78,7 +73,7 @@ public class TimerActivity extends AppCompatActivity {
 
         // set views
         mStartPauseBtn.setText(R.string.pause);
-      //  workoutText.setText(workout.getExercise());
+        //  workoutText.setText(workout.getExercise());
 
         startCountdown(mDuration);
 
@@ -126,6 +121,7 @@ public class TimerActivity extends AppCompatActivity {
 
 
                 updateTimerTxt(millisUntilFinished);
+                updateCurrentExerciseTxt();
                 updateNextExerciseTxt();
                 tickCount++;
                 Log.i(TAG, "tickCount: " + tickCount);
@@ -149,6 +145,7 @@ public class TimerActivity extends AppCompatActivity {
                 } else {
                     mTimerValueTxt.setTextSize(70);
                     mTimerValueTxt.setText(R.string.workout_complete);
+                    mCurrentExerciseTxt.setVisibility(View.INVISIBLE);
                     mNextExerciseTxt.setVisibility(View.INVISIBLE);
                     mNextExerciseTitleTxt.setVisibility(View.INVISIBLE);
                 }
@@ -166,7 +163,9 @@ public class TimerActivity extends AppCompatActivity {
         mStartPauseBtn.setText(R.string.start);
     }
 
-    // format time to mm:ss and set value of timer
+    /**
+     * format time to mm:ss and set value of timer
+     */
     private void updateTimerTxt(long timeRemaining) {
         int mins = (int) (timeRemaining / 1000) / 60;
         int secs = (int) (timeRemaining / 1000) % 60;
@@ -174,16 +173,24 @@ public class TimerActivity extends AppCompatActivity {
         mTimerValueTxt.setText(formTimeRemaining);
     }
 
+    private void updateCurrentExerciseTxt() {
+        String currentExercise = workoutArrayList.get(finCount).getExercise();
+        mCurrentExerciseTxt.setText(currentExercise);
+    }
+
+    /**
+     * update the textView to display upcoming exercise
+     */
     private void updateNextExerciseTxt() {
         int arrayIndex = finCount + 1;
 
         if(arrayIndex < workoutArrayList.size()) {
-            String exercise = workoutArrayList.get(arrayIndex).getExercise();
-            mNextExerciseTxt.setText(exercise);
-        } else  {
+            String nextExercise = workoutArrayList.get(arrayIndex).getExercise();
+            mNextExerciseTxt.setText(nextExercise);
+        } else {
+            mNextExerciseTitleTxt.setVisibility(View.INVISIBLE);
             mNextExerciseTxt.setText(R.string.final_exercise);
         }
-
     }
 
 

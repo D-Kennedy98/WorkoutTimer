@@ -50,6 +50,7 @@
     <!-- Error check duration edit text -->
     <string name="enter_valid_duration">Enter a valid duration!</string>
     <string name="value_too_high">Duration can\'t be above 6000s (100mins)</string>
+    <string name="add_workout">Add Workout</string>
 
 
 </resources>

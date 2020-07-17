@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class RoutinesActivity extends AppCompatActivity {
 
     private ArrayList<Workout> mWorkoutList = new ArrayList<>();
 
@@ -26,14 +26,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // create workout data and add to list
-        mWorkoutList.add(new Workout("Press Ups",R.drawable.ic_press_up, R.drawable.press_up, "Arms / Chest", 3));
-        mWorkoutList.add(new Workout("Plank",R.drawable.ic_plank, R.drawable.plank, "Core", 5));
-        mWorkoutList.add(new Workout("High Knees",R.drawable.ic_high_knees, R.drawable.high_knees, "Cardio", 4));
+        mWorkoutList.add(new Workout("Press Ups", 3));
+        mWorkoutList.add(new Workout("Plank", 5));
+        mWorkoutList.add(new Workout("High Knees", 4));
 
-
-//        mWorkoutList.add(new Workout("Yoga", R.drawable.ic_yoga, R.drawable.yoga, "Full Body / Stretch", ));
-//        mWorkoutList.add(new Workout("Burpees", R.drawable.ic_burpees, R.drawable.burpees, "Cardio"));
-//        mWorkoutList.add(new Workout("Squats", R.drawable.ic_squat, R.drawable.squat, "Legs"));
 
         // init views
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -61,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         workouts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchTimerActivity(mWorkoutList);
+                launchCreateWorkoutActivity();
             }
         });
 
@@ -98,6 +94,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void launchInformationActivity() {
         Intent intent = new Intent(this, InformationActivity.class);
+        startActivity(intent);
+    }
+
+    public void launchCreateWorkoutActivity() {
+        Intent intent = new Intent(this, CreateWorkoutActivity.class);
         startActivity(intent);
     }
 

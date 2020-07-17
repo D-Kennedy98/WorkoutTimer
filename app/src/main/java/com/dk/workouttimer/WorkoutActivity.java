@@ -39,8 +39,7 @@ public class WorkoutActivity extends AppCompatActivity {
 
         // set views
         exerciseTitle.setText(workout.getExercise());
-        categoryTxt.setText(workout.getCategory());
-        exerciseImg.setImageResource(workout.getImageResource());
+        //categoryTxt.setText(workout.getCategory());
 
         // set on click listeners
         startBtn.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +99,7 @@ public class WorkoutActivity extends AppCompatActivity {
     }
 
     private void launchMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, RoutinesActivity.class);
         startActivity(intent);
     }
 

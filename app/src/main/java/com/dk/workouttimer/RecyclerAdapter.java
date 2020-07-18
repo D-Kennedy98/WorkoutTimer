@@ -9,22 +9,23 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    private ArrayList<Workout> mWorkoutList;
+    //private ArrayList<Exercise> mExerciseList;
+    private ArrayList<Workout> mWorkoutArrayList;
     private LayoutInflater layoutInflater;
     private View.OnClickListener mOnItemClickListener;
 
-    RecyclerAdapter(Context context, ArrayList<Workout> workoutList) {
-        this.mWorkoutList = workoutList;
+    RecyclerAdapter(Context context, ArrayList<Workout> mWorkoutArrayList) {
+        this.mWorkoutArrayList = mWorkoutArrayList;
         this.layoutInflater = LayoutInflater.from(context);
     }
 
@@ -37,13 +38,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override // bind data to views
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
-        Workout workout = mWorkoutList.get(position);
-        holder.exerciseTxt.setText(workout.getExercise());
+       // Exercise exercise = mExerciseList.get(position);
+        //holder.exerciseTxt.setText(exercise.getName());
+
+        Workout workout = mWorkoutArrayList.get(position);
+        holder.workoutTitle.setText(workout.getTitle());
+        holder.duration.setText(String.format(Locale.getDefault(),
+                "Duration: %d", workout.getTotalDuration()));
+        holder.numberExercises.setText(String.format(Locale.getDefault(),
+                "No. of exercises: %d", workout.getNoExercises()));
+
     }
 
     @Override
     public int getItemCount() {
-        return mWorkoutList.size();
+        return mWorkoutArrayList.size();
     }
 
     // set view listener
@@ -52,12 +61,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView exerciseTxt;
-       // ImageView exerciseIcon;
+        TextView workoutTitle;
+        TextView duration;
+        TextView numberExercises;
+        //ImageView exerciseIcon;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            exerciseTxt = itemView.findViewById(R.id.workout_txt);
-           // exerciseIcon = itemView.findViewById(R.id.workout_img);
+            workoutTitle = itemView.findViewById(R.id.workout_txt);
+            duration = itemView.findViewById(R.id.workout_duration_txt);
+            numberExercises = itemView.findViewById(R.id.number_exercises_txt);
+
+
+            //exerciseIcon = itemView.findViewById(R.id.workout_img);
 
             // for recycler onItemClick
             itemView.setTag(this);

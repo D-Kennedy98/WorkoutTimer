@@ -1,31 +1,35 @@
-/*
-Author: Dominic Kennedy 160304253
-Purpose: Defines workout class used to store data
-*/
+package com.dk.workouttimer;/*
+ * Author: Dominic Kennedy
+ * Purpose: Defines workout object which is used to store data about a collection of exercises
+ *          so that it can be displayed in a list
+ */
 
-package com.dk.workouttimer;
-
-import android.os.Parcelable;
 import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 
 public class Workout implements Parcelable {
-    private String mExercise;
-//    private String mCategory;
-    private int mDuration;
+    private String mTitle;
+    private int mTotalDuration;
+    private int mNoExercises;
+    private ArrayList<Exercise> mExerciseArrayList;
 
+    public Workout(String mTitle, int mTotalDuration, int mNoExercises, ArrayList<Exercise> mExerciseArrayList) {
+        this.mTitle = mTitle;
+        this.mTotalDuration = mTotalDuration;
+        this.mNoExercises = mNoExercises;
+        this.mExerciseArrayList = mExerciseArrayList;
+    }
+
+    // implement parcelable so that the workout objects can be passed as intent
     private Workout(Parcel in) {
-        mExercise = in.readString();
-     //   mCategory = in.readString();
-        mDuration = in.readInt();
+        mTitle = in.readString();
+        mTotalDuration = in.readInt();
+        mNoExercises = in.readInt();
+        mExerciseArrayList = in.createTypedArrayList(Exercise.CREATOR);
     }
 
-    Workout(String mExercise, int mDuration) {
-        this.mExercise = mExercise;
-     //   this.mCategory = mCategory;
-        this.mDuration = mDuration * 1000;
-    }
-
-    // implements parcelable
     public static final Creator<Workout> CREATOR = new Creator<Workout>() {
         @Override
         public Workout createFromParcel(Parcel in) {
@@ -45,25 +49,43 @@ public class Workout implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mExercise);
-      //  dest.writeString(mCategory);
-        dest.writeInt(mDuration);
+        dest.writeString(mTitle);
+        dest.writeInt(mTotalDuration);
+        dest.writeInt(mNoExercises);
+        dest.writeTypedList(mExerciseArrayList);
     }
 
-    String getExercise() {
-        return mExercise;
+    public String getTitle() {
+        return mTitle;
     }
 
-//    String getCategory() {
-//        return mCategory;
-//    }
-
-    int getDuration() {
-        return mDuration;
+    public void setTitle(String mTitle) {
+        this.mTitle = mTitle;
     }
 
-    void setDuration(int duration) {
-        this.mDuration = duration * 1000;
+    public int getTotalDuration() {
+        return mTotalDuration;
     }
+
+    public void setTotalDuration(int mTotalDuration) {
+        this.mTotalDuration = mTotalDuration;
+    }
+
+    public int getNoExercises() {
+        return mNoExercises;
+    }
+
+    public void setNoExercises(int mNoExercises) {
+        this.mNoExercises = mNoExercises;
+    }
+
+    public ArrayList<Exercise> getExerciseArrayList() {
+        return mExerciseArrayList;
+    }
+
+    public void setExerciseArrayList(ArrayList<Exercise> mExerciseArrayList) {
+        this.mExerciseArrayList = mExerciseArrayList;
+    }
+
 
 }

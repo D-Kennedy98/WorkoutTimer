@@ -8,7 +8,7 @@
     <string name="enter_workout_duration">seconds</string>
     <string name="exercises">Exercises</string>
     <string name="final_exercise">Final Exercise</string>
-    <string name="image_of_workout">Image of workout</string>
+    <string name="image_of_workout">Image of exercise</string>
     <string name="information_button">Information Button</string>
     <string name="next_exercise">Next Exercise</string>
     <string name="pause">Pause</string>
@@ -31,9 +31,9 @@
         Newcastle University</string>
 
     <string name="user_manual">WorkoutTimer is a fitness application that allows users to time their workouts.
-        Six workouts are provided which collectively target all the major muscle groups.\n\nFrom the home screen, choose a workout to be navigated to the workout screen.
-        In the workout screen, an image demonstrates the exercise.
-        Enter a duration for the exercise <b>(value can not be above 6000 seconds / 100 minutes)</b> and tap the start workout button.
+        Six workouts are provided which collectively target all the major muscle groups.\n\nFrom the home screen, choose a exercise to be navigated to the exercise screen.
+        In the exercise screen, an image demonstrates the exercise.
+        Enter a duration for the exercise <b>(value can not be above 6000 seconds / 100 minutes)</b> and tap the start exercise button.
         You will be directed to the timer screen where the countdown timer will begin.</string>
 
     <string name="info_attributions">Attributions</string>
@@ -51,6 +51,12 @@
     <string name="enter_valid_duration">Enter a valid duration!</string>
     <string name="value_too_high">Duration can\'t be above 6000s (100mins)</string>
     <string name="add_workout">Add Workout</string>
+    <string name="add_exercise">Add Exercise</string>
+    <string name="workout_title">Workout Title</string>
+    <string name="exercise_duration">exercise duration</string>
+    <string name="exercise_name">exercise name</string>
+    <string name="duration">Duration %d</string>
+    <string name="number_of_exercises">No. exercises</string>
 
 
 </resources>

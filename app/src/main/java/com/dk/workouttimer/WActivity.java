@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class WorkoutActivity extends AppCompatActivity {
+public class WActivity extends AppCompatActivity {
    private EditText mDurationInput;
 
     @Override
@@ -27,7 +27,7 @@ public class WorkoutActivity extends AppCompatActivity {
 
         // retrieve intent from main
         Intent mainIntent = getIntent();
-        final Workout workout = mainIntent.getParcelableExtra("workout");
+        final Exercise exercise = mainIntent.getParcelableExtra("workout");
 
         // init views
         mDurationInput = findViewById(R.id.duration_et);
@@ -38,15 +38,15 @@ public class WorkoutActivity extends AppCompatActivity {
         ImageView backBtn = findViewById(R.id.back_btn);
 
         // set views
-        exerciseTitle.setText(workout.getExercise());
+        exerciseTitle.setText(exercise.getName());
         //categoryTxt.setText(workout.getCategory());
 
         // set on click listeners
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                workout.setDuration(getDuration());
-                durationInputCheck(workout);
+                exercise.setDuration(getDuration());
+                durationInputCheck(exercise);
             }
         });
 
@@ -76,9 +76,9 @@ public class WorkoutActivity extends AppCompatActivity {
     }
 
     // check duration input is valid and within appropriate range
-    private void durationInputCheck(Workout workout) {
+    private void durationInputCheck(Exercise exercise) {
         if (getDuration() != 0 && getDuration() <= 6000) {
-            launchTimerActivity(workout);
+            launchTimerActivity(exercise);
         } else if (getDuration() == 0) {
             Context context = getApplicationContext();
             int duration = Toast.LENGTH_SHORT;
@@ -92,14 +92,14 @@ public class WorkoutActivity extends AppCompatActivity {
         }
     }
 
-    private void launchTimerActivity(Workout workout) {
+    private void launchTimerActivity(Exercise exercise) {
         Intent intent = new Intent(this, TimerActivity.class);
-        intent.putExtra("workout", workout);
+        intent.putExtra("workout", exercise);
         startActivity(intent);
     }
 
     private void launchMainActivity() {
-        Intent intent = new Intent(this, RoutinesActivity.class);
+        Intent intent = new Intent(this, WorkoutsActivity.class);
         startActivity(intent);
     }
 

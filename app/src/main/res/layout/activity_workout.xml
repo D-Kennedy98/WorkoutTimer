@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WorkoutActivity">
+    tools:context=".WActivity">
 
     <RelativeLayout
         android:id="@+id/header"
@@ -84,7 +84,7 @@
         app:layout_constraintTop_toBottomOf="@+id/category_Txt" />
 
     <TextView
-        android:id="@+id/duration_txt"
+        android:id="@+id/duration_txt2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -104,13 +104,13 @@
         android:ems="10"
         android:hint="@string/enter_workout_duration"
         android:inputType="number"
-        android:labelFor="@id/duration_txt"
+        android:labelFor="@id/duration_txt2"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/duration_txt" />
+        app:layout_constraintTop_toBottomOf="@+id/duration_txt2" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/start_btn"

@@ -6,6 +6,7 @@
 package com.dk.workouttimer;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -32,7 +33,7 @@ public class TimerActivity extends AppCompatActivity {
     private TextView mNextExerciseTxt;
     private TextView mNextExerciseTitleTxt;
 
-    private ArrayList<Workout> workoutArrayList;
+    private ArrayList<Exercise> exerciseArrayList;
 
     /**
      * keep count of onTick calls for logging
@@ -56,10 +57,10 @@ public class TimerActivity extends AppCompatActivity {
 
         // get arrayList of workout objects to be passed to CDT
         final Intent workoutIntent = getIntent();
-        workoutArrayList = workoutIntent.getParcelableArrayListExtra("workoutArrayList");
-        mDuration = workoutArrayList.get(0).getDuration();
+        exerciseArrayList = workoutIntent.getParcelableArrayListExtra("workoutArrayList");
+        mDuration = exerciseArrayList.get(0).getDuration();
 
-        Log.i(TAG, String.valueOf(workoutArrayList.size()));
+        Log.i(TAG, String.valueOf(exerciseArrayList.size()));
 
         // init views
         mTimerValueTxt = findViewById(R.id.timer_value);
@@ -73,7 +74,7 @@ public class TimerActivity extends AppCompatActivity {
 
         // set views
         mStartPauseBtn.setText(R.string.pause);
-        //  workoutText.setText(workout.getExercise());
+        //  workoutText.setText(workout.getName());
 
         startCountdown(mDuration);
 
@@ -140,8 +141,8 @@ public class TimerActivity extends AppCompatActivity {
                 Log.i(TAG, "FinCount: " + finCount);
 
                 // if there are still WO objs in array, start next CD
-                if(finCount < workoutArrayList.size()) {
-                    startCountdown(workoutArrayList.get(finCount).getDuration());
+                if(finCount < exerciseArrayList.size()) {
+                    startCountdown(exerciseArrayList.get(finCount).getDuration());
                 } else {
                     mTimerValueTxt.setTextSize(70);
                     mTimerValueTxt.setText(R.string.workout_complete);
@@ -174,7 +175,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void updateCurrentExerciseTxt() {
-        String currentExercise = workoutArrayList.get(finCount).getExercise();
+        String currentExercise = exerciseArrayList.get(finCount).getName();
         mCurrentExerciseTxt.setText(currentExercise);
     }
 
@@ -184,12 +185,13 @@ public class TimerActivity extends AppCompatActivity {
     private void updateNextExerciseTxt() {
         int arrayIndex = finCount + 1;
 
-        if(arrayIndex < workoutArrayList.size()) {
-            String nextExercise = workoutArrayList.get(arrayIndex).getExercise();
+        if(arrayIndex < exerciseArrayList.size()) {
+            String nextExercise = exerciseArrayList.get(arrayIndex).getName();
             mNextExerciseTxt.setText(nextExercise);
         } else {
             mNextExerciseTitleTxt.setVisibility(View.INVISIBLE);
             mNextExerciseTxt.setText(R.string.final_exercise);
+            mNextExerciseTxt.setTypeface(Typeface.DEFAULT_BOLD);
         }
     }
 

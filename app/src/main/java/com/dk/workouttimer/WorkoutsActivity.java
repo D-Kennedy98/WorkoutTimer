@@ -6,29 +6,54 @@ package com.dk.workouttimer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RoutinesActivity extends AppCompatActivity {
+public class WorkoutsActivity extends AppCompatActivity {
 
-    private ArrayList<Workout> mWorkoutList = new ArrayList<>();
+
+    private ArrayList<Exercise> mExerciseList = new ArrayList<>();
+
+
+    /**
+     * Tags for logging
+     */
+    private static final String WO_TITLE_TAG = "Workout Title";
+    private static final String EX_NAME_TAG = "Exercise names";
+    private static final String EX_LIST_COUNT_TITLE = "ExerciseList WO Title";
+
+    private ArrayList<Workout> mWorkoutArrayList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.i("OnCreate", "called");
+
+
+        if(savedInstanceState != null) {
+
+            onRestoreInstanceState(savedInstanceState);
+        }
 
         // create workout data and add to list
-        mWorkoutList.add(new Workout("Press Ups", 3));
-        mWorkoutList.add(new Workout("Plank", 5));
-        mWorkoutList.add(new Workout("High Knees", 4));
+        mExerciseList.add(new Exercise("Press Ups", 3));
+        mExerciseList.add(new Exercise("Plank", 5));
+        mExerciseList.add(new Exercise("High Knees", 4));
+
+
+        // default workout
+        mWorkoutArrayList.add(new Workout("title 1", 10, 1, mExerciseList));
 
 
         // init views
@@ -36,7 +61,9 @@ public class RoutinesActivity extends AppCompatActivity {
         ImageView infoBtn = findViewById(R.id.info_btn);
 
         // set the recycler view
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, mWorkoutList);
+       // RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, mExerciseList);
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, mWorkoutArrayList);
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(recyclerAdapter);
@@ -51,8 +78,6 @@ public class RoutinesActivity extends AppCompatActivity {
         });
 
 
-        // New implementation
-
         TextView workouts = findViewById(R.id.workout_title);
         workouts.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +87,23 @@ public class RoutinesActivity extends AppCompatActivity {
         });
 
 
+        // get workout object from CreateWOAct
+        Intent createWorkoutIntent = getIntent();
+        Workout newWorkout = createWorkoutIntent.getParcelableExtra("workout");
+
+        // only access intent if != null i.e after navigating back from CreateWOAct once a WO has been created
+        if(newWorkout != null) {
+
+            Log.i(WO_TITLE_TAG, newWorkout.getTitle());
+            // log if WO intent is successfully passed
+            for(int i = 0; i < newWorkout.getExerciseArrayList().size(); i++) {
+                Log.i(EX_NAME_TAG, newWorkout.getExerciseArrayList().get(i).getName());
+            }
+
+            mWorkoutArrayList.add(newWorkout);
+
+            Log.i(EX_LIST_COUNT_TITLE, mWorkoutArrayList.get(0).getTitle());
+        }
 
     }
 
@@ -70,18 +112,18 @@ public class RoutinesActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v.getTag();
-            Workout workout = mWorkoutList.get(holder.getAdapterPosition());
-            launchWorkoutActivity(workout);
+            Exercise exercise = mExerciseList.get(holder.getAdapterPosition());
+            launchWorkoutActivity(exercise);
         }
     };
 
     /**
      * Used in initial implementation
-     * @param workout stores chosen workout data
+     * @param exercise stores chosen workout data
      */
-    private void launchWorkoutActivity(Workout workout) {
-        Intent intent = new Intent(this, WorkoutActivity.class);
-        intent.putExtra("workout", workout);
+    private void launchWorkoutActivity(Exercise exercise) {
+        Intent intent = new Intent(this, WActivity.class);
+        intent.putExtra("workout", exercise);
         startActivity(intent);
     }
 

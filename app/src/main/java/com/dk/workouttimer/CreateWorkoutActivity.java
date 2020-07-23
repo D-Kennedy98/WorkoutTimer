@@ -44,6 +44,8 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_workout);
 
+
+
         // btn to create WO objects using edit text values
         Button addExerciseBtn = findViewById(R.id.add_exercise_btn);
 
@@ -82,16 +84,16 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         });
 
         // navigate back to routines with workout object as intent
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchWorkoutsActivity(
-                        new Workout(getWorkoutTitleInput(), calcTotalDuration(mExerciseArrayList),
-                        mExerciseArrayList.size(), mExerciseArrayList)
-                );
-
-            }
-        });
+//        backBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                launchWorkoutsActivity(
+//                        new Workout(getWorkoutTitleInput(), calcTotalDuration(mExerciseArrayList),
+//                        mExerciseArrayList.size(), mExerciseArrayList)
+//                );
+//
+//            }
+//        });
 
     }
 

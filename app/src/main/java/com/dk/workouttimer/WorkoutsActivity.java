@@ -8,20 +8,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+import com.google.gson.Gson;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class WorkoutsActivity extends AppCompatActivity {
 
 
-    private ArrayList<Exercise> mExerciseList = new ArrayList<>();
+    private ArrayList<Exercise> mExerciseList1 = new ArrayList<>();
+    private ArrayList<Exercise> mExerciseList2 = new ArrayList<>();
 
 
     /**
@@ -34,26 +38,43 @@ public class WorkoutsActivity extends AppCompatActivity {
     private ArrayList<Workout> mWorkoutArrayList = new ArrayList<>();
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.i("OnCreate", "called");
+
+        // Create data
+        Exercise e1 = new Exercise("e1", 50);
+        Exercise e2 = new Exercise("e2", 100);
+        Exercise e3 = new Exercise("e3", 25);
+        Exercise e4 = new Exercise("e4", 75);
+
+        mExerciseList1.add(e1);
+        mExerciseList1.add(e2);
+        mExerciseList2.add(e3);
+        mExerciseList2.add(e4);
+
+        Workout workout1 = new Workout("Workout 1", 5, 10, mExerciseList1);
+        Workout workout2 = new Workout("Workout 2", 15, 30, mExerciseList2);
 
 
-        if(savedInstanceState != null) {
+        App app = (App)getApplication();
+        app.workoutDao.clearTable();
 
-            onRestoreInstanceState(savedInstanceState);
+        app.workoutDao.insertWorkout(workout1);
+        app.workoutDao.insertWorkout(workout2);
+
+        List<Workout> workoutList = app.workoutDao.loadAllWorkouts();
+        Log.i("List size", String.valueOf(workoutList.size()));
+        for (Workout workout: workoutList) {
+            Log.i("workout", workout.getTitle());
+            for(int i = 0; i < workoutList.size(); i++) {
+               Log.i("Exercise",workout.getExerciseList().get(i).getName());
+            }
         }
 
-        // create workout data and add to list
-        mExerciseList.add(new Exercise("Press Ups", 3));
-        mExerciseList.add(new Exercise("Plank", 5));
-        mExerciseList.add(new Exercise("High Knees", 4));
-
-
-        // default workout
-        mWorkoutArrayList.add(new Workout("title 1", 10, 1, mExerciseList));
 
 
         // init views
@@ -62,7 +83,7 @@ public class WorkoutsActivity extends AppCompatActivity {
 
         // set the recycler view
        // RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, mExerciseList);
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, mWorkoutArrayList);
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, (ArrayList<Workout>) workoutList);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -87,23 +108,12 @@ public class WorkoutsActivity extends AppCompatActivity {
         });
 
 
+
         // get workout object from CreateWOAct
         Intent createWorkoutIntent = getIntent();
         Workout newWorkout = createWorkoutIntent.getParcelableExtra("workout");
 
-        // only access intent if != null i.e after navigating back from CreateWOAct once a WO has been created
-        if(newWorkout != null) {
 
-            Log.i(WO_TITLE_TAG, newWorkout.getTitle());
-            // log if WO intent is successfully passed
-            for(int i = 0; i < newWorkout.getExerciseArrayList().size(); i++) {
-                Log.i(EX_NAME_TAG, newWorkout.getExerciseArrayList().get(i).getName());
-            }
-
-            mWorkoutArrayList.add(newWorkout);
-
-            Log.i(EX_LIST_COUNT_TITLE, mWorkoutArrayList.get(0).getTitle());
-        }
 
     }
 
@@ -112,7 +122,7 @@ public class WorkoutsActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v.getTag();
-            Exercise exercise = mExerciseList.get(holder.getAdapterPosition());
+            Exercise exercise = mExerciseList1.get(holder.getAdapterPosition());
             launchWorkoutActivity(exercise);
         }
     };
@@ -128,9 +138,8 @@ public class WorkoutsActivity extends AppCompatActivity {
     }
 
 
-    private void launchTimerActivity(ArrayList mWorkoutList) {
+    private void launchTimerActivity() {
         Intent intent = new Intent(this, TimerActivity.class);
-        intent.putExtra("workoutList", mWorkoutList);
         startActivity(intent);
     }
 

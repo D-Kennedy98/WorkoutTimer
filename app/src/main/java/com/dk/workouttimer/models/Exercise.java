@@ -3,7 +3,7 @@
  * Purpose: Defines workout class used to store exercise data
  */
 
-package com.dk.workouttimer;
+package com.dk.workouttimer.models;
 
 import android.os.Parcelable;
 import android.os.Parcel;
@@ -12,7 +12,7 @@ public class Exercise implements Parcelable {
     private String mName;
     private int mDuration;
 
-    Exercise(String mName, int mDuration) {
+    public Exercise(String mName, int mDuration) {
         this.mName = mName;
         this.mDuration = mDuration * 1000;
     }
@@ -46,15 +46,15 @@ public class Exercise implements Parcelable {
         dest.writeInt(mDuration);
     }
 
-    String getName() {
+    public String getName() {
         return mName;
     }
 
-    int getDuration() {
+    public int getDuration() {
         return mDuration;
     }
 
-    void setDuration(int duration) {
+    public void setDuration(int duration) {
         this.mDuration = duration * 1000;
     }
 

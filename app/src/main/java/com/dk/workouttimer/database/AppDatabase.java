@@ -1,12 +1,14 @@
 /*
  * Author: Dominic Kennedy
- * Date: 22/07/20
- * Purpose: Defines the abstract database.
+ * Purpose: Defines the abstract com.dk.workouttimer.database.
  *          Follows singleton DP - Only one instance can exist
  */
-package com.dk.workouttimer;
+
+package com.dk.workouttimer.database;
 
 import android.content.Context;
+
+import com.dk.workouttimer.models.Workout;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -20,15 +22,18 @@ public abstract class AppDatabase extends RoomDatabase {
      */
     private static AppDatabase sInstance = null;
 
-    public static final String NAME = "workout-DB";
+    /**
+     * com.dk.workouttimer.database name
+     */
+    private static final String NAME = "workout-DB";
 
     /**
      * Default constructor.
      */
-    public AppDatabase(){}
+    AppDatabase(){}
 
     /**
-     * get instance of the created database
+     * get instance of the created com.dk.workouttimer.database
      * @param context current state of application
      * @return AppDatabase instance
      * TODO: change so it doesn't run on main thread
@@ -42,5 +47,9 @@ public abstract class AppDatabase extends RoomDatabase {
         return sInstance;
     }
 
+    /**
+     * workoutDAO interface
+     */
     public abstract WorkoutDao workoutDao();
+
 }

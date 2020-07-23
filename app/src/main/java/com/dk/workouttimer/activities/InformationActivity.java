@@ -3,12 +3,15 @@
  Purpose: Implements information screen which provides users with info about the application
  */
 
-package com.dk.workouttimer;
+package com.dk.workouttimer.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.dk.workouttimer.R;
+import com.dk.workouttimer.activities.WorkoutsActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

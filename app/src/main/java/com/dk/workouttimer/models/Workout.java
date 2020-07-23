@@ -1,12 +1,14 @@
-package com.dk.workouttimer;
 /*
  * Author: Dominic Kennedy
- * Purpose: Defines workout object which is used to store data about a collection of exercises
- *          so that it can be displayed in a list
+ * Purpose: Defines workout object which is used to store data about a list of exercises
  */
+
+package com.dk.workouttimer.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.dk.workouttimer.database.Converter;
 
 import java.util.List;
 
@@ -18,9 +20,8 @@ import androidx.room.TypeConverters;
 @Entity(tableName = "workoutTable")
 public class Workout implements Parcelable {
 
-
     @PrimaryKey(autoGenerate = true)
-    int id;
+    private int id;
 
     private String mTitle;
     private int mTotalDuration;
@@ -30,11 +31,6 @@ public class Workout implements Parcelable {
     private List<Exercise> mExerciseList;
 
     @Ignore
-    public Workout() {
-
-    }
-
-    @Ignore
     public Workout(String mTitle, int mTotalDuration, int mNoExercises, List<Exercise> mExerciseList) {
         this.mTitle = mTitle;
         this.mTotalDuration = mTotalDuration;
@@ -42,7 +38,7 @@ public class Workout implements Parcelable {
         this.mExerciseList = mExerciseList;
     }
 
-    // for rooms
+    // constructor for room db
     public Workout(int id, String mTitle, int mTotalDuration, int mNoExercises, List<Exercise> mExerciseList) {
         this.id = id;
         this.mTitle = mTitle;
@@ -96,7 +92,7 @@ public class Workout implements Parcelable {
         this.id = id;
     }
 
-    String getTitle() {
+    public String getTitle() {
         return mTitle;
     }
 
@@ -104,7 +100,7 @@ public class Workout implements Parcelable {
         this.mTitle = mTitle;
     }
 
-    int getTotalDuration() {
+    public int getTotalDuration() {
         return mTotalDuration;
     }
 
@@ -112,7 +108,7 @@ public class Workout implements Parcelable {
         this.mTotalDuration = mTotalDuration;
     }
 
-    int getNoExercises() {
+    public int getNoExercises() {
         return mNoExercises;
     }
 
@@ -120,7 +116,7 @@ public class Workout implements Parcelable {
         this.mNoExercises = mNoExercises;
     }
 
-    List<Exercise> getExerciseList() {
+    public List<Exercise> getExerciseList() {
         return mExerciseList;
     }
 

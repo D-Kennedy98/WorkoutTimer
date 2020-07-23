@@ -1,4 +1,4 @@
-package com.dk.workouttimer;
+package com.dk.workouttimer.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.dk.workouttimer.R;
+import com.dk.workouttimer.activities.WorkoutsActivity;
+import com.dk.workouttimer.models.Exercise;
+import com.dk.workouttimer.models.Workout;
 
 import java.util.ArrayList;
 

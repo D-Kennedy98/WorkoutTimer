@@ -1,15 +1,18 @@
 /*
- Author: Dominic Kennedy 160304253
- Purpose: Creates view holders and binds workout data to them
+ Author: Dominic Kennedy
+ Purpose: creates view holders and binds workout data to them
  */
 
-package com.dk.workouttimer;
+package com.dk.workouttimer.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.dk.workouttimer.R;
+import com.dk.workouttimer.models.Workout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +27,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private LayoutInflater layoutInflater;
     private View.OnClickListener mOnItemClickListener;
 
-    RecyclerAdapter(Context context, ArrayList<Workout> mWorkoutArrayList) {
+    public RecyclerAdapter(Context context, ArrayList<Workout> mWorkoutArrayList) {
         this.mWorkoutArrayList = mWorkoutArrayList;
         this.layoutInflater = LayoutInflater.from(context);
     }
@@ -56,7 +59,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     // set view listener
-    void setOnItemClickListener(View.OnClickListener itemClickListener) {
+    public void setOnItemClickListener(View.OnClickListener itemClickListener) {
         mOnItemClickListener = itemClickListener;
     }
 

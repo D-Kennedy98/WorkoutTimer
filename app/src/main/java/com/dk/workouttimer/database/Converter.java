@@ -24,7 +24,7 @@ public class Converter {
      * @return string form of List<Exercise>
      */
     @TypeConverter
-    public String ListToString(List<Exercise> exerciseList) {
+    public String listToString(List<Exercise> exerciseList) {
         if(exerciseList == null) {
             return null;
         }
@@ -41,7 +41,7 @@ public class Converter {
      * @return original List<Exercise> that was stored in com.dk.workouttimer.database
      */
     @TypeConverter
-    public List<Exercise> StringToWorkout(String exercisesString) {
+    public List<Exercise> stringToList(String exercisesString) {
         if(exercisesString == null) {
             return null;
         }

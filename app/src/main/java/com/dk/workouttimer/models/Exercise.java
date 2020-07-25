@@ -55,7 +55,7 @@ public class Exercise implements Parcelable {
     }
 
     public void setDuration(int duration) {
-        this.mDuration = duration * 1000;
+        this.mDuration = duration;
     }
 
 }

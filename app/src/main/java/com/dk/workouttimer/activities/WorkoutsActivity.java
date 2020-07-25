@@ -41,10 +41,10 @@ public class WorkoutsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_workouts);
 
         // create data
-        Exercise e1 = new Exercise("e1", 10);
+        Exercise e1 = new Exercise("e1", 7);
         Exercise e2 = new Exercise("e2", 5);
-        Exercise e3 = new Exercise("e3", 25);
-        Exercise e4 = new Exercise("e4", 75);
+        Exercise e3 = new Exercise("e3", 10);
+        Exercise e4 = new Exercise("e4", 4);
 
         mExerciseList1.add(e1);
         mExerciseList1.add(e2);
@@ -52,25 +52,28 @@ public class WorkoutsActivity extends AppCompatActivity {
         mExerciseList2.add(e3);
         mExerciseList2.add(e4);
 
-        Workout workout1 = new Workout("Workout 1", 5, 10, mExerciseList1);
+        Workout workout1 = new Workout("Workout 1", 10, 10, mExerciseList1);
         Workout workout2 = new Workout("Workout 2", 15, 30, mExerciseList2);
+        Workout workout3 = new Workout("Workout 3", 5, 1, mExerciseList2);
 
-        // com.dk.workouttimer.database operations
-        App app = (App)getApplication();
-        app.workoutDao.clearTable();
+        // database operations
+        final App app = (App)getApplication();
+       // app.workoutDao.clearTable();
 
         app.workoutDao.insertWorkout(workout1);
         app.workoutDao.insertWorkout(workout2);
+        app.workoutDao.insertWorkout(workout3);
 
         mWorkoutArrayList = (ArrayList<Workout>) app.workoutDao.loadAllWorkouts();
-        Log.i("List size", String.valueOf(mWorkoutArrayList.size()));
-        for (Workout workout: mWorkoutArrayList) {
-            Log.i("workout", workout.getTitle());
-            for(int i = 0; i < mWorkoutArrayList.size(); i++) {
-               Log.i("Exercise",workout.getExerciseList().get(i).getName());
+
+        // log retried workouts and their associated exercises
+        for (int i = 0; i < mWorkoutArrayList.size(); i++) {
+            Log.i("workout", mWorkoutArrayList.get(i).getTitle());
+
+            for (int j = 0; j < mWorkoutArrayList.get(i).getExerciseList().size(); j++) {
+                Log.i("Exercise", mWorkoutArrayList.get(i).getExerciseList().get(j).getName());
             }
         }
-
 
         setViews();
 
@@ -86,6 +89,7 @@ public class WorkoutsActivity extends AppCompatActivity {
 
     /**
      * set up UI views
+     * TODO: Refactor
      */
     private void setViews() {
 

@@ -25,6 +25,9 @@ import java.util.Locale;
 
 public class TimerActivity extends AppCompatActivity {
 
+    // TODO: - int -> long
+    //  -Include workout name in UI
+
     private static final String TAG = "";
     private Button mStartPauseBtn;
     private boolean mIsTimerRunning;
@@ -36,17 +39,30 @@ public class TimerActivity extends AppCompatActivity {
     private TextView mNextExerciseTxt;
     private TextView mNextExerciseTitleTxt;
 
+    /**
+     * stores milliseconds to seconds conversion
+     */
+    private static final int CONVERT_MILLIS = 1000;
+
+    /**
+     * stores interval between onTick calls in milliseconds
+     */
+    private static final long COUNT_DOWN_INTERVAL = 1000;
+
+    /**
+     * stores arrayList of exercises from workouts activity
+     */
     private ArrayList<Exercise> exerciseArrayList;
 
     /**
      * keep count of onTick calls for logging
      */
-    static int tickCount;
+    private static int tickCount;
 
     /**
      * keep count of onFinish calls to access correct WO array object
      */
-    static int finCount;
+    private static int finCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +90,7 @@ public class TimerActivity extends AppCompatActivity {
         mStartPauseBtn.setText(R.string.pause);
         //  workoutText.setText(workout.getName());
 
-        startCountdown(mDuration);
+        startCountdown(mDuration * CONVERT_MILLIS);
 
         // set on click listeners
         mBackBtn.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +130,7 @@ public class TimerActivity extends AppCompatActivity {
      */
 
     private void startCountdown(int mDuration) {
-        mTimer = new CountDownTimer(mDuration, 1000) {
+        mTimer = new CountDownTimer(mDuration, COUNT_DOWN_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
                 updateTimerTxt(millisUntilFinished);
@@ -131,7 +147,7 @@ public class TimerActivity extends AppCompatActivity {
 
                 // if there are still WO objs in array, start next CD
                 if (finCount < exerciseArrayList.size()) {
-                    startCountdown(exerciseArrayList.get(finCount).getDuration());
+                    startCountdown(exerciseArrayList.get(finCount).getDuration() * CONVERT_MILLIS);
                 } else {
                     mTimerValueTxt.setTextSize(70);
                     mTimerValueTxt.setText(R.string.workout_complete);

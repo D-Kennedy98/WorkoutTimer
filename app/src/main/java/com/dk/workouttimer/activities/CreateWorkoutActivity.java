@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.dk.workouttimer.App;
 import com.dk.workouttimer.R;
-import com.dk.workouttimer.activities.WorkoutsActivity;
 import com.dk.workouttimer.models.Exercise;
 import com.dk.workouttimer.models.Workout;
 
@@ -28,6 +28,31 @@ public class CreateWorkoutActivity extends AppCompatActivity {
      */
     private static final String TAG = "";
     private static int logCount = 0;
+
+
+    /**
+     * store exercise name to be passed into exercise constructor
+     */
+    private String mExerciseName;
+
+
+    /**
+     * store workout title to be passed into workout constructor
+     */
+    private String mWorkoutTitle;
+
+
+    // TODO: appropriate max lengths
+    /**
+     * store max length that of exercise name
+     */
+    private static final int MAX_WORKOUT_TITLE_LENGTH = 35;
+
+    /**
+     * store max length of workout title
+     */
+    private static final int MAX_EXERCISE_NAME_LENGTH = 30;
+
 
     /**
      * edit text elements for inputting workout title, exercise name and duration
@@ -49,7 +74,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_workout);
 
-
+        final App app = (App)getApplication();
 
         // btn to create WO objects using edit text values
         Button addExerciseBtn = findViewById(R.id.add_exercise_btn);
@@ -57,104 +82,131 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         // btn to navigate back to routines activity
         ImageView backBtn = findViewById(R.id.back_btn_cw);
 
+        // btn to save workout and navigate back to workouts activity
+        Button saveBtn = findViewById(R.id.save_btn);
+
         mWorkoutTitleInput = findViewById(R.id.workout_title_input);
         mNameInput = findViewById(R.id.name_input);
         mDurationInput = findViewById(R.id.duration_input);
 
-        //mExerciseArrayList = new ArrayList<>();
 
-        /* create new exercise object from edit text values and add to arrayList
+        /*
+         * create new exercise object from edit text values and add to arrayList
          * TODO: Error checking input, make sure it doesn't exceed max CDT value
          */
         addExerciseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mExerciseArrayList.add(new Exercise(getNameInput(), getDurationInput()));
-
-                // clear edit texts once exercise is added
-                mDurationInput.getText().clear();
-                mNameInput.getText().clear();
-
-                // display msg if exercise is successfully added
-                Context context = getApplicationContext();
-                int toastDuration = Toast.LENGTH_SHORT;
-                Toast woAddedToast = Toast.makeText(context, "Exercise Added", toastDuration);
-                woAddedToast.show();
-
-                // log objects being added to arrayList
-                logCount = mExerciseArrayList.size() - 1;
-                Log.i(TAG, String.valueOf(mExerciseArrayList.size()));
-                Log.i(TAG, mExerciseArrayList.get(logCount).getName() + " " + mExerciseArrayList.get(logCount).getDuration());
+                if (getNameInput()) {
+                    mExerciseArrayList.add(new Exercise(mExerciseName, getDurationInput()));
+                    mDurationInput.getText().clear();
+                    mNameInput.getText().clear();
+                }
             }
         });
 
-        // navigate back to routines with workout object as intent
-//        backBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                launchWorkoutsActivity(
-//                        new Workout(getWorkoutTitleInput(), calcTotalDuration(mExerciseArrayList),
-//                        mExerciseArrayList.size(), mExerciseArrayList)
-//                );
-//
-//            }
-//        });
+
+        /*
+         *  create workout object and add to database
+         *  then launch workouts activity
+         */
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getWorkoutTitleInput()) {
+                    Workout newWorkout = new Workout(
+                            mWorkoutTitle, calcTotalDuration(mExerciseArrayList),
+                            mExerciseArrayList.size(), mExerciseArrayList);
+
+                    app.workoutDao.clearTable(); // Clear table
+                    app.workoutDao.insertWorkout(newWorkout);
+
+                    launchWorkoutsActivity();
+                }
+            }
+        });
 
     }
+
 
     /**
      * get the workout title from the edit text for creating a workout object
      * @return the inputted workout title
      */
-    private String getWorkoutTitleInput() {
-        return mWorkoutTitleInput.getText().toString();
+    private Boolean getWorkoutTitleInput() {
+        String title = mWorkoutTitleInput.getText().toString();
+        Context contextWO = getApplicationContext();
+
+        if (title.equals("")) {
+            Toast titleToast = Toast.makeText(contextWO, "Enter a workout title! (Max 35 characters)", Toast.LENGTH_SHORT);
+            titleToast.show();
+            return false;
+        } else if (title.length() > MAX_WORKOUT_TITLE_LENGTH) {
+            Toast nameToast = Toast.makeText(contextWO, "Workout title must not exceed 35 characters", Toast.LENGTH_SHORT);
+            nameToast.show();
+            return false;
+        } else {
+            mWorkoutTitle = title;
+            return true;
+        }
     }
 
+
     /**
-     * gets the exercise name from edit text for creating a exercise object
-     * @return the inputted exercise name
+     * get the exercise name from edit text and
+     * check its a valid string (not empty or exceeding 35 chars)
+     * @return true if string checks pass / false if string checks fail
      */
-    private String getNameInput() {
-        return mNameInput.getText().toString();
+    private Boolean getNameInput() {
+        String name = mNameInput.getText().toString();
+        Context contextEx = getApplicationContext();
+
+        if (name.equals("")) {
+            Toast nameToast = Toast.makeText(contextEx, "Enter an exercise name! (Max 30 characters)", Toast.LENGTH_SHORT);
+            nameToast.show();
+            return false;
+        } else if (name.length() > MAX_EXERCISE_NAME_LENGTH) {
+            Toast nameToast = Toast.makeText(contextEx, "Exercise name must not exceed 30 characters", Toast.LENGTH_SHORT);
+            nameToast.show();
+            return false;
+        } else {
+            mExerciseName = name;
+            return true;
+        }
     }
 
 
     /**
-     * gets the duration that the exercise will last for from edit text for creating a exercise object
+     * get the duration that the exercise will last for from edit text for creating a exercise object
      * @return the inputted duration for the workout
      */
     private int getDurationInput() {
+        if (mDurationInput.getText() == null) {
+            Log.i("Duration", "duration");
+            Context context = getApplicationContext();
+            Toast nameToast = Toast.makeText(context, "Enter a duration", Toast.LENGTH_SHORT);
+            nameToast.show();
+        }
+
         return parseInt(String.valueOf(mDurationInput.getText()));
     }
 
-//    /**
-//     * launch timer activity and pass the exercise arrayList as intent
-//     * TODO: will go to routines before timer when storage is implemented
-//     * @param workoutArrayList stores the workout
-//     */
-//    private void launchTimerActivity(ArrayList<Workout> workoutArrayList) {
-//        Intent intent = new Intent(this, TimerActivity.class);
-//        intent.putExtra("workoutArrayList", workoutArrayList);
-//        startActivity(intent);
-//
-//    }
 
     /**
-     * launch workouts activity and pass workout object as intent
-     * @param workout stores the workout data
+     * launch workouts activity after workout has been saved
      */
-    private void launchWorkoutsActivity(Workout workout) {
+    private void launchWorkoutsActivity() {
         Intent intent = new Intent(this, WorkoutsActivity.class);
-        intent.putExtra("workout", workout);
         startActivity(intent);
     }
+
 
     /**
      * calculate total duration of all exercises in the workout
      * @param exerciseArrayList stores the exercise objects which will be assigned to workout field
      * @return total duration of all exercises in workout
      */
-    int calcTotalDuration(ArrayList<Exercise> exerciseArrayList) {
+    private int calcTotalDuration(ArrayList<Exercise> exerciseArrayList) {
         int totalDuration = 0;
 
         for(int i = 0; i < exerciseArrayList.size(); i++) {
@@ -163,7 +215,5 @@ public class CreateWorkoutActivity extends AppCompatActivity {
 
         return totalDuration;
     }
-
-
 
 }

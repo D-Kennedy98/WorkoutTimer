@@ -19,7 +19,7 @@ import androidx.room.TypeConverter;
 public class Converter {
 
     /**
-     * convert List<Exercise> to string for com.dk.workouttimer.database storage
+     * Convert List<Exercise> to string for database storage.
      * @param exerciseList exercises objects for conversion
      * @return string form of List<Exercise>
      */
@@ -36,7 +36,7 @@ public class Converter {
     }
 
     /**
-     * convert string back to List<Exercise> when retrieving from com.dk.workouttimer.database
+     * Convert string back to List<Exercise> when retrieving from database.
      * @param exercisesString string form of List<Exercise> to be converted back
      * @return original List<Exercise> that was stored in com.dk.workouttimer.database
      */

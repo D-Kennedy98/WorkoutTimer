@@ -28,12 +28,12 @@ public abstract class AppDatabase extends RoomDatabase {
     private static final String NAME = "workout-DB";
 
     /**
-     * Default constructor.
+     * default constructor.
      */
     AppDatabase(){}
 
     /**
-     * get instance of the created com.dk.workouttimer.database
+     * Get instance of the created com.dk.workouttimer.database.
      * @param context current state of application
      * @return AppDatabase instance
      * TODO: change so it doesn't run on main thread

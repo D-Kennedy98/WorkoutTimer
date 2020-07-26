@@ -32,7 +32,7 @@ public class TimerActivity extends AppCompatActivity {
     private Button mStartPauseBtn;
     private boolean mIsTimerRunning;
     private CountDownTimer mTimer;
-    private int mDuration;
+    private long mDuration;
 
     private TextView mTimerValueTxt;
     private TextView mCurrentExerciseTxt;
@@ -125,11 +125,11 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     /**
-     *  create count down timer
+     *  Create count down timer.
      *  TODO: Fix delay before starting after first time causes time to jump, could add name of exercise?
      */
 
-    private void startCountdown(int mDuration) {
+    private void startCountdown(long mDuration) {
         mTimer = new CountDownTimer(mDuration, COUNT_DOWN_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -168,7 +168,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     /**
-     * format time to mm:ss and set value of timer
+     * Format time to mm:ss and set value of timer.
      */
     private void updateTimerTxt(long timeRemaining) {
         int mins = (int) (timeRemaining / 1000) / 60;
@@ -178,7 +178,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     /**
-     * update the textView to display the current exercise
+     * Update the textView to display the current exercise.
      */
     private void updateCurrentExerciseTxt() {
         if (finCount < exerciseArrayList.size()) {
@@ -188,7 +188,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     /**
-     * update the textView to display upcoming exercise
+     * Update the textView to display upcoming exercise.
      */
     private void updateNextExerciseTxt() {
         int arrayIndex = finCount + 1;

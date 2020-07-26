@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.dk.workouttimer.R;
-import com.dk.workouttimer.activities.WorkoutsActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -55,9 +55,10 @@
     <string name="workout_title">Workout Title</string>
     <string name="exercise_duration">exercise duration</string>
     <string name="exercise_name">exercise name</string>
-    <string name="duration">Duration %d</string>
+    <string name="duration_x">Duration %d</string>
     <string name="number_of_exercises">No. exercises</string>
     <string name="save_workout">Save Workout</string>
+    <string name="duration">Duration</string>
 
 
 </resources>

@@ -10,17 +10,17 @@ import android.os.Parcel;
 
 public class Exercise implements Parcelable {
     private String mName;
-    private int mDuration;
+    private long mDuration;
 
-    public Exercise(String mName, int mDuration) {
+    public Exercise(String mName, long mDuration) {
         this.mName = mName;
-        this.mDuration = mDuration * 1000;
+        this.mDuration = mDuration;
     }
 
     // implements parcelable so that exercise objects can be passed as intent
     private Exercise(Parcel in) {
         mName = in.readString();
-        mDuration = in.readInt();
+        mDuration = in.readLong();
     }
 
     public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {
@@ -43,14 +43,14 @@ public class Exercise implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mName);
-        dest.writeInt(mDuration);
+        dest.writeLong(mDuration);
     }
 
     public String getName() {
         return mName;
     }
 
-    public int getDuration() {
+    public long getDuration() {
         return mDuration;
     }
 

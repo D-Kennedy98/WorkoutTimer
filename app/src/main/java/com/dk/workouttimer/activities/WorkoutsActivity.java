@@ -1,13 +1,12 @@
 /*
-Author: Dominic Kennedy 160304243
-Purpose: Implements home screen where users choose a workout
-*/
+ * Author: Dominic Kennedy
+ * Purpose: Implements home screen where users choose a workout
+ */
 
 package com.dk.workouttimer.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,7 +57,7 @@ public class WorkoutsActivity extends AppCompatActivity {
 
         // database operations
         final App app = (App)getApplication();
-       // app.workoutDao.clearTable();
+//        app.workoutDao.clearTable();
 
         app.workoutDao.insertWorkout(workout1);
         app.workoutDao.insertWorkout(workout2);
@@ -67,13 +66,15 @@ public class WorkoutsActivity extends AppCompatActivity {
         mWorkoutArrayList = (ArrayList<Workout>) app.workoutDao.loadAllWorkouts();
 
         // log retried workouts and their associated exercises
-        for (int i = 0; i < mWorkoutArrayList.size(); i++) {
-            Log.i("workout", mWorkoutArrayList.get(i).getTitle());
-
-            for (int j = 0; j < mWorkoutArrayList.get(i).getExerciseList().size(); j++) {
-                Log.i("Exercise", mWorkoutArrayList.get(i).getExerciseList().get(j).getName());
-            }
-        }
+//        for (int i = 0; i < mWorkoutArrayList.size(); i++) {
+//            Log.i("workout", mWorkoutArrayList.get(i).getTitle());
+//
+//            for (int j = 0; j < mWorkoutArrayList.get(i).getExerciseList().size(); j++) {
+//                Log.i("Exercise", mWorkoutArrayList.get(i).getExerciseList().get(j).getName());
+//                Log.i("Duration", String.valueOf(mWorkoutArrayList.get(i).getExerciseList().get(j).getDuration()));
+//
+//            }
+//        }
 
         setViews();
 
@@ -88,7 +89,7 @@ public class WorkoutsActivity extends AppCompatActivity {
     }
 
     /**
-     * set up UI views
+     * Set up UI views.
      * TODO: Refactor
      */
     private void setViews() {
@@ -100,7 +101,8 @@ public class WorkoutsActivity extends AppCompatActivity {
         // set the recycler view
         RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, mWorkoutArrayList);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(
+                this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(recyclerAdapter);
 
@@ -115,20 +117,20 @@ public class WorkoutsActivity extends AppCompatActivity {
     }
 
     /**
-     * launch timer for the workout chosen on recycler view
+     * Launch timer for the workout chosen on recycler view.
      */
     private View.OnClickListener onItemClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) view.getTag();
             Workout workout = mWorkoutArrayList.get(holder.getAdapterPosition());
-            Log.i("Workout Clicked RV", workout.getTitle());
+           // Log.i("Workout Clicked RV", workout.getTitle());
             launchTimerActivity((ArrayList<Exercise>) workout.getExerciseList());
         }
     };
 
     /**
-     * launch timer activity to time chosen workout
+     * Launch timer activity to time chosen workout.
      * @param exerciseArrayList stores exercise data to pass to CDT
      */
     private void launchTimerActivity(ArrayList<Exercise> exerciseArrayList) {
@@ -138,7 +140,7 @@ public class WorkoutsActivity extends AppCompatActivity {
     }
 
     /**
-     * launch information activity which contains info about the app
+     * Launch information activity which contains info about the app.
      */
     public void launchInformationActivity() {
         Intent intent = new Intent(this, InformationActivity.class);
@@ -146,7 +148,7 @@ public class WorkoutsActivity extends AppCompatActivity {
     }
 
     /**
-     * launch createWorkout activity to create new workout routines
+     * Launch createWorkout activity to create new workout routines.
      */
     public void launchCreateWorkoutActivity() {
         Intent intent = new Intent(this, CreateWorkoutActivity.class);

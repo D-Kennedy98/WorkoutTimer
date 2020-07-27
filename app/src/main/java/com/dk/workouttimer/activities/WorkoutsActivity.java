@@ -23,16 +23,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class WorkoutsActivity extends AppCompatActivity {
+public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapter.OnWorkoutListener {
 
+    /**
+     * Default data.
+     */
     private ArrayList<Exercise> mExerciseList1 = new ArrayList<>();
     private ArrayList<Exercise> mExerciseList2 = new ArrayList<>();
 
     /**
-     * stores workouts retrieved from db
+     * Stores workouts retrieved from db.
      */
     private ArrayList<Workout> mWorkoutArrayList = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,14 @@ public class WorkoutsActivity extends AppCompatActivity {
             }
         });
 
+        ImageView infoBtn = findViewById(R.id.info_btn);
+        infoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchInformationActivity();
+            }
+        });
+
     }
 
     /**
@@ -94,43 +104,20 @@ public class WorkoutsActivity extends AppCompatActivity {
      */
     private void setViews() {
 
-        // init views
+        // initialise recycler view
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        ImageView infoBtn = findViewById(R.id.info_btn);
-
         // set the recycler view
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, mWorkoutArrayList);
-
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, mWorkoutArrayList, this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(
                 this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(recyclerAdapter);
 
-        // set on click listener
-        recyclerAdapter.setOnItemClickListener(onItemClickListener);
-        infoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchInformationActivity();
-            }
-        });
     }
 
     /**
-     * Launch timer for the workout chosen on recycler view.
-     */
-    private View.OnClickListener onItemClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) view.getTag();
-            Workout workout = mWorkoutArrayList.get(holder.getAdapterPosition());
-           // Log.i("Workout Clicked RV", workout.getTitle());
-            launchTimerActivity((ArrayList<Exercise>) workout.getExerciseList());
-        }
-    };
-
-    /**
      * Launch timer activity to time chosen workout.
+     *
      * @param exerciseArrayList stores exercise data to pass to CDT
      */
     private void launchTimerActivity(ArrayList<Exercise> exerciseArrayList) {
@@ -153,6 +140,17 @@ public class WorkoutsActivity extends AppCompatActivity {
     public void launchCreateWorkoutActivity() {
         Intent intent = new Intent(this, CreateWorkoutActivity.class);
         startActivity(intent);
+    }
+
+    /**
+     * Launch timer for the workout chosen on recycler view
+     *
+     * @param position position chosen on recycler view used to index workout list.
+     */
+    @Override
+    public void onWorkoutClick(int position) {
+        Workout chosenWorkout = mWorkoutArrayList.get(position);
+        launchTimerActivity((ArrayList<Exercise>) chosenWorkout.getExerciseList());
     }
 
 }

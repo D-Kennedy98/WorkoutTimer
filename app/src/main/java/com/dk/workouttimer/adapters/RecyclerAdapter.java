@@ -1,6 +1,6 @@
 /*
- Author: Dominic Kennedy
- Purpose: creates view holders and binds workout data to them
+ * Author: Dominic Kennedy
+ * Purpose: Allows workout objects to be displayed as a list.
  */
 
 package com.dk.workouttimer.adapters;
@@ -22,65 +22,105 @@ import java.util.Locale;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    //private ArrayList<Exercise> mExerciseList;
+    /**
+     * Data set binded to adapter view holders.
+     */
     private ArrayList<Workout> mWorkoutArrayList;
-    private LayoutInflater layoutInflater;
-    private View.OnClickListener mOnItemClickListener;
 
-    public RecyclerAdapter(Context context, ArrayList<Workout> mWorkoutArrayList) {
-        this.mWorkoutArrayList = mWorkoutArrayList;
+    /**
+     * Instantiates layout XML files to corresponding view objects.
+     */
+    private LayoutInflater layoutInflater;
+
+    /**
+     * OnWorkoutListener interface.
+     */
+    private OnWorkoutListener mWorkoutListener;
+
+    /**
+     * Recycler Adaptor constructor.
+     *
+     * @param context current state of app
+     * @param workoutArrayList data set containing workout data to be bound to view holders
+     * @param workoutListener allows any object that implements OnWorkoutListener interface to be passed
+     */
+    public RecyclerAdapter(Context context, ArrayList<Workout> workoutArrayList, OnWorkoutListener workoutListener) {
+        this.mWorkoutArrayList = workoutArrayList;
         this.layoutInflater = LayoutInflater.from(context);
+        this.mWorkoutListener = workoutListener;
     }
 
+    /**
+     * Inflates the grid view and creates view holders which are updated to represent item views.
+     * Called as user scrolls when a new item needs to be visible.
+     *
+     * @param parent view group that new view will be added to after binding to adapter
+     * @param viewType view type of new view
+     * @return view holder representing contents of workout item in arrayList
+     */
     @NonNull
     @Override
     public RecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.workout_grid_layout, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mWorkoutListener);
     }
 
-    @Override // bind data to views
+    /**
+     * Binds workout data from arrayList to view holders.
+     *
+     * @param holder view holder
+     * @param position index of array list
+     */
+    @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
-       // Exercise exercise = mExerciseList.get(position);
-        //holder.exerciseTxt.setText(exercise.getName());
-
         Workout workout = mWorkoutArrayList.get(position);
         holder.workoutTitle.setText(workout.getTitle());
         holder.duration.setText(String.format(Locale.getDefault(),
                 "Duration: %d", workout.getTotalDuration()));
         holder.numberExercises.setText(String.format(Locale.getDefault(),
                 "No. of exercises: %d", workout.getNoExercises()));
-
     }
 
+    /**
+     * Get number of items in adaptor arrayList.
+     *
+     * @return number of items adaptor arrayList.
+     */
     @Override
     public int getItemCount() {
         return mWorkoutArrayList.size();
     }
 
-    // set view listener
-    public void setOnItemClickListener(View.OnClickListener itemClickListener) {
-        mOnItemClickListener = itemClickListener;
-    }
+    /**
+     * Represents contents of item in data set. Holders are recycled as user scrolls.
+     */
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView workoutTitle, duration, numberExercises;
+        OnWorkoutListener workoutListener;
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        TextView workoutTitle;
-        TextView duration;
-        TextView numberExercises;
-        //ImageView exerciseIcon;
-        ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView, OnWorkoutListener workoutListener) {
             super(itemView);
             workoutTitle = itemView.findViewById(R.id.workout_txt);
             duration = itemView.findViewById(R.id.workout_duration_txt);
             numberExercises = itemView.findViewById(R.id.number_exercises_txt);
+            this.workoutListener = workoutListener;
 
-
-            //exerciseIcon = itemView.findViewById(R.id.workout_img);
-
-            // for recycler onItemClick
-            itemView.setTag(this);
-            itemView.setOnClickListener(mOnItemClickListener);
+            // this refers to onClickListener interface
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            workoutListener.onWorkoutClick(getAdapterPosition());
+        }
+    }
+
+    /*
+     * Interface to detect recycler view click and pass position of clicked item
+     * to WO activity.
+     */
+    public interface OnWorkoutListener{
+        void onWorkoutClick(int position);
     }
 
 }

@@ -1,6 +1,6 @@
 /*
- * Author: Dominic Kennedy
- * Purpose: Allows workout objects to be displayed as a list.
+ Author: Dominic Kennedy
+ Purpose: creates view holders and binds workout data to them
  */
 
 package com.dk.workouttimer.adapters;
@@ -9,6 +9,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.dk.workouttimer.R;
@@ -23,7 +24,7 @@ import java.util.Locale;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     /**
-     * Data set binded to adapter view holders.
+     * Data set binded to adapter.
      */
     private ArrayList<Workout> mWorkoutArrayList;
 
@@ -39,8 +40,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     /**
      * Recycler Adaptor constructor.
-     *
-     * @param context current state of app
+     *  @param context current state of app
      * @param workoutArrayList data set containing workout data to be bound to view holders
      * @param workoutListener allows any object that implements OnWorkoutListener interface to be passed
      */
@@ -56,7 +56,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      *
      * @param parent view group that new view will be added to after binding to adapter
      * @param viewType view type of new view
-     * @return view holder representing contents of workout item in arrayList
+     * @return view holder representing contents of workout item in the data set
      */
     @NonNull
     @Override
@@ -66,10 +66,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     /**
-     * Binds workout data from arrayList to view holders.
+     * Binds workout data from array list to view holders.
      *
      * @param holder view holder
-     * @param position index of array list
+     * @param position position of view holder
      */
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
@@ -82,9 +82,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     /**
-     * Get number of items in adaptor arrayList.
+     * Get number of items in adaptor data set.
      *
-     * @return number of items adaptor arrayList.
+     * @return number of items adaptor data set
      */
     @Override
     public int getItemCount() {
@@ -92,11 +92,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     /**
-     * Represents contents of item in data set. Holders are recycled as user scrolls.
+     * Represents contents of item in data set. Holders are recycled as user scrolls and
+     * new items become visible.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView workoutTitle, duration, numberExercises;
         OnWorkoutListener workoutListener;
+
+        Button deleteBtn;
 
         ViewHolder(@NonNull View itemView, OnWorkoutListener workoutListener) {
             super(itemView);
@@ -105,22 +108,48 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             numberExercises = itemView.findViewById(R.id.number_exercises_txt);
             this.workoutListener = workoutListener;
 
+            deleteBtn = itemView.findViewById(R.id.delete_btn);
+
             // this refers to onClickListener interface
-            itemView.setOnClickListener(this);
+            workoutTitle.setOnClickListener(this);
+            deleteBtn.setOnClickListener(this);
         }
 
+        /**
+         * Gets position of item in adapter when clicked.
+         * @param v view
+         */
         @Override
         public void onClick(View v) {
-            workoutListener.onWorkoutClick(getAdapterPosition());
+            // check which view is clicked
+           if(deleteBtn.isPressed()) {
+               workoutListener.onDeleteClick(getAdapterPosition());
+           } else if (workoutTitle.isPressed()){
+               workoutListener.onStartTimerClick(getAdapterPosition());
+           }
         }
     }
 
     /*
-     * Interface to detect recycler view click and pass position of clicked item
-     * to WO activity.
+     * Interface to detect recycler view click
+     * and pass position of clicked item to WO activity.
+     * TODO: Separate file?
      */
-    public interface OnWorkoutListener{
-        void onWorkoutClick(int position);
+    public interface OnWorkoutListener {
+
+        /**
+         * Detect click on *** and pass chosen view holder position to WO activity.
+         *
+         * @param position position of view holder where *** is clicked
+         */
+        void onStartTimerClick(int position);
+
+        /**
+         * Detect click on delete button and pass chosen view holder position to WO activity.
+         *
+         * @param position position of view holder where delete button is clicked
+         */
+        void onDeleteClick(int position);
     }
 
 }

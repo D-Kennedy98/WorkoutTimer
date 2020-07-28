@@ -11,8 +11,8 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view"
-        android:layout_width="142dp"
-        android:layout_height="142dp"
+        android:layout_width="175dp"
+        android:layout_height="150dp"
         android:background="@color/snow"
         android:padding="2dp"
         app:cardCornerRadius="15sp"
@@ -44,6 +44,7 @@
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/workout_icon"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/workout_txt"
                 app:srcCompat="@drawable/ic_press_up" />
@@ -53,12 +54,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
                 android:text="@string/duration_x"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.183"
+                app:layout_constraintHorizontal_bias="0.178"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/workout_img" />
 
@@ -67,43 +67,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
                 android:text="@string/number_of_exercises"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.29"
+                app:layout_constraintHorizontal_bias="0.206"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/workout_duration_txt" />
+
+            <Button
+                android:id="@+id/delete_btn"
+                android:layout_width="49dp"
+                android:layout_height="28dp"
+                android:layout_marginBottom="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.126"
+                app:layout_constraintStart_toStartOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:gravity="center"-->
-        <!--            android:orientation="vertical"-->
-        <!--            tools:ignore="UseCompoundDrawables">-->
-
-        <!--            <ImageView-->
-        <!--                android:id="@+id/workout_img"-->
-        <!--                android:layout_width="94dp"-->
-        <!--                android:layout_height="67dp"-->
-        <!--                android:layout_gravity="center_horizontal"-->
-        <!--                android:contentDescription="@string/workout_icon"-->
-        <!--                app:srcCompat="@drawable/ic_press_up" />-->
-
-        <!--            <TextView-->
-        <!--                android:id="@+id/workout_txt"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_gravity="center_horizontal"-->
-        <!--                android:text="@string/press_ups"-->
-        <!--                android:textColor="@color/black"-->
-        <!--                android:textSize="20sp" />-->
-
-        <!--        </LinearLayout>-->
 
     </com.google.android.material.card.MaterialCardView>
 

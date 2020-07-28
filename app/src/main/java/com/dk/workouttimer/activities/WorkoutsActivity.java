@@ -7,6 +7,7 @@ package com.dk.workouttimer.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,6 +37,8 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
      */
     private ArrayList<Workout> mWorkoutArrayList = new ArrayList<>();
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,9 +61,8 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
         Workout workout3 = new Workout("Workout 3", 5, 1, mExerciseList2);
 
         // database operations
-        final App app = (App)getApplication();
 //        app.workoutDao.clearTable();
-
+        App app = (App)getApplication();
         app.workoutDao.insertWorkout(workout1);
         app.workoutDao.insertWorkout(workout2);
         app.workoutDao.insertWorkout(workout3);
@@ -112,7 +114,6 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
                 this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(recyclerAdapter);
-
     }
 
     /**
@@ -142,15 +143,30 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
         startActivity(intent);
     }
 
+
     /**
-     * Launch timer for the workout chosen on recycler view
+     * Start timer activity for chosen workout.
      *
-     * @param position position chosen on recycler view used to index workout list.
+     * @param position position of view holder chosen on recycler view in index workout array list.
      */
     @Override
-    public void onWorkoutClick(int position) {
+    public void onStartTimerClick(int position) {
+        Log.i("On StartTimer", "Click");
         Workout chosenWorkout = mWorkoutArrayList.get(position);
         launchTimerActivity((ArrayList<Exercise>) chosenWorkout.getExerciseList());
+    }
+
+    /**
+     * Delete chosen workout.
+     *
+     * @param position position of view holder chosen on recycler view to index workout array list.
+     */
+    @Override
+    public void onDeleteClick(int position) {
+        Log.i("On Delete", "Click");
+
+       // Workout chosenWorkout = mWorkoutArrayList.get(position);
+
     }
 
 }

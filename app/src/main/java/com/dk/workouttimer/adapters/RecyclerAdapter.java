@@ -40,7 +40,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     /**
      * Recycler Adaptor constructor.
-     *  @param context current state of app
+     *
+     * @param context current state of app
      * @param workoutArrayList data set containing workout data to be bound to view holders
      * @param workoutListener allows any object that implements OnWorkoutListener interface to be passed
      */

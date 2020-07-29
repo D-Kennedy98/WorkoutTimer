@@ -104,7 +104,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         addExerciseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getNameInput() && durationInputCheck(mExerciseDuration)) {
+                if (isValidNameInput() && isDurationInputted(mExerciseDuration)) {
                     mExerciseArrayList.add(new Exercise(mExerciseName, mExerciseDuration));
                     Context context = getApplicationContext();
                     Toast addToast = Toast.makeText(context, "Exercise added", Toast.LENGTH_SHORT);
@@ -117,18 +117,17 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         });
 
         /*
-         * Create workout object and add to database then launch workouts activity.
-         * TODO: Check array list is not empty
+         * Create workout object and add to database then launch workouts activity
+         * if title input and exercise ArrayList checks pass.
          */
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getWorkoutTitleInput()) {
+                if (isValidWorkoutTitleInput() && isValidExerciseArray()) {
                     Workout newWorkout = new Workout(
                             mWorkoutTitle, (int) calcTotalDuration(mExerciseArrayList),
                             mExerciseArrayList.size(), mExerciseArrayList);
 
-                    //app.workoutDao.clearTable(); // Clear table
                     app.workoutDao.insertWorkout(newWorkout);
                     launchWorkoutsActivity();
                 }
@@ -149,19 +148,26 @@ public class CreateWorkoutActivity extends AppCompatActivity {
 
     }
 
+//    public void initViews() {
+//
+//    }
+
     /**
      * Get the workout title from the edit text for creating a workout object.
+     * //TODO: Refactor to 2 methods
+     *
      * @return the inputted workout title
      */
-    private Boolean getWorkoutTitleInput() {
+    private Boolean isValidWorkoutTitleInput() {
         String title = mWorkoutTitleInput.getText().toString();
-        Context contextWO = getApplicationContext();
 
         if (title.equals("")) {
+            Context contextWO = getApplicationContext();
             Toast titleToast = Toast.makeText(contextWO, "Enter a workout title! (Max 35 characters)", Toast.LENGTH_SHORT);
             titleToast.show();
             return false;
         } else if (title.length() > MAX_WORKOUT_TITLE_LENGTH) {
+            Context contextWO = getApplicationContext();
             Toast nameToast = Toast.makeText(contextWO, "Workout title must not exceed 35 characters", Toast.LENGTH_SHORT);
             nameToast.show();
             return false;
@@ -172,19 +178,40 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     }
 
     /**
+     * Check exercise array list is not empty.
+     *
+     * @return true if not empty | false if empty
+     */
+    private Boolean isValidExerciseArray() {
+        if (mExerciseArrayList.size() != 0) {
+            return true;
+        } else {
+            Context contextExArray = getApplicationContext();
+            Toast ExArrayToast = Toast.makeText(contextExArray, "Workout must contain at least 1 exercise!", Toast.LENGTH_SHORT);
+            ExArrayToast.show();
+            return false;
+        }
+
+    }
+
+
+    /**
      * Get the exercise name from edit text and
      * check its a valid string (not empty or exceeding 35 chars).
-     * @return true if string checks pass / false if string checks fail
+     * // TODO: Refactor into two methods
+     *
+     * @return true if string checks pass | false if string checks fail
      */
-    private Boolean getNameInput() {
+    private Boolean isValidNameInput() {
         String name = mNameInput.getText().toString();
-        Context contextEx = getApplicationContext();
 
         if (name.equals("")) {
+            Context contextEx = getApplicationContext();
             Toast nameToast = Toast.makeText(contextEx, "Enter an exercise name! (Max 30 characters)", Toast.LENGTH_SHORT);
             nameToast.show();
             return false;
         } else if (name.length() > MAX_EXERCISE_NAME_LENGTH) {
+            Context contextEx = getApplicationContext();
             Toast nameToast = Toast.makeText(contextEx, "Exercise name must not exceed 30 characters", Toast.LENGTH_SHORT);
             nameToast.show();
             return false;
@@ -204,6 +231,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
 
     /**
      * Calculate total duration of all exercises in the workout.
+     *
      * @param exerciseArrayList stores the exercise objects which will be assigned to workout field
      * @return total duration of all exercises in workout
      */
@@ -221,6 +249,8 @@ public class CreateWorkoutActivity extends AppCompatActivity {
      * Show dialogFragment to allow exercise duration to be inputted.
      * Update mExerciseDuration with inputted value.
      * Implements DurationListener to retrieve duration from dialogFragment.
+     *
+     * TODO: Look at depreciated tags
      */
     private void showDurationFragment() {
         DurationDialogFragment durationDialogFragment = new DurationDialogFragment();
@@ -236,10 +266,11 @@ public class CreateWorkoutActivity extends AppCompatActivity {
 
     /**
      * Check that a duration has been inputted before creating exercise object.
+     *
      * @param inputtedDuration user inputted duration from dialogFragment
-     * @return true if a duration has been entered / false if duration is empty
+     * @return true if a duration has been entered | false if duration is empty
      */
-    private boolean durationInputCheck(long inputtedDuration) {
+    private boolean isDurationInputted(long inputtedDuration) {
         if (inputtedDuration == 0) {
             Context context = getApplicationContext();
             Toast dialogToast = Toast.makeText(context, "Enter a duration", Toast.LENGTH_SHORT);

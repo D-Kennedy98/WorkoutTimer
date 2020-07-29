@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.dk.workouttimer.App;
 import com.dk.workouttimer.R;
 import com.dk.workouttimer.adapters.RecyclerAdapter;
-import com.dk.workouttimer.models.Exercise;
 import com.dk.workouttimer.models.Workout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,16 +26,14 @@ import java.util.ArrayList;
 public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapter.OnWorkoutListener {
 
     /**
-     * Default data.
-     */
-    private ArrayList<Exercise> mExerciseList1 = new ArrayList<>();
-    private ArrayList<Exercise> mExerciseList2 = new ArrayList<>();
-
-    /**
      * Stores workouts retrieved from db.
      */
     private ArrayList<Workout> mWorkoutArrayList = new ArrayList<>();
 
+    /**
+     * Recycler adapter to bind workout data set to recycler view
+     */
+    RecyclerAdapter recyclerAdapter;
 
 
     @Override
@@ -44,59 +41,11 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workouts);
 
-        // create data
-        Exercise e1 = new Exercise("e1", 7);
-        Exercise e2 = new Exercise("e2", 5);
-        Exercise e3 = new Exercise("e3", 10);
-        Exercise e4 = new Exercise("e4", 4);
-
-        mExerciseList1.add(e1);
-        mExerciseList1.add(e2);
-        mExerciseList1.add(e3);
-        mExerciseList2.add(e3);
-        mExerciseList2.add(e4);
-
-        Workout workout1 = new Workout("Workout 1", 10, 10, mExerciseList1);
-        Workout workout2 = new Workout("Workout 2", 15, 30, mExerciseList2);
-        Workout workout3 = new Workout("Workout 3", 5, 1, mExerciseList2);
-
-        // database operations
-//        app.workoutDao.clearTable();
-        App app = (App)getApplication();
-        app.workoutDao.insertWorkout(workout1);
-        app.workoutDao.insertWorkout(workout2);
-        app.workoutDao.insertWorkout(workout3);
-
-        mWorkoutArrayList = (ArrayList<Workout>) app.workoutDao.loadAllWorkouts();
-
-        // log retried workouts and their associated exercises
-//        for (int i = 0; i < mWorkoutArrayList.size(); i++) {
-//            Log.i("workout", mWorkoutArrayList.get(i).getTitle());
-//
-//            for (int j = 0; j < mWorkoutArrayList.get(i).getExerciseList().size(); j++) {
-//                Log.i("Exercise", mWorkoutArrayList.get(i).getExerciseList().get(j).getName());
-//                Log.i("Duration", String.valueOf(mWorkoutArrayList.get(i).getExerciseList().get(j).getDuration()));
-//
-//            }
-//        }
-
         setViews();
 
-        TextView workouts = findViewById(R.id.workout_title);
-        workouts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchCreateWorkoutActivity();
-            }
-        });
+        setWorkoutOnClick();
 
-        ImageView infoBtn = findViewById(R.id.info_btn);
-        infoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchInformationActivity();
-            }
-        });
+        setInfoOnClick();
 
     }
 
@@ -105,11 +54,16 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
      * TODO: Refactor
      */
     private void setViews() {
+        // load workouts from database and add to array list
+        App app = (App)getApplication();
+        mWorkoutArrayList = (ArrayList<Workout>) app.workoutDao.loadAllWorkouts();
 
         // initialise recycler view
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
         // set the recycler view
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, mWorkoutArrayList, this);
+        recyclerAdapter = new RecyclerAdapter(
+                this, mWorkoutArrayList, this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(
                 this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -117,13 +71,43 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
     }
 
     /**
-     * Launch timer activity to time chosen workout.
-     *
-     * @param exerciseArrayList stores exercise data to pass to CDT
+     * Set onClickListener for information button.
      */
-    private void launchTimerActivity(ArrayList<Exercise> exerciseArrayList) {
+    public void setInfoOnClick() {
+        ImageView infoBtn = findViewById(R.id.info_btn);
+
+        // Launch information activity.
+        infoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchInformationActivity();
+            }
+        });
+    }
+
+    /**
+     * Set onClickListener ****
+     * TODO: Create create btn
+     */
+    public void setWorkoutOnClick() {
+        TextView workouts = findViewById(R.id.workout_title);
+
+        workouts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchCreateWorkoutActivity();
+            }
+        });
+    }
+
+    /**
+     * Launch timer activity for chosen workout.
+     *
+     * @param chosenWorkout workout object containing exercises information
+     */
+    private void launchTimerActivity(Workout chosenWorkout) {
         Intent intent = new Intent(this, TimerActivity.class);
-        intent.putParcelableArrayListExtra("exerciseArrayList", exerciseArrayList);
+        intent.putExtra("workout", chosenWorkout);
         startActivity(intent);
     }
 
@@ -143,7 +127,6 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
         startActivity(intent);
     }
 
-
     /**
      * Start timer activity for chosen workout.
      *
@@ -153,7 +136,8 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
     public void onStartTimerClick(int position) {
         Log.i("On StartTimer", "Click");
         Workout chosenWorkout = mWorkoutArrayList.get(position);
-        launchTimerActivity((ArrayList<Exercise>) chosenWorkout.getExerciseList());
+        launchTimerActivity(chosenWorkout);
+        //launchTimerActivity((ArrayList<Exercise>) chosenWorkout.getExerciseList());
     }
 
     /**
@@ -163,10 +147,15 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
      */
     @Override
     public void onDeleteClick(int position) {
-        Log.i("On Delete", "Click");
+        Workout chosenWorkout = mWorkoutArrayList.get(position);
 
-       // Workout chosenWorkout = mWorkoutArrayList.get(position);
+        // remove from database
+        App app = (App)getApplication();
+        app.workoutDao.deleteWorkout(chosenWorkout);
 
+        // remove from array list
+        mWorkoutArrayList.remove(position);
+        recyclerAdapter.notifyItemRemoved(position);
     }
 
 }

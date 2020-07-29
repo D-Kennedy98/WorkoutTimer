@@ -12,7 +12,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view"
         android:layout_width="175dp"
-        android:layout_height="150dp"
+        android:layout_height="155dp"
         android:background="@color/snow"
         android:padding="2dp"
         app:cardCornerRadius="15sp"
@@ -77,12 +77,14 @@
 
             <Button
                 android:id="@+id/delete_btn"
-                android:layout_width="49dp"
-                android:layout_height="28dp"
-                android:layout_marginBottom="4dp"
+                android:layout_width="78dp"
+                android:layout_height="37dp"
+                android:text="@string/delete"
+                android:textAllCaps="false"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.126"
+                app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent" />
 
 

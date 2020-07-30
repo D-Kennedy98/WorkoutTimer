@@ -6,7 +6,8 @@
 package com.dk.workouttimer.activities;
 
 import android.content.Intent;
-import android.graphics.Typeface;
+import android.media.AudioAttributes;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -28,39 +29,43 @@ public class TimerActivity extends AppCompatActivity {
 
     private static final String TAG = "";
     private Button mStartPauseBtn;
-    private boolean mIsTimerRunning;
     private CountDownTimer mTimer;
     private TextView mTimerValueTxt;
     private TextView mCurrentExerciseTxt;
     private TextView mNextExerciseTxt;
     private TextView mNextExerciseTitleTxt;
     private Button mStopBtn;
+    private boolean mIsTimerRunning;
+
 
     /**
-     * stores milliseconds to seconds conversion
+     * Stores milliseconds to seconds conversion.
      */
     private static final int CONVERT_MILLIS_SECONDS = 1000;
 
     /**
-     * stores interval between onTick calls in milliseconds
+     * Stores interval between onTick calls in milliseconds.
      */
     private static final long COUNT_DOWN_INTERVAL = 1000;
 
     /**
-     * stores arrayList of exercises from workouts activity
+     * Stores arrayList of exercises from workouts activity.
      */
-    private ArrayList<Exercise> exerciseArrayList;
+    private ArrayList<Exercise> mExerciseArrayList;
 
     /**
-     * keep count of onTick calls for logging
+     * Keep count of onTick calls for logging
      */
-    private static int tickCount;
+    private static int sTickCount;
 
     /**
-     * keep count of onFinish calls to access correct WO array object
+     * Keep count of onFinish calls to access correct WO array object.
      */
-    private static int onFinishCount;
+    private static int sOnFinishCount;
 
+    /**
+     * Store duration of first exercise.
+     */
     private long firstDuration;
 
     /**
@@ -78,6 +83,22 @@ public class TimerActivity extends AppCompatActivity {
      * Store if onFinish has been called.
      */
     private boolean mIsWorkoutFinished;
+
+    /**
+     * Manages and plays sound audio resource for alarm sound.
+     */
+    private SoundPool mSoundPool;
+
+    /**
+     * Store alarm resource id.
+     */
+    private static int sAlarmSound;
+
+    /**
+     * Store if SoundPool .play has been called.
+     */
+    private static boolean sIsAlarmPlaying;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +122,9 @@ public class TimerActivity extends AppCompatActivity {
         final Intent workoutIntent = getIntent();
         Workout workout = workoutIntent.getParcelableExtra("workout");
         mWorkoutTitleTxt.setText(workout.getTitle());
-        exerciseArrayList = (ArrayList<Exercise>) workout.getExerciseList();
+        mExerciseArrayList = (ArrayList<Exercise>) workout.getExerciseList();
 
-        firstDuration = exerciseArrayList.get(0).getDuration();
+        firstDuration = mExerciseArrayList.get(0).getDuration();
 
         // set timer value to duration of first exercise
         updateTimerTxt(firstDuration * CONVERT_MILLIS_SECONDS);
@@ -116,11 +137,13 @@ public class TimerActivity extends AppCompatActivity {
         // update to duration of first exercise for passing to StartCountdown
         millisRemaining = (firstDuration * CONVERT_MILLIS_SECONDS);
 
+        sIsAlarmPlaying = false;
+
 
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onFinishCount = 0;
+                sOnFinishCount = 0;
                 finish();
             }
         });
@@ -144,6 +167,8 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
 
+        setUpAlarm();
+
     }
 
     /**
@@ -158,21 +183,22 @@ public class TimerActivity extends AppCompatActivity {
                 updateTimerTxt(millisUntilFinished);
                 updateCurrentExerciseTxt();
                 updateNextExerciseTxt();
-                tickCount++;
-                Log.i(TAG, "tickCount: " + tickCount);
+                sTickCount++;
+                Log.i(TAG, "tickCount: " + sTickCount);
                 millisRemaining = millisUntilFinished;
             }
 
             @Override
             public void onFinish() {
-                onFinishCount++;
-                Log.i(TAG, "FinCount: " + onFinishCount);
+                sOnFinishCount++;
+                Log.i(TAG, "FinCount: " + sOnFinishCount);
 
                 // if there are still exercise objects in array, start next CD
-                if (onFinishCount < exerciseArrayList.size()) {
-                    startCountdown(exerciseArrayList.get(onFinishCount).getDuration() * CONVERT_MILLIS_SECONDS);
+                if (sOnFinishCount < mExerciseArrayList.size()) {
+                    startCountdown(mExerciseArrayList.get(sOnFinishCount).getDuration() * CONVERT_MILLIS_SECONDS);
                 } else {
                     mIsWorkoutFinished = true;
+                    mIsPenultimateExercise = false;
                     mTimer.cancel();
                     mTimerValueTxt.setTextSize(70);
                     mTimerValueTxt.setText(R.string.workout_complete);
@@ -181,6 +207,8 @@ public class TimerActivity extends AppCompatActivity {
                     mNextExerciseTitleTxt.setVisibility(View.INVISIBLE);
                     mStartPauseBtn.setVisibility(View.INVISIBLE);
                     mStopBtn.setText(R.string.restart);
+
+                    playAlarm();
                 }
             }
         }.start();
@@ -203,31 +231,39 @@ public class TimerActivity extends AppCompatActivity {
      * Stop timer and reset UI.
      */
     private void stopTimer() {
-        onFinishCount = 0;
+        sOnFinishCount = 0;
         pauseTimer();
         millisRemaining = firstDuration * CONVERT_MILLIS_SECONDS;
         updateTimerTxt(firstDuration * CONVERT_MILLIS_SECONDS);
         updateCurrentExerciseTxt();
         updateNextExerciseTxt();
+        mStopBtn.setText(R.string.stop);
 
-        // if stopped on penultimate exercise reset UI
-        if (mIsPenultimateExercise && !mIsWorkoutFinished) {
+        // if stopped on penultimate exercise and there's more than one exercise, reset UI
+        if (mIsPenultimateExercise && (mExerciseArrayList.size() > 1)) {
             mNextExerciseTitleTxt.setVisibility(View.VISIBLE);
-            mNextExerciseTxt.setTypeface(mNextExerciseTxt.getTypeface());
             mIsPenultimateExercise = false;
 
-        } else if (mIsWorkoutFinished) {   // if workout has finished reset UI
+        // if workout is finished reset UI and stop alarm
+        } else if (mIsWorkoutFinished && (mExerciseArrayList.size() > 1)) {
+            mIsWorkoutFinished = false;
             mTimerValueTxt.setTextSize(130);
             mNextExerciseTitleTxt.setVisibility(View.VISIBLE);
-            mNextExerciseTxt.setTypeface(Typeface.DEFAULT);
             mCurrentExerciseTxt.setVisibility(View.VISIBLE);
             mNextExerciseTxt.setVisibility(View.VISIBLE);
             mStartPauseBtn.setVisibility(View.VISIBLE);
+            mSoundPool.pause(sAlarmSound);
+
+        // if workout is finished and there's only 1 exercise, reset UI and stop alarm
+        } else if (mIsWorkoutFinished && (mExerciseArrayList.size() == 1)) {
             mIsWorkoutFinished = false;
-            mIsPenultimateExercise = false;
+            mTimerValueTxt.setTextSize(130);
+            mCurrentExerciseTxt.setVisibility(View.VISIBLE);
+            mNextExerciseTxt.setVisibility(View.VISIBLE);
+            mStartPauseBtn.setVisibility(View.VISIBLE);
+            mSoundPool.pause(sAlarmSound);
         }
     }
-
 
     /**
      * Format time to mm:ss and set value of timer.
@@ -243,8 +279,8 @@ public class TimerActivity extends AppCompatActivity {
      * Update the textView to display the current exercise.
      */
     private void updateCurrentExerciseTxt() {
-        if (onFinishCount < exerciseArrayList.size()) {
-            String currentExercise = exerciseArrayList.get(onFinishCount).getName();
+        if (sOnFinishCount < mExerciseArrayList.size()) {
+            String currentExercise = mExerciseArrayList.get(sOnFinishCount).getName();
             mCurrentExerciseTxt.setText(currentExercise);
         }
     }
@@ -253,10 +289,10 @@ public class TimerActivity extends AppCompatActivity {
      * Update the textView to display upcoming exercise.
      */
     private void updateNextExerciseTxt() {
-        int arrayIndex = onFinishCount + 1;
+        int arrayIndex = sOnFinishCount + 1;
 
-        if (arrayIndex < exerciseArrayList.size()) {
-            String nextExercise = exerciseArrayList.get(arrayIndex).getName();
+        if (arrayIndex < mExerciseArrayList.size()) {
+            String nextExercise = mExerciseArrayList.get(arrayIndex).getName();
             mNextExerciseTxt.setText(nextExercise);
         } else {
             mIsPenultimateExercise = true;
@@ -265,6 +301,47 @@ public class TimerActivity extends AppCompatActivity {
             // mNextExerciseTxt.setTypeface(Typeface.DEFAULT_BOLD);
             // unsure how to change back to normal typeface
         }
+    }
+
+    /**
+     * Build SoundPool and load in alarm sound.
+     */
+    private void setUpAlarm() {
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .build();
+
+        mSoundPool = new SoundPool.Builder()
+                .setMaxStreams(1)
+                .setAudioAttributes(audioAttributes)
+                .build();
+
+        sAlarmSound = mSoundPool.load(this, R.raw.alarm, 1);
+    }
+
+    /**
+     * Play alarm sound for when timer is complete.
+     */
+    private void playAlarm() {
+        if (!sIsAlarmPlaying) {
+            mSoundPool.play(sAlarmSound, 1, 1, 1, 0, 2);
+            sIsAlarmPlaying = true;
+
+           /* if alarm has been paused after a workout is completed, then the exercise is restarted
+            * and completed again, the alarm must be resumed (not played).
+            */
+        } else {
+            mSoundPool.resume(sAlarmSound);
+        }
+    }
+
+    /**
+     * Release soundPool when activity is destroyed.
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSoundPool.release();
+        mSoundPool = null;
     }
 
 }

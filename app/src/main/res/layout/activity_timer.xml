@@ -116,7 +116,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginBottom="25dp"
         android:fontFamily="@font/raleway"
-        android:text="@string/pause"
+        android:text="@string/start"
         android:textAllCaps="false"
         android:textSize="15sp"
         app:cornerRadius="8dp"

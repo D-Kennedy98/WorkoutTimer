@@ -38,14 +38,9 @@
 
     <string name="info_attributions">Attributions</string>
 
-    <string name="info_icons">Icons made by Pixel perfect from www.flaticon.com</string>
+    <string name="zapsplat_sound">Sound effects obtained from www.zapsplat.com</string>
 
-    <string name="image_sources">Burpees Image: Blogspot\n
-        High Knees Image: India Times\n
-        Press Up Image: Healthifyme Blog\n
-        Plank Image: PopSugar\n
-        Squat Image: Ultimate You\n
-        Yoga Image: Howcast</string>
+<!--    <string name="info_icons">Icons made by Pixel perfect from www.flaticon.com</string>-->
 
     <!-- Error check duration edit text -->
     <string name="enter_valid_duration">Enter a valid duration!</string>

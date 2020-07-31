@@ -27,17 +27,6 @@ import java.util.Locale;
 
 public class TimerActivity extends AppCompatActivity {
 
-    private static final String TAG = "";
-    private Button mStartPauseBtn;
-    private CountDownTimer mTimer;
-    private TextView mTimerValueTxt;
-    private TextView mCurrentExerciseTxt;
-    private TextView mNextExerciseTxt;
-    private TextView mNextExerciseTitleTxt;
-    private Button mStopBtn;
-    private boolean mIsTimerRunning;
-
-
     /**
      * Stores milliseconds to seconds conversion.
      */
@@ -49,14 +38,14 @@ public class TimerActivity extends AppCompatActivity {
     private static final long COUNT_DOWN_INTERVAL = 1000;
 
     /**
-     * Stores arrayList of exercises from workouts activity.
+     * TAG for logging.
      */
-    private ArrayList<Exercise> mExerciseArrayList;
+    private static final String TAG = "";
 
-    /**
-     * Keep count of onTick calls for logging
-     */
-    private static int sTickCount;
+//    /**
+//     * Keep count of onTick calls for logging.
+//     */
+//    private static int sTickCount;
 
     /**
      * Keep count of onFinish calls to access correct WO array object.
@@ -64,15 +53,9 @@ public class TimerActivity extends AppCompatActivity {
     private static int sOnFinishCount;
 
     /**
-     * Store duration of first exercise.
+     * Store if timer is running.
      */
-    private long firstDuration;
-
-    /**
-     * Store the time remaining of current timer to be passed
-     * into CDT constructor
-     */
-    private long millisRemaining;
+    private boolean mIsTimerRunning;
 
     /**
      * Store if timer is on penultimate exercise.
@@ -85,19 +68,65 @@ public class TimerActivity extends AppCompatActivity {
     private boolean mIsWorkoutFinished;
 
     /**
+     * Store if SoundPool.play has been called.
+     */
+    private boolean mIsAlarmPlaying;
+
+    /**
+     * Store alarm resource id.
+     */
+    private int mAlarmSound;
+
+    /**
+     * Store duration of first exercise.
+     */
+    private long mFirstDuration;
+
+    /**
+     * Store the time remaining of current timer to be passed
+     * into CDT constructor
+     */
+    private long mMillisRemaining;
+
+    /**
+     * Stores arrayList of exercises from workouts activity.
+     */
+    private ArrayList<Exercise> mExerciseArrayList;
+
+    /**
+     * CountDownTimer object to provide timer functionality.
+     */
+    private CountDownTimer mTimer;
+
+    /**
      * Manages and plays sound audio resource for alarm sound.
      */
     private SoundPool mSoundPool;
 
     /**
-     * Store alarm resource id.
+     * Workout object retrieved from WOs activity which stores
+     * data regarding the workout and exercises.
      */
-    private static int sAlarmSound;
+    private Workout workout;
 
     /**
-     * Store if SoundPool .play has been called.
+     * Image view for back button.
      */
-    private static boolean sIsAlarmPlaying;
+    private ImageView mBackBtn;
+
+    /**
+     * Text views.
+     */
+    private TextView mCurrentExerciseTxt;
+    private TextView mNextExerciseTxt;
+    private TextView mNextExerciseTitleTxt;
+    private TextView mTimerValueTxt;
+
+    /**
+     * Buttons to start/pause or stop the timer.
+     */
+    private Button mStartPauseBtn;
+    private Button mStopBtn;
 
 
     @Override
@@ -105,40 +134,22 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
-        // init views
-        TextView mWorkoutTitleTxt = findViewById(R.id.workout_title_timer);
-        mTimerValueTxt = findViewById(R.id.timer_value);
-        mCurrentExerciseTxt = findViewById(R.id.current_exercise_title);
-        mNextExerciseTxt = findViewById(R.id.next_exercise);
-        mNextExerciseTitleTxt = findViewById(R.id.next_exercise_title);
-        mStartPauseBtn = findViewById(R.id.pause_btn);
-        mStopBtn = findViewById(R.id.stop_btn);
-        ImageView mBackBtn = findViewById(R.id.back_btn);
-
-        mStartPauseBtn.setText(R.string.start);
-
-
-        // get workout object from WO activity intent
+        // Get workout object from WOs activity intent.
         final Intent workoutIntent = getIntent();
-        Workout workout = workoutIntent.getParcelableExtra("workout");
-        mWorkoutTitleTxt.setText(workout.getTitle());
+        workout = workoutIntent.getParcelableExtra("workout");
+
+        // Get data from WO object.
         mExerciseArrayList = (ArrayList<Exercise>) workout.getExerciseList();
+        mFirstDuration = mExerciseArrayList.get(0).getDuration();
 
-        firstDuration = mExerciseArrayList.get(0).getDuration();
+        // Update to duration of first exercise for passing to StartCountdown.
+        mMillisRemaining = (mFirstDuration * CONVERT_MILLIS_SECONDS);
 
-        // set timer value to duration of first exercise
-        updateTimerTxt(firstDuration * CONVERT_MILLIS_SECONDS);
+        setUpViews();
 
-        // set exercise text to first exercise
-        updateCurrentExerciseTxt();
+        setUpAlarm();
 
-        updateNextExerciseTxt();
-
-        // update to duration of first exercise for passing to StartCountdown
-        millisRemaining = (firstDuration * CONVERT_MILLIS_SECONDS);
-
-        sIsAlarmPlaying = false;
-
+        mIsAlarmPlaying = false;
 
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +163,7 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!mIsTimerRunning) {
-                    startCountdown(millisRemaining);
+                    startCountdown(mMillisRemaining);
                     mStartPauseBtn.setText(R.string.pause);
                 } else {
                     pauseTimer();
@@ -167,15 +178,35 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
 
-        setUpAlarm();
-
     }
+
+    /**
+     * Initialise UI views.
+     */
+    private void setUpViews() {
+        TextView mWorkoutTitleTxt = findViewById(R.id.workout_title_timer);
+        mWorkoutTitleTxt.setText(workout.getTitle());
+        mBackBtn = findViewById(R.id.back_btn);
+        mCurrentExerciseTxt = findViewById(R.id.current_exercise_title);
+        mNextExerciseTxt = findViewById(R.id.next_exercise);
+        mNextExerciseTitleTxt = findViewById(R.id.next_exercise_title);
+        mStartPauseBtn = findViewById(R.id.pause_btn);
+        mStopBtn = findViewById(R.id.stop_btn);
+        mTimerValueTxt = findViewById(R.id.timer_value);
+
+        // Set exercise text using data from workout object.
+        updateCurrentExerciseTxt();
+        updateNextExerciseTxt();
+
+        // Set timer value to duration of first exercise.
+        updateTimerTxt(mFirstDuration * CONVERT_MILLIS_SECONDS);
+    }
+
 
     /**
      *  Create count down timer.
      *  TODO: Fix delay before starting after first time causes time to jump, could add name of exercise?
      */
-
     private void startCountdown(long duration) {
         mTimer = new CountDownTimer(duration, COUNT_DOWN_INTERVAL) {
             @Override
@@ -183,9 +214,9 @@ public class TimerActivity extends AppCompatActivity {
                 updateTimerTxt(millisUntilFinished);
                 updateCurrentExerciseTxt();
                 updateNextExerciseTxt();
-                sTickCount++;
-                Log.i(TAG, "tickCount: " + sTickCount);
-                millisRemaining = millisUntilFinished;
+                mMillisRemaining = millisUntilFinished;
+                //sTickCount++;
+                //Log.i(TAG, "tickCount: " + sTickCount);
             }
 
             @Override
@@ -233,8 +264,8 @@ public class TimerActivity extends AppCompatActivity {
     private void stopTimer() {
         sOnFinishCount = 0;
         pauseTimer();
-        millisRemaining = firstDuration * CONVERT_MILLIS_SECONDS;
-        updateTimerTxt(firstDuration * CONVERT_MILLIS_SECONDS);
+        mMillisRemaining = mFirstDuration * CONVERT_MILLIS_SECONDS;
+        updateTimerTxt(mFirstDuration * CONVERT_MILLIS_SECONDS);
         updateCurrentExerciseTxt();
         updateNextExerciseTxt();
         mStopBtn.setText(R.string.stop);
@@ -252,7 +283,7 @@ public class TimerActivity extends AppCompatActivity {
             mCurrentExerciseTxt.setVisibility(View.VISIBLE);
             mNextExerciseTxt.setVisibility(View.VISIBLE);
             mStartPauseBtn.setVisibility(View.VISIBLE);
-            mSoundPool.pause(sAlarmSound);
+            mSoundPool.pause(mAlarmSound);
 
         // if workout is finished and there's only 1 exercise, reset UI and stop alarm
         } else if (mIsWorkoutFinished && (mExerciseArrayList.size() == 1)) {
@@ -261,7 +292,7 @@ public class TimerActivity extends AppCompatActivity {
             mCurrentExerciseTxt.setVisibility(View.VISIBLE);
             mNextExerciseTxt.setVisibility(View.VISIBLE);
             mStartPauseBtn.setVisibility(View.VISIBLE);
-            mSoundPool.pause(sAlarmSound);
+            mSoundPool.pause(mAlarmSound);
         }
     }
 
@@ -315,22 +346,22 @@ public class TimerActivity extends AppCompatActivity {
                 .setAudioAttributes(audioAttributes)
                 .build();
 
-        sAlarmSound = mSoundPool.load(this, R.raw.alarm, 1);
+        mAlarmSound = mSoundPool.load(this, R.raw.alarm, 1);
     }
 
     /**
      * Play alarm sound for when timer is complete.
      */
     private void playAlarm() {
-        if (!sIsAlarmPlaying) {
-            mSoundPool.play(sAlarmSound, 1, 1, 1, 0, 2);
-            sIsAlarmPlaying = true;
+        if (!mIsAlarmPlaying) {
+            mSoundPool.play(mAlarmSound, 1, 1, 1, 0, 2);
+            mIsAlarmPlaying = true;
 
            /* if alarm has been paused after a workout is completed, then the exercise is restarted
             * and completed again, the alarm must be resumed (not played).
             */
         } else {
-            mSoundPool.resume(sAlarmSound);
+            mSoundPool.resume(mAlarmSound);
         }
     }
 

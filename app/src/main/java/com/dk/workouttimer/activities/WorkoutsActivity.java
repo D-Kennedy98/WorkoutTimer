@@ -7,7 +7,6 @@ package com.dk.workouttimer.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,22 +25,30 @@ import java.util.ArrayList;
 public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapter.OnWorkoutListener {
 
     /**
+     * Application class.
+     */
+    App app;
+
+    /**
      * Stores workouts retrieved from db.
      */
     private ArrayList<Workout> mWorkoutArrayList = new ArrayList<>();
 
     /**
-     * Recycler adapter to bind workout data set to recycler view
+     * Recycler adapter to bind workout data set to recycler view.
      */
-    RecyclerAdapter recyclerAdapter;
-
+    private RecyclerAdapter recyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workouts);
 
-        setViews();
+        app = (App)getApplication();
+
+        mWorkoutArrayList = getDatabaseWorkouts();
+
+        setUpRecyclerView();
 
         setWorkoutOnClick();
 
@@ -50,18 +57,19 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
     }
 
     /**
-     * Set up UI views.
-     * TODO: Refactor
+     * Get array list of workout objects from db.
+     * TODO: Is this a necessary refactor from setUpRecyclerView?
      */
-    private void setViews() {
-        // load workouts from database and add to array list
-        App app = (App)getApplication();
-        mWorkoutArrayList = (ArrayList<Workout>) app.workoutDao.loadAllWorkouts();
+    private ArrayList<Workout> getDatabaseWorkouts() {
+        return (ArrayList<Workout>) app.workoutDao.loadAllWorkouts();
+    }
 
-        // initialise recycler view
+    /**
+     * Initialise recycler view.
+     */
+    private void setUpRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        // set the recycler view
         recyclerAdapter = new RecyclerAdapter(
                 this, mWorkoutArrayList, this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(
@@ -134,14 +142,13 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
      */
     @Override
     public void onStartTimerClick(int position) {
-        Log.i("On StartTimer", "Click");
         Workout chosenWorkout = mWorkoutArrayList.get(position);
         launchTimerActivity(chosenWorkout);
-        //launchTimerActivity((ArrayList<Exercise>) chosenWorkout.getExerciseList());
     }
 
     /**
-     * Delete chosen workout.
+     * Remove chosen workout from database and recycler data set.
+     * TODO: Refactor into delete and remove method?
      *
      * @param position position of view holder chosen on recycler view to index workout array list.
      */
@@ -150,7 +157,6 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
         Workout chosenWorkout = mWorkoutArrayList.get(position);
 
         // remove from database
-        App app = (App)getApplication();
         app.workoutDao.deleteWorkout(chosenWorkout);
 
         // remove from array list

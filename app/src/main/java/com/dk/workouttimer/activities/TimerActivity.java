@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dk.workouttimer.R;
+import com.dk.workouttimer.TimeConverter;
 import com.dk.workouttimer.models.Exercise;
 import com.dk.workouttimer.models.Workout;
 
@@ -25,7 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class TimerActivity extends AppCompatActivity {
+public class TimerActivity extends AppCompatActivity implements TimeConverter {
 
     /**
      * Stores milliseconds to seconds conversion.
@@ -110,11 +111,6 @@ public class TimerActivity extends AppCompatActivity {
     private Workout workout;
 
     /**
-     * Image view for back button.
-     */
-    private ImageView mBackBtn;
-
-    /**
      * Text views.
      */
     private TextView mCurrentExerciseTxt;
@@ -146,18 +142,39 @@ public class TimerActivity extends AppCompatActivity {
         mMillisRemaining = (mFirstDuration * CONVERT_MILLIS_SECONDS);
 
         setUpViews();
+        setUpStartPauseBtn();
+        setUpStopBtn();
+        setUpBackBtn();
 
         setUpAlarm();
-
         mIsAlarmPlaying = false;
 
-        mBackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sOnFinishCount = 0;
-                finish();
-            }
-        });
+    }
+
+    /**
+     * Initialise UI views.
+     */
+    private void setUpViews() {
+        TextView mWorkoutTitleTxt = findViewById(R.id.workout_title_timer);
+        mWorkoutTitleTxt.setText(workout.getTitle());
+        mCurrentExerciseTxt = findViewById(R.id.current_exercise_title);
+        mNextExerciseTxt = findViewById(R.id.next_exercise);
+        mNextExerciseTitleTxt = findViewById(R.id.next_exercise_title);
+        mTimerValueTxt = findViewById(R.id.timer_value);
+
+        // Set exercise text using data from workout object.
+        updateCurrentExerciseTxt();
+        updateNextExerciseTxt();
+
+        // Set timer value to duration of first exercise.
+        mTimerValueTxt.setText(convertTime(mFirstDuration * CONVERT_MILLIS_SECONDS));
+    }
+
+    /**
+     * Set up startPause button which starts/pauses timer.
+     */
+    private void setUpStartPauseBtn() {
+        mStartPauseBtn = findViewById(R.id.pause_btn);
 
         mStartPauseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,6 +187,13 @@ public class TimerActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * Set up stop button which stops and restarts timer.
+     */
+    private void setUpStopBtn() {
+        mStopBtn = findViewById(R.id.stop_btn);
 
         mStopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,41 +201,33 @@ public class TimerActivity extends AppCompatActivity {
                 stopTimer();
             }
         });
-
     }
 
     /**
-     * Initialise UI views.
+     * Set up back button which navigates user back
+     * to workout activity.
      */
-    private void setUpViews() {
-        TextView mWorkoutTitleTxt = findViewById(R.id.workout_title_timer);
-        mWorkoutTitleTxt.setText(workout.getTitle());
-        mBackBtn = findViewById(R.id.back_btn);
-        mCurrentExerciseTxt = findViewById(R.id.current_exercise_title);
-        mNextExerciseTxt = findViewById(R.id.next_exercise);
-        mNextExerciseTitleTxt = findViewById(R.id.next_exercise_title);
-        mStartPauseBtn = findViewById(R.id.pause_btn);
-        mStopBtn = findViewById(R.id.stop_btn);
-        mTimerValueTxt = findViewById(R.id.timer_value);
+    private void setUpBackBtn() {
+        ImageView mBackBtn = findViewById(R.id.back_btn);
 
-        // Set exercise text using data from workout object.
-        updateCurrentExerciseTxt();
-        updateNextExerciseTxt();
-
-        // Set timer value to duration of first exercise.
-        updateTimerTxt(mFirstDuration * CONVERT_MILLIS_SECONDS);
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sOnFinishCount = 0;
+                finish();
+            }
+        });
     }
 
-
     /**
-     *  Create count down timer.
-     *  TODO: Fix delay before starting after first time causes time to jump, could add name of exercise?
+     * Create count down timer.
+     * TODO: Fix delay before starting after first time causes time to jump, could add name of exercise?
      */
     private void startCountdown(long duration) {
         mTimer = new CountDownTimer(duration, COUNT_DOWN_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
-                updateTimerTxt(millisUntilFinished);
+                mTimerValueTxt.setText(convertTime(millisUntilFinished));
                 updateCurrentExerciseTxt();
                 updateNextExerciseTxt();
                 mMillisRemaining = millisUntilFinished;
@@ -265,17 +281,17 @@ public class TimerActivity extends AppCompatActivity {
         sOnFinishCount = 0;
         pauseTimer();
         mMillisRemaining = mFirstDuration * CONVERT_MILLIS_SECONDS;
-        updateTimerTxt(mFirstDuration * CONVERT_MILLIS_SECONDS);
+        mTimerValueTxt.setText(convertTime(mFirstDuration * CONVERT_MILLIS_SECONDS));
         updateCurrentExerciseTxt();
         updateNextExerciseTxt();
         mStopBtn.setText(R.string.stop);
 
-        // if stopped on penultimate exercise and there's more than one exercise, reset UI
+        // If stopped on penultimate exercise and there's more than one exercise, reset UI.
         if (mIsPenultimateExercise && (mExerciseArrayList.size() > 1)) {
             mNextExerciseTitleTxt.setVisibility(View.VISIBLE);
             mIsPenultimateExercise = false;
 
-        // if workout is finished reset UI and stop alarm
+        // If workout is finished reset UI and stop alarm.
         } else if (mIsWorkoutFinished && (mExerciseArrayList.size() > 1)) {
             mIsWorkoutFinished = false;
             mTimerValueTxt.setTextSize(130);
@@ -285,7 +301,7 @@ public class TimerActivity extends AppCompatActivity {
             mStartPauseBtn.setVisibility(View.VISIBLE);
             mSoundPool.pause(mAlarmSound);
 
-        // if workout is finished and there's only 1 exercise, reset UI and stop alarm
+        // If workout is finished and there's only 1 exercise, reset UI and stop alarm.
         } else if (mIsWorkoutFinished && (mExerciseArrayList.size() == 1)) {
             mIsWorkoutFinished = false;
             mTimerValueTxt.setTextSize(130);
@@ -294,16 +310,6 @@ public class TimerActivity extends AppCompatActivity {
             mStartPauseBtn.setVisibility(View.VISIBLE);
             mSoundPool.pause(mAlarmSound);
         }
-    }
-
-    /**
-     * Format time to mm:ss and set value of timer.
-     */
-    private void updateTimerTxt(long timeRemaining) {
-        int mins = (int) (timeRemaining / 1000) / 60;
-        int secs = (int) (timeRemaining / 1000) % 60;
-        String formTimeRemaining = String.format(Locale.getDefault(), "%02d:%02d", mins, secs);
-        mTimerValueTxt.setText(formTimeRemaining);
     }
 
     /**
@@ -357,8 +363,9 @@ public class TimerActivity extends AppCompatActivity {
             mSoundPool.play(mAlarmSound, 1, 1, 1, 0, 2);
             mIsAlarmPlaying = true;
 
-           /* if alarm has been paused after a workout is completed, then the exercise is restarted
-            * and completed again, the alarm must be resumed (not played).
+           /* If alarm has been paused after a workout is completed,
+            * then the exercise is restarted and completed again,
+            * the alarm must be resumed (not played).
             */
         } else {
             mSoundPool.resume(mAlarmSound);
@@ -373,6 +380,20 @@ public class TimerActivity extends AppCompatActivity {
         super.onDestroy();
         mSoundPool.release();
         mSoundPool = null;
+    }
+
+    /**
+     * Convert time remaining in millis to format ss:mm.
+     * Implements TimeConverter interface.
+     *
+     * @param time time being converted in millis
+     * @return string format of time in format ss:mm
+     */
+    @Override
+    public String convertTime(long time) {
+        int mins = (int) (time / 1000) / 60;
+        int secs = (int) (time / 1000) % 60;
+        return String.format(Locale.getDefault(), "%02d:%02d", mins, secs);
     }
 
 }

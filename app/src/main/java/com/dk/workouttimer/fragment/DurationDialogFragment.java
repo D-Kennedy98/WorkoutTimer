@@ -42,7 +42,7 @@ public class DurationDialogFragment extends TimeDurationPickerDialogFragment {
 
     /**
      * Called when user leaves dialogFragment by pressing OK button.
-     * OnDurationListener is triggered to pass duration back.
+     * OnDurationListener is triggered to pass duration back
      * to CreateWO activity
      * @param view picker view
      * @param duration duration that was entered

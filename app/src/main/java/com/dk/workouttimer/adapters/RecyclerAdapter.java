@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.dk.workouttimer.R;
+import com.dk.workouttimer.TimeConverter;
 import com.dk.workouttimer.models.Workout;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements TimeConverter {
 
     /**
      * Data set binded to adapter.
@@ -77,7 +78,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         Workout workout = mWorkoutArrayList.get(position);
         holder.workoutTitle.setText(workout.getTitle());
         holder.duration.setText(String.format(Locale.getDefault(),
-                "Duration: %d", workout.getTotalDuration()));
+                "Duration: %s", convertTime(workout.getTotalDuration())));
         holder.numberExercises.setText(String.format(Locale.getDefault(),
                 "No. of exercises: %d", workout.getNoExercises()));
     }
@@ -93,14 +94,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     /**
+     * Convert time in seconds to format ss:mm.
+     * @param time time being converted
+     * @return string of time in format ss:mm
+     */
+    @Override
+    public String convertTime(long time) {
+        int mins = (int) time / 60;
+        int secs = (int) time % 60;
+        return  String.format(Locale.getDefault(), "%02d:%02d", mins, secs);
+    }
+
+    /**
      * Represents contents of item in data set. Holders are recycled as user scrolls and
      * new items become visible.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        Button deleteBtn;
         TextView workoutTitle, duration, numberExercises;
         OnWorkoutListener workoutListener;
-
-        Button deleteBtn;
 
         ViewHolder(@NonNull View itemView, OnWorkoutListener workoutListener) {
             super(itemView);
@@ -118,6 +130,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         /**
          * Gets position of item in adapter when clicked.
+         *
          * @param v view
          */
         @Override

@@ -18,22 +18,23 @@ import androidx.room.RoomDatabase;
 public abstract class AppDatabase extends RoomDatabase {
 
     /**
-     * singleton instance
+     * Singleton instance.
      */
     private static AppDatabase sInstance = null;
 
     /**
-     * com.dk.workouttimer.database name
+     * Database name.
      */
     private static final String NAME = "workout-DB";
 
     /**
-     * default constructor.
+     * Default constructor.
      */
     AppDatabase(){}
 
     /**
-     * Get instance of the created com.dk.workouttimer.database.
+     * Get instance of the created database.
+     *
      * @param context current state of application
      * @return AppDatabase instance
      * TODO: change so it doesn't run on main thread
@@ -48,7 +49,7 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     /**
-     * workoutDAO interface
+     * WorkoutDAO interface.
      */
     public abstract WorkoutDao workoutDao();
 

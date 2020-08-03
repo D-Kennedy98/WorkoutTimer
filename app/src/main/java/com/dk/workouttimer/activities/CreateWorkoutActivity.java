@@ -28,80 +28,77 @@ import java.util.ArrayList;
 public class CreateWorkoutActivity extends AppCompatActivity {
 
     /**
-     * store exercise name to be passed into exercise constructor
+     * Application class.
+     */
+    App app;
+
+    /**
+     * Store exercise name to be passed into exercise constructor.
      */
     private String mExerciseName;
 
     /**
-     * store workout title to be passed into workout constructor
+     * Store workout title to be passed into workout constructor.
      */
     private String mWorkoutTitle;
 
+    /**
+     * Store duration entered in duration dialog fragment.
+     */
     private long mExerciseDuration;
 
     // TODO: appropriate max lengths
     /**
-     * store max length that of exercise name
+     * Store max length that of exercise name.
      */
     private static final int MAX_WORKOUT_TITLE_LENGTH = 35;
 
     /**
-     * store max length of workout title
+     * Store max length of workout title.
      */
     private static final int MAX_EXERCISE_NAME_LENGTH = 30;
 
     /**
-     * edit text elements for inputting workout title and exercise name
+     * Edit text elements for inputting workout title and exercise name.
      */
     private EditText mWorkoutTitleInput;
     private EditText mNameInput;
 
     /**
-     * array list to store exercise objects that make up a workout.
-     * passed as intent back to workout activity to populate recycler view
+     * Store exercise objects that make up a workout.
+     * Passed as intent back to workout activity to populate recycler view.
      */
     private ArrayList<Exercise> mExerciseArrayList = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_workout);
 
-        final App app = (App)getApplication();
+        app = (App)getApplication();
 
-        // btn to create WO objects using edit text values
-        Button addExerciseBtn = findViewById(R.id.add_exercise_btn);
+        setUpViews();
 
-        // btn to open dialogueFragment for entering exercise duration
-        Button mDurationBtn = findViewById(R.id.duration_btn);
+        setUpAddExerciseBtn();
+        setUpDurationBtn();
+        setUpSaveBtn();
+        setUpBackBtn();
 
-        // btn to navigate back to routines activity
-        ImageView backBtn = findViewById(R.id.back_btn_cw);
+    }
 
-        // btn to save workout and navigate back to workouts activity
-        Button saveBtn = findViewById(R.id.save_btn);
-
+    private void setUpViews() {
         mWorkoutTitleInput = findViewById(R.id.workout_title_input);
         mNameInput = findViewById(R.id.name_input);
+    }
 
-        /*
-         * Open duration dialogFragment for inputting exercise duration.
-         */
-        mDurationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDurationFragment();
+    /**
+     * Create new exercise object from edit text values and add to array list.
+     * TODO: Error checking input, make sure it doesn't exceed max CDT value
+     */
+    private void setUpAddExerciseBtn() {
+        Button mAddExerciseBtn = findViewById(R.id.add_exercise_btn);
 
-            }
-        });
-
-        /*
-         * Create new exercise object from edit text values and add to arrayList
-         * if name and duration checks pass.
-         * TODO: Error checking input, make sure it doesn't exceed max CDT value
-         */
-        addExerciseBtn.setOnClickListener(new View.OnClickListener() {
+        mAddExerciseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isValidNameInput() && isDurationInputted(mExerciseDuration)) {
@@ -115,12 +112,32 @@ public class CreateWorkoutActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-        /*
-         * Create workout object and add to database then launch workouts activity
-         * if title input and exercise ArrayList checks pass.
-         */
-        saveBtn.setOnClickListener(new View.OnClickListener() {
+    /**
+     * Set up duration button which opens a duration dialog fragment
+     * for inputting exercise duration.
+     */
+    private void setUpDurationBtn() {
+        Button mDurationBtn = findViewById(R.id.duration_btn);
+
+        mDurationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDurationFragment();
+
+            }
+        });
+    }
+
+    /**
+     * Set up save button which creates a workout object,
+     * adds it to the database then launches workouts activity.
+     */
+    private void setUpSaveBtn() {
+        Button mSaveBtn = findViewById(R.id.save_btn);
+
+        mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isValidWorkoutTitleInput() && isValidExerciseArray()) {
@@ -133,24 +150,23 @@ public class CreateWorkoutActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-        /*
-         * Go back to workouts activity without saving.
-         * TODO: Are you sure message (not saved) message?
-         */
-        backBtn.setOnClickListener(new View.OnClickListener() {
+    /**
+     * Set up back button which navigates user back to
+     * workouts activity without saving.
+     * TODO: Confirmation btn
+     */
+    private void setUpBackBtn() {
+        ImageView mBackBtn = findViewById(R.id.back_btn_cw);
+
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 launchWorkoutsActivity();
             }
         });
-
-
     }
-
-//    public void initViews() {
-//
-//    }
 
     /**
      * Get the workout title from the edit text for creating a workout object.
@@ -161,16 +177,20 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private Boolean isValidWorkoutTitleInput() {
         String title = mWorkoutTitleInput.getText().toString();
 
-        if (title.equals("")) {
+        // Check title has been entered.
+        if (title.isEmpty()) {
             Context contextWO = getApplicationContext();
             Toast titleToast = Toast.makeText(contextWO, "Enter a workout title! (Max 35 characters)", Toast.LENGTH_SHORT);
             titleToast.show();
             return false;
+
+          // Check title doesn't exceed max length.
         } else if (title.length() > MAX_WORKOUT_TITLE_LENGTH) {
             Context contextWO = getApplicationContext();
             Toast nameToast = Toast.makeText(contextWO, "Workout title must not exceed 35 characters", Toast.LENGTH_SHORT);
             nameToast.show();
             return false;
+
         } else {
             mWorkoutTitle = title;
             return true;
@@ -194,7 +214,6 @@ public class CreateWorkoutActivity extends AppCompatActivity {
 
     }
 
-
     /**
      * Get the exercise name from edit text and
      * check its a valid string (not empty or exceeding 35 chars).
@@ -205,16 +224,20 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private Boolean isValidNameInput() {
         String name = mNameInput.getText().toString();
 
-        if (name.equals("")) {
+        // Check name has been entered.
+        if (name.isEmpty()) {
             Context contextEx = getApplicationContext();
             Toast nameToast = Toast.makeText(contextEx, "Enter an exercise name! (Max 30 characters)", Toast.LENGTH_SHORT);
             nameToast.show();
             return false;
+
+          // Check name doesn't exceed max length.
         } else if (name.length() > MAX_EXERCISE_NAME_LENGTH) {
             Context contextEx = getApplicationContext();
             Toast nameToast = Toast.makeText(contextEx, "Exercise name must not exceed 30 characters", Toast.LENGTH_SHORT);
             nameToast.show();
             return false;
+
         } else {
             mExerciseName = name;
             return true;
@@ -246,20 +269,20 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     }
 
     /**
-     * Show dialogFragment to allow exercise duration to be inputted.
-     * Update mExerciseDuration with inputted value.
-     * Implements DurationListener to retrieve duration from dialogFragment.
+     * Show dialog fragment to allow exercise duration to be inputted.
      *
      * TODO: Look at depreciated tags
      */
     private void showDurationFragment() {
         DurationDialogFragment durationDialogFragment = new DurationDialogFragment();
         durationDialogFragment.show(getFragmentManager(), "exercise");
+
+        // Implement DurationListener interface to retrieve duration from fragment.
         durationDialogFragment.setDurationListener(new DurationDialogFragment.DurationListener() {
             @Override
             public void onDurationFinished(long duration) {
-                //TODO: CONSTANT class?
-                mExerciseDuration =  (duration / 1000);
+            //TODO: CONSTANT class?
+            mExerciseDuration =  (duration / 1000);
             }
         });
     }

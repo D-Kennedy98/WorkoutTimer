@@ -43,7 +43,6 @@
 <!--    <string name="info_icons">Icons made by Pixel perfect from www.flaticon.com</string>-->
 
     <!-- Error check duration edit text -->
-    <string name="enter_valid_duration">Enter a valid duration!</string>
     <string name="value_too_high">Duration can\'t be above 6000s (100mins)</string>
     <string name="add_workout">Add Workout</string>
     <string name="add_exercise">Add Exercise</string>
@@ -56,6 +55,17 @@
     <string name="duration">Duration</string>
     <string name="delete">Delete</string>
     <string name="stop">Stop</string>
+
+    <!-- Create Workout Activity -->
+    <string name="enter_duration">Enter a valid duration!</string>
+    <string name="enter_exercise_name">Enter an exercise name!\n(Max 30 characters)</string>
+    <string name="enter_workout_title">Enter a workout title! (Max 35 characters)</string>
+    <string name="exercise_added">Exercise added</string>
+    <string name="exercise_name_exceed">Exercise name must not exceed 30 characters</string>
+    <string name="max_duration_met">Max workout duration met.\nNo more exercises can be added.\nSave workout!"</string>
+    <string name="total_duration_exceeds">Total workout duration now exceeds the max workout duration (3 hours).\nEnter a shorter duration!"</string>
+    <string name="workout_contain_exercise">Workout must contain at least 1 exercise!</string>
+    <string name="workout_title_exceed">Workout title must not exceed 35 characters</string>
 
 
 </resources>

@@ -32,10 +32,36 @@ public class CreateWorkoutActivity extends AppCompatActivity {
      */
     App app;
 
+    // TODO: appropriate max lengths
     /**
-     * Store exercise name to be passed into exercise constructor.
+     * Store max length of workout title.
      */
-    private String mExerciseName;
+    private static final int MAX_EXERCISE_NAME_LENGTH = 30;
+
+    /**
+     * Store max length of workout (3 hours) in milliseconds.
+     */
+    private static final int MAX_TOTAL_WORKOUT_DURATION = 10800000;
+
+    /**
+     * Store max length that of exercise name.
+     */
+    private static final int MAX_WORKOUT_TITLE_LENGTH = 35;
+
+//    /**
+//     * Store exercise name to be passed into exercise constructor.
+//     */
+//    private String mExerciseName;
+
+    /**
+     * Store duration entered in duration dialog fragment.
+     */
+    private long mExerciseDuration;
+
+    /**
+     * Store total duration of all exercises for ensuring max duration isn't exceeded.
+     */
+    private long mTotalDuration;
 
     /**
      * Store workout title to be passed into workout constructor.
@@ -43,20 +69,10 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private String mWorkoutTitle;
 
     /**
-     * Store duration entered in duration dialog fragment.
+     * Store exercise objects that make up a workout.
+     * Passed as intent back to workout activity to populate recycler view.
      */
-    private long mExerciseDuration;
-
-    // TODO: appropriate max lengths
-    /**
-     * Store max length that of exercise name.
-     */
-    private static final int MAX_WORKOUT_TITLE_LENGTH = 35;
-
-    /**
-     * Store max length of workout title.
-     */
-    private static final int MAX_EXERCISE_NAME_LENGTH = 30;
+    private ArrayList<Exercise> mExerciseArrayList = new ArrayList<>();
 
     /**
      * Edit text elements for inputting workout title and exercise name.
@@ -64,11 +80,6 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private EditText mWorkoutTitleInput;
     private EditText mNameInput;
 
-    /**
-     * Store exercise objects that make up a workout.
-     * Passed as intent back to workout activity to populate recycler view.
-     */
-    private ArrayList<Exercise> mExerciseArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,10 +112,13 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         mAddExerciseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isValidNameInput() && isDurationInputted(mExerciseDuration)) {
-                    mExerciseArrayList.add(new Exercise(mExerciseName, mExerciseDuration));
+                String name = getNameInput();
+
+                if (isValidNameInput(name) && isDurationValid(mExerciseDuration)) {
+                    mExerciseArrayList.add(new Exercise(name, mExerciseDuration));
+
                     Context context = getApplicationContext();
-                    Toast addToast = Toast.makeText(context, "Exercise added", Toast.LENGTH_SHORT);
+                    Toast addToast = Toast.makeText(context, R.string.exercise_added, Toast.LENGTH_SHORT);
                     addToast.show();
 
                     mNameInput.getText().clear();
@@ -140,7 +154,8 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isValidWorkoutTitleInput() && isValidExerciseArray()) {
+                if (isValidWorkoutTitleInput(getWorkoutTitleInput())
+                        && isValidExerciseArray()) {
                     Workout newWorkout = new Workout(
                             mWorkoutTitle, (int) calcTotalDuration(mExerciseArrayList),
                             mExerciseArrayList.size(), mExerciseArrayList);
@@ -169,25 +184,36 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     }
 
     /**
-     * Get the workout title from the edit text for creating a workout object.
-     * //TODO: Refactor to 2 methods
+     * Get workout title input from edit text.
      *
-     * @return the inputted workout title
+     * @return workout title input as string
+     *         or empty string if input is null.
      */
-    private Boolean isValidWorkoutTitleInput() {
-        String title = mWorkoutTitleInput.getText().toString();
+    private String getWorkoutTitleInput() {
+        if (mWorkoutTitleInput.getText() == null) {
+            return "";
+        } else {
+            return mWorkoutTitleInput.getText().toString().trim();
+        }
+    }
 
+    /**
+     * Check workout title input is valid.
+     *
+     * @return true if title is valid | false if title is empty or exceeds max length.
+     */
+    private Boolean isValidWorkoutTitleInput(String title) {
         // Check title has been entered.
         if (title.isEmpty()) {
             Context contextWO = getApplicationContext();
-            Toast titleToast = Toast.makeText(contextWO, "Enter a workout title! (Max 35 characters)", Toast.LENGTH_SHORT);
+            Toast titleToast = Toast.makeText(contextWO, R.string.enter_workout_title, Toast.LENGTH_SHORT);
             titleToast.show();
             return false;
 
           // Check title doesn't exceed max length.
         } else if (title.length() > MAX_WORKOUT_TITLE_LENGTH) {
             Context contextWO = getApplicationContext();
-            Toast nameToast = Toast.makeText(contextWO, "Workout title must not exceed 35 characters", Toast.LENGTH_SHORT);
+            Toast nameToast = Toast.makeText(contextWO, R.string.workout_title_exceed, Toast.LENGTH_SHORT);
             nameToast.show();
             return false;
 
@@ -200,46 +226,56 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     /**
      * Check exercise array list is not empty.
      *
-     * @return true if not empty | false if empty
+     * @return true if not empty | false if empty.
      */
     private Boolean isValidExerciseArray() {
         if (mExerciseArrayList.size() != 0) {
             return true;
         } else {
             Context contextExArray = getApplicationContext();
-            Toast ExArrayToast = Toast.makeText(contextExArray, "Workout must contain at least 1 exercise!", Toast.LENGTH_SHORT);
+            Toast ExArrayToast = Toast.makeText(contextExArray, R.string.workout_contain_exercise, Toast.LENGTH_SHORT);
             ExArrayToast.show();
             return false;
         }
-
     }
 
     /**
-     * Get the exercise name from edit text and
-     * check its a valid string (not empty or exceeding 35 chars).
-     * // TODO: Refactor into two methods
+     * Get exercise name input from edit text.
+     * TODO: Consider whitespace (can currently just enter a space)
      *
-     * @return true if string checks pass | false if string checks fail
+     * @return name input from edit text as string
+     *         or empty string if input is null.
      */
-    private Boolean isValidNameInput() {
-        String name = mNameInput.getText().toString();
+    private String getNameInput() {
+        if (mNameInput.getText() == null) {
+            return "";
+        } else  {
+            return mNameInput.getText().toString().trim();
+        }
+    }
 
+    /**
+     * Check if inputted name is valid.
+     *
+     * @return true is name is valid.
+     *        | false if name is empty or exceeds max length.
+     */
+    private Boolean isValidNameInput(String name) {
         // Check name has been entered.
         if (name.isEmpty()) {
             Context contextEx = getApplicationContext();
-            Toast nameToast = Toast.makeText(contextEx, "Enter an exercise name! (Max 30 characters)", Toast.LENGTH_SHORT);
+            Toast nameToast = Toast.makeText(contextEx, R.string.enter_exercise_name, Toast.LENGTH_SHORT);
             nameToast.show();
             return false;
 
           // Check name doesn't exceed max length.
         } else if (name.length() > MAX_EXERCISE_NAME_LENGTH) {
             Context contextEx = getApplicationContext();
-            Toast nameToast = Toast.makeText(contextEx, "Exercise name must not exceed 30 characters", Toast.LENGTH_SHORT);
+            Toast nameToast = Toast.makeText(contextEx, R.string.exercise_name_exceed, Toast.LENGTH_SHORT);
             nameToast.show();
             return false;
 
         } else {
-            mExerciseName = name;
             return true;
         }
     }
@@ -255,8 +291,8 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     /**
      * Calculate total duration of all exercises in the workout.
      *
-     * @param exerciseArrayList stores the exercise objects which will be assigned to workout field
-     * @return total duration of all exercises in workout
+     * @param exerciseArrayList stores the exercise objects which will be assigned to workout field.
+     * @return total duration of all exercises in workout.
      */
     private long calcTotalDuration(ArrayList<Exercise> exerciseArrayList) {
         long totalDuration = 0;
@@ -281,25 +317,45 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         durationDialogFragment.setDurationListener(new DurationDialogFragment.DurationListener() {
             @Override
             public void onDurationFinished(long duration) {
-            //TODO: CONSTANT class?
             mExerciseDuration =  (duration / 1000);
+            mTotalDuration += duration;
             }
         });
     }
 
     /**
-     * Check that a duration has been inputted before creating exercise object.
+     * Check that exercise duration is valid.
      *
-     * @param inputtedDuration user inputted duration from dialogFragment
-     * @return true if a duration has been entered | false if duration is empty
+     * @param inputDuration User inputted duration from dialogFragment.
+     * @return True if a valid duration has been entered.
+     *        | False if duration is empty or workout duration exceeds 3 hours.
      */
-    private boolean isDurationInputted(long inputtedDuration) {
-        if (inputtedDuration == 0) {
-            Context context = getApplicationContext();
-            Toast dialogToast = Toast.makeText(context, "Enter a duration", Toast.LENGTH_SHORT);
-            dialogToast.show();
+    private boolean isDurationValid(long inputDuration) {
+
+        // Check a duration has been inputted.
+        if (inputDuration == 0) {
+            Context durationContext = getApplicationContext();
+            Toast durationToast = Toast.makeText(durationContext, R.string.enter_duration, Toast.LENGTH_SHORT);
+            durationToast.show();
             return false;
-        } else {
+
+            // Check workout duration doesn't exceed 3 hours.
+        }  else if (mTotalDuration > MAX_TOTAL_WORKOUT_DURATION) {
+            Context durationContext = getApplicationContext();
+            Toast durationToast = Toast.makeText(durationContext, R.string.total_duration_exceeds, Toast.LENGTH_LONG);
+            durationToast.show();
+            return false;
+
+           // Notify user if total duration has been met.
+        } else if (mTotalDuration == MAX_TOTAL_WORKOUT_DURATION) {
+            Context durationContext = getApplicationContext();
+            Toast durationToast = Toast.makeText(durationContext, R.string.max_duration_met, Toast.LENGTH_LONG);
+            durationToast.show();
+            return true;
+        }
+
+        // All checks pass.
+        else {
             return true;
         }
     }

@@ -124,7 +124,6 @@ public class TimerActivity extends AppCompatActivity implements TimeConverter {
     private Button mStartPauseBtn;
     private Button mStopBtn;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,13 +155,13 @@ public class TimerActivity extends AppCompatActivity implements TimeConverter {
      */
     private void setUpViews() {
         TextView mWorkoutTitleTxt = findViewById(R.id.workout_title_timer);
-        mWorkoutTitleTxt.setText(workout.getTitle());
         mCurrentExerciseTxt = findViewById(R.id.current_exercise_title);
         mNextExerciseTxt = findViewById(R.id.next_exercise);
         mNextExerciseTitleTxt = findViewById(R.id.next_exercise_title);
         mTimerValueTxt = findViewById(R.id.timer_value);
 
-        // Set exercise text using data from workout object.
+        // Set text using data from workout object.
+        mWorkoutTitleTxt.setText(workout.getTitle());
         updateCurrentExerciseTxt();
         updateNextExerciseTxt();
 

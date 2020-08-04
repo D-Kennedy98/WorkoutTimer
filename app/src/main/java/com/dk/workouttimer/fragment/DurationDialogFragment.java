@@ -25,6 +25,7 @@ public class DurationDialogFragment extends TimeDurationPickerDialogFragment {
 
     /**
      * Used to set duration listener to dialogFragment object.
+     *
      * @param durationListener listener that the fragment is set to
      */
     public void setDurationListener(DurationListener durationListener) {
@@ -33,6 +34,7 @@ public class DurationDialogFragment extends TimeDurationPickerDialogFragment {
 
     /**
      * Set the unit to be displayed by dialogFragment.
+     *
      * @return time unit value
      */
     @Override
@@ -43,7 +45,8 @@ public class DurationDialogFragment extends TimeDurationPickerDialogFragment {
     /**
      * Called when user leaves dialogFragment by pressing OK button.
      * OnDurationListener is triggered to pass duration back
-     * to CreateWO activity
+     * to CreateWO activity.
+     *
      * @param view picker view
      * @param duration duration that was entered
      */

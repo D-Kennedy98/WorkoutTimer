@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dk.workouttimer.R;
-import com.dk.workouttimer.TimeConverter;
 import com.dk.workouttimer.models.Exercise;
 import com.dk.workouttimer.models.Workout;
 
@@ -26,7 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class TimerActivity extends AppCompatActivity implements TimeConverter {
+public class TimerActivity extends AppCompatActivity {
 
     /**
      * Stores milliseconds to seconds conversion.
@@ -42,11 +41,6 @@ public class TimerActivity extends AppCompatActivity implements TimeConverter {
      * TAG for logging.
      */
     private static final String TAG = "";
-
-//    /**
-//     * Keep count of onTick calls for logging.
-//     */
-//    private static int sTickCount;
 
     /**
      * Keep count of onFinish calls to access correct WO array object.
@@ -219,11 +213,18 @@ public class TimerActivity extends AppCompatActivity implements TimeConverter {
     }
 
     /**
-     * Create count down timer.
+     * Create count down timer object.
+     *
+     * @param duration Duration of the timer.
      * TODO: Fix delay before starting after first time causes time to jump, could add name of exercise?
      */
     private void startCountdown(long duration) {
         mTimer = new CountDownTimer(duration, COUNT_DOWN_INTERVAL) {
+
+            /**
+             * Callback fired after each count down interval.
+             * @param millisUntilFinished The amount of time left until countdown is finished.
+             */
             @Override
             public void onTick(long millisUntilFinished) {
                 mTimerValueTxt.setText(convertTime(millisUntilFinished));
@@ -234,6 +235,9 @@ public class TimerActivity extends AppCompatActivity implements TimeConverter {
                 //Log.i(TAG, "tickCount: " + sTickCount);
             }
 
+            /**
+             * Callback fired when timer is finished (millisUntilFinished = 0).
+             */
             @Override
             public void onFinish() {
                 sOnFinishCount++;
@@ -274,7 +278,7 @@ public class TimerActivity extends AppCompatActivity implements TimeConverter {
     }
 
     /**
-     * Stop timer and reset UI.
+     * Stop timer.
      */
     private void stopTimer() {
         sOnFinishCount = 0;
@@ -316,8 +320,7 @@ public class TimerActivity extends AppCompatActivity implements TimeConverter {
      */
     private void updateCurrentExerciseTxt() {
         if (sOnFinishCount < mExerciseArrayList.size()) {
-            String currentExercise = mExerciseArrayList.get(sOnFinishCount).getName();
-            mCurrentExerciseTxt.setText(currentExercise);
+            mCurrentExerciseTxt.setText(mExerciseArrayList.get(sOnFinishCount).getName());
         }
     }
 
@@ -385,11 +388,10 @@ public class TimerActivity extends AppCompatActivity implements TimeConverter {
      * Convert time remaining in millis to format ss:mm.
      * Implements TimeConverter interface.
      *
-     * @param time time being converted in millis
-     * @return string format of time in format ss:mm
+     * @param time Time being converted in milli seconds.
+     * @return Time in string format of ss:mm.
      */
-    @Override
-    public String convertTime(long time) {
+    private String convertTime(long time) {
         int mins = (int) (time / 1000) / 60;
         int secs = (int) (time / 1000) % 60;
         return String.format(Locale.getDefault(), "%02d:%02d", mins, secs);

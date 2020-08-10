@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.dk.workouttimer.App;
 import com.dk.workouttimer.R;
-import com.dk.workouttimer.adapters.RecyclerAdapter;
+import com.dk.workouttimer.adapter.RecyclerAdapter;
 import com.dk.workouttimer.models.Workout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +27,7 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
     /**
      * Application class.
      */
-    App app;
+    private App app;
 
     /**
      * Stores workouts retrieved from db.
@@ -58,7 +58,6 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
 
     /**
      * Get array list of workout objects from db.
-     * TODO: Is this a necessary refactor from setUpRecyclerView?
      */
     private ArrayList<Workout> getDatabaseWorkouts() {
         return (ArrayList<Workout>) app.workoutDao.loadAllWorkouts();
@@ -81,7 +80,7 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
     /**
      * Set onClickListener for information button.
      */
-    public void setInfoOnClick() {
+    private void setInfoOnClick() {
         ImageView infoBtn = findViewById(R.id.info_btn);
 
         // Launch information activity.
@@ -97,7 +96,7 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
      * Set onClickListener ****
      * TODO: Create create btn
      */
-    public void setWorkoutOnClick() {
+    private void setWorkoutOnClick() {
         TextView workouts = findViewById(R.id.workout_title);
 
         workouts.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +110,7 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
     /**
      * Launch timer activity for chosen workout.
      *
-     * @param chosenWorkout workout object containing exercises information
+     * @param chosenWorkout Workout object containing exercises information.
      */
     private void launchTimerActivity(Workout chosenWorkout) {
         Intent intent = new Intent(this, TimerActivity.class);
@@ -122,7 +121,7 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
     /**
      * Launch information activity which contains info about the app.
      */
-    public void launchInformationActivity() {
+    private void launchInformationActivity() {
         Intent intent = new Intent(this, InformationActivity.class);
         startActivity(intent);
     }
@@ -130,7 +129,7 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
     /**
      * Launch createWorkout activity to create new workout routines.
      */
-    public void launchCreateWorkoutActivity() {
+    private void launchCreateWorkoutActivity() {
         Intent intent = new Intent(this, CreateWorkoutActivity.class);
         startActivity(intent);
     }
@@ -150,7 +149,7 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
      * Remove chosen workout from database and recycler data set.
      * TODO: Refactor into delete and remove method?
      *
-     * @param position position of view holder chosen on recycler view to index workout array list.
+     * @param position Position of view holder chosen on recycler view to index workout array list.
      */
     @Override
     public void onDeleteClick(int position) {

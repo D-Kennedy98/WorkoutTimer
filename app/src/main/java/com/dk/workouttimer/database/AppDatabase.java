@@ -30,7 +30,7 @@ public abstract class AppDatabase extends RoomDatabase {
     /**
      * Default constructor.
      */
-    AppDatabase(){}
+     AppDatabase(){}
 
     /**
      * Get instance of the created database.

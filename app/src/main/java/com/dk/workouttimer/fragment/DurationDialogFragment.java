@@ -12,21 +12,21 @@ import mobi.upod.timedurationpicker.TimeDurationPickerDialogFragment;
 public class DurationDialogFragment extends TimeDurationPickerDialogFragment {
 
     /**
-     * interface to pass duration to CreateWO activity from the dialogFragment
+     * Interface to pass duration to CreateWO activity from the dialogFragment.
      */
     public interface DurationListener {
         void onDurationFinished(long duration);
     }
 
     /**
-     * listener variable to be assigned implementation of interface
+     * Listener variable to be assigned implementation of interface.
      */
     private DurationListener mDurationListener;
 
     /**
      * Used to set duration listener to dialogFragment object.
      *
-     * @param durationListener listener that the fragment is set to
+     * @param durationListener Listener that the fragment is set to.
      */
     public void setDurationListener(DurationListener durationListener) {
         this.mDurationListener = durationListener;
@@ -35,7 +35,7 @@ public class DurationDialogFragment extends TimeDurationPickerDialogFragment {
     /**
      * Set the unit to be displayed by dialogFragment.
      *
-     * @return time unit value
+     * @return Time unit value.
      */
     @Override
     protected int setTimeUnits() {
@@ -47,8 +47,8 @@ public class DurationDialogFragment extends TimeDurationPickerDialogFragment {
      * OnDurationListener is triggered to pass duration back
      * to CreateWO activity.
      *
-     * @param view picker view
-     * @param duration duration that was entered
+     * @param view Picker view.
+     * @param duration Duration that was entered.
      */
     @Override
     public void onDurationSet(TimeDurationPicker view, long duration) {

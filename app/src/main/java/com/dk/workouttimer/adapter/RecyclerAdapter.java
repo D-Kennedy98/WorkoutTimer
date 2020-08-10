@@ -3,7 +3,7 @@
  Purpose: creates view holders and binds workout data to them
  */
 
-package com.dk.workouttimer.adapters;
+package com.dk.workouttimer.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.dk.workouttimer.R;
-import com.dk.workouttimer.TimeConverter;
 import com.dk.workouttimer.models.Workout;
 
 import androidx.annotation.NonNull;
@@ -22,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements TimeConverter {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     /**
      * Data set binded to adapter.
@@ -95,11 +94,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     /**
      * Convert time in seconds to format ss:mm.
+     *
      * @param time time being converted
      * @return string of time in format ss:mm
      */
-    @Override
-    public String convertTime(long time) {
+    private String convertTime(long time) {
         int mins = (int) time / 60;
         int secs = (int) time % 60;
         return  String.format(Locale.getDefault(), "%02d:%02d", mins, secs);

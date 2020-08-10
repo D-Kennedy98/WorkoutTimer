@@ -30,7 +30,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     /**
      * Application class.
      */
-    App app;
+    private App app;
 
     // TODO: appropriate max lengths
     /**
@@ -47,11 +47,6 @@ public class CreateWorkoutActivity extends AppCompatActivity {
      * Store max length that of exercise name.
      */
     private static final int MAX_WORKOUT_TITLE_LENGTH = 35;
-
-//    /**
-//     * Store exercise name to be passed into exercise constructor.
-//     */
-//    private String mExerciseName;
 
     /**
      * Store duration entered in duration dialog fragment.
@@ -80,7 +75,6 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private EditText mWorkoutTitleInput;
     private EditText mNameInput;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +91,9 @@ public class CreateWorkoutActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Set up UI views.
+     */
     private void setUpViews() {
         mWorkoutTitleInput = findViewById(R.id.workout_title_input);
         mNameInput = findViewById(R.id.name_input);
@@ -104,7 +101,6 @@ public class CreateWorkoutActivity extends AppCompatActivity {
 
     /**
      * Create new exercise object from edit text values and add to array list.
-     * TODO: Error checking input, make sure it doesn't exceed max CDT value
      */
     private void setUpAddExerciseBtn() {
         Button mAddExerciseBtn = findViewById(R.id.add_exercise_btn);
@@ -186,8 +182,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     /**
      * Get workout title input from edit text.
      *
-     * @return workout title input as string
-     *         or empty string if input is null.
+     * @return Workout title input as string or empty string if input is null.
      */
     private String getWorkoutTitleInput() {
         if (mWorkoutTitleInput.getText() == null) {
@@ -200,7 +195,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     /**
      * Check workout title input is valid.
      *
-     * @return true if title is valid | false if title is empty or exceeds max length.
+     * @return True if title is valid. | False if title is empty or exceeds max length.
      */
     private Boolean isValidWorkoutTitleInput(String title) {
         // Check title has been entered.
@@ -226,7 +221,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     /**
      * Check exercise array list is not empty.
      *
-     * @return true if not empty | false if empty.
+     * @return True if not empty. | False if empty.
      */
     private Boolean isValidExerciseArray() {
         if (mExerciseArrayList.size() != 0) {
@@ -241,10 +236,8 @@ public class CreateWorkoutActivity extends AppCompatActivity {
 
     /**
      * Get exercise name input from edit text.
-     * TODO: Consider whitespace (can currently just enter a space)
      *
-     * @return name input from edit text as string
-     *         or empty string if input is null.
+     * @return Name input from edit text as string or empty string if input is null.
      */
     private String getNameInput() {
         if (mNameInput.getText() == null) {
@@ -257,8 +250,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     /**
      * Check if inputted name is valid.
      *
-     * @return true is name is valid.
-     *        | false if name is empty or exceeds max length.
+     * @return True is name is valid. | False if name is empty or exceeds max length.
      */
     private Boolean isValidNameInput(String name) {
         // Check name has been entered.
@@ -291,8 +283,8 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     /**
      * Calculate total duration of all exercises in the workout.
      *
-     * @param exerciseArrayList stores the exercise objects which will be assigned to workout field.
-     * @return total duration of all exercises in workout.
+     * @param exerciseArrayList Stores the exercise objects which will be assigned to workout field.
+     * @return Total duration of all exercises in workout.
      */
     private long calcTotalDuration(ArrayList<Exercise> exerciseArrayList) {
         long totalDuration = 0;
@@ -331,7 +323,6 @@ public class CreateWorkoutActivity extends AppCompatActivity {
      *        | False if duration is empty or workout duration exceeds 3 hours.
      */
     private boolean isDurationValid(long inputDuration) {
-
         // Check a duration has been inputted.
         if (inputDuration == 0) {
             Context durationContext = getApplicationContext();
@@ -358,6 +349,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         else {
             return true;
         }
+
     }
 
 }

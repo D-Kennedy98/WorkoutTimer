@@ -13,44 +13,45 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 @Dao
 public interface WorkoutDao {
 
     /**
-     * insert workout to db
-     * @param workout object to be inserted to db
+     * Insert workout to db.
+     * @param workout Workout object to be inserted to db.
      */
     @Insert
     void insertWorkout(Workout workout);
 
     /**
-     * updates stored workout object params
-     * if object doesn't exist in db, then db is not updated
-     * @param workout object to be updated
-     */
-    @Update
-    void updateWorkout(Workout workout);
-
-    /**
-     * deletes workout object from db
-     * @param workout object to be deleted
+     * Deletes workout object from db.
+     * @param workout Workout object to be deleted.
      */
     @Delete
     void deleteWorkout(Workout workout);
 
     /**
-     * returns all workout objects stored in db
-     * @return list of all workouts
+     * Returns all workout objects stored in db.
+     * @return List of all workout objects.
      */
     @Query("SELECT * FROM workoutTable ORDER BY id")
     List<Workout> loadAllWorkouts();
 
-    /**
-     * deletes all workout objects from table
-     */
-    @Query("DELETE FROM workoutTable")
-    void clearTable();
+
+//    /**
+//     * Deletes all workout objects from db table.
+//     */
+//    @Query("DELETE FROM workoutTable")
+//    void clearTable();
+
+//    /**
+//     * Updates stored workout object params.
+//     * If object doesn't exist in db, then db is not updated.
+//     * @param workout Workout object to be updated.
+//     */
+//    @Update
+//    void updateWorkout(Workout workout);
+
 
 }

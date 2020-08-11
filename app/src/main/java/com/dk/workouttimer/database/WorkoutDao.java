@@ -1,6 +1,6 @@
 /*
  * Author: Dominic Kennedy
- * Purpose: define dao interface for interacting with com.dk.workouttimer.database
+ * Purpose: Define data access object interface for interacting with database.
  */
 
 package com.dk.workouttimer.database;
@@ -32,7 +32,7 @@ public interface WorkoutDao {
     void deleteWorkout(Workout workout);
 
     /**
-     * Returns all workout objects stored in db.
+     * Returns all workout objects stored in db as list.
      * @return List of all workout objects.
      */
     @Query("SELECT * FROM workoutTable ORDER BY id")

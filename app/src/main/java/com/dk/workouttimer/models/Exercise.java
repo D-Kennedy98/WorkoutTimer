@@ -1,6 +1,8 @@
 /*
  * Author: Dominic Kennedy 160304253
- * Purpose: Defines workout class used to store exercise data
+ * Purpose: Defines workout objects used to store exercise data.
+ * Implements parcelable to allow workout objects to be passed as intent
+ * (field of workout is List<Exercise>).
  */
 
 package com.dk.workouttimer.models;
@@ -9,53 +11,123 @@ import android.os.Parcelable;
 import android.os.Parcel;
 
 public class Exercise implements Parcelable {
+
+    /**
+     * Name of exercise.
+     */
     private String mName;
+
+    /**
+     * Duration of exercise in seconds.
+     */
     private long mDuration;
 
+    /**
+     * Exercise constructor.
+     *
+     * @param mName Name of exercise.
+     * @param mDuration Duration of exercise in seconds.
+     */
     public Exercise(String mName, long mDuration) {
         this.mName = mName;
         this.mDuration = mDuration;
     }
 
-    // implements parcelable so that exercise objects can be passed as intent
+    /**
+     * Write exercise instance to parcel.
+     *
+     * @param in Parcel in which object should be written.
+     */
     private Exercise(Parcel in) {
         mName = in.readString();
         mDuration = in.readLong();
     }
 
+    /**
+     * Interface require for parcelable.
+     */
     public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {
+
+        /**
+         * Generates new instances of parcelable exercise class.
+         *
+         * @param in The parcel to read object data from.
+         * @return Return new parcelable exercise instance.
+         */
         @Override
         public Exercise createFromParcel(Parcel in) {
             return new Exercise(in);
         }
 
+        /**
+         * Create new array of parcelable exercise class.
+         *
+         * @param size Size of array.
+         * @return Returns array of parcelable exercise class.
+         */
         @Override
         public Exercise[] newArray(int size) {
             return new Exercise[size];
         }
     };
 
+    /**
+     * Describes contents of parcelable exercise instance.
+     *
+     * @return a bitmask indicating the set of special object types marshaled
+     *  by this parcelable instance.
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     * Convert objects to parcel.
+     *
+     * @param dest The parcel in which the exercise object should be written.
+     * @param flags Additional flags about how the exercise object should be written.
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mName);
         dest.writeLong(mDuration);
     }
 
+    /**
+     * Get name field of exercise instance.
+     *
+     * @return Name field of exercise instance.
+     */
     public String getName() {
         return mName;
     }
 
+    /**
+     * Set name field of exercise instance.
+     *
+     * @param name String that name field is set to.
+     */
+    public void setName(String name) {
+        this.mName = name;
+    }
+
+    /**
+     * Get duration field of exercise instance.
+     *
+     * @return Duration field of exercise instance.
+     */
     public long getDuration() {
         return mDuration;
     }
 
-    public void setDuration(int duration) {
-        this.mDuration = duration;
-    }
+//    /**
+//     * Set duration field of exercise instance.
+//     *
+//     * @param duration Int that duration field is set to.
+//     */
+//    public void setDuration(int duration) {
+//        this.mDuration = duration;
+//    }
 
 }

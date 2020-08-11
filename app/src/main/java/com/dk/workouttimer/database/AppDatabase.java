@@ -1,7 +1,7 @@
 /*
  * Author: Dominic Kennedy
- * Purpose: Defines the abstract com.dk.workouttimer.database.
- *          Follows singleton DP - Only one instance can exist
+ * Purpose: Defines the abstract database.
+ * Follows singleton DP - Only one instance can exist.
  */
 
 package com.dk.workouttimer.database;

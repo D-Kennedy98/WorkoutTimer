@@ -1,7 +1,7 @@
 /*
  * Author: Dominic Kennedy
  * Purpose: Allow user to create exercises which are used
- *          to create workout objects
+ * to create workout objects.
  */
 
 package com.dk.workouttimer.activities;

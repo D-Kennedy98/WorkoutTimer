@@ -1,6 +1,6 @@
 /*
  Author: Dominic Kennedy
- Purpose: creates view holders and binds workout data to them
+ Purpose: Creates view holders and binds workout data to them.
  */
 
 package com.dk.workouttimer.adapter;

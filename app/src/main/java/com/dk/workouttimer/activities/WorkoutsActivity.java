@@ -1,6 +1,6 @@
 /*
  * Author: Dominic Kennedy
- * Purpose: Implements home screen where users choose a workout
+ * Purpose: Implements home screen where users choose a workout.
  */
 
 package com.dk.workouttimer.activities;

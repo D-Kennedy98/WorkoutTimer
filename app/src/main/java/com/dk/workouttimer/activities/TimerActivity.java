@@ -1,6 +1,6 @@
 /*
  Author: Dominic Kennedy 160304253
- Purpose: Implements Timer screen which displays the workout timer
+ Purpose: Implements Timer screen which displays the workout timer.
  */
 
 package com.dk.workouttimer.activities;

@@ -1,6 +1,7 @@
 /*
  * Author: Dominic Kennedy
- * Purpose: Implements home screen where users choose a workout.
+ * Purpose: Implements home screen activity where a user can
+ * choose a workout to start or delete a workout.
  */
 
 package com.dk.workouttimer.activities;
@@ -46,9 +47,13 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
 
         app = (App)getApplication();
 
-        mWorkoutArrayList = getDatabaseWorkouts();
+        // Access db on background thread
+        AccessDbRunnable runnable = new AccessDbRunnable();
+        new Thread(runnable).start();
 
-        setUpRecyclerView();
+      //  mWorkoutArrayList = getDatabaseWorkouts();
+
+      //  setUpRecyclerView();
 
         setWorkoutOnClick();
 
@@ -61,6 +66,15 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
      */
     private ArrayList<Workout> getDatabaseWorkouts() {
         return (ArrayList<Workout>) app.workoutDao.loadAllWorkouts();
+    }
+
+    /**
+     * Delete workout from db.
+     *
+     * @param workout Workout to removed from db.
+     */
+    private void deleteDatabaseWorkout(Workout workout) {
+        app.workoutDao.deleteWorkout(workout);
     }
 
     /**
@@ -147,7 +161,6 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
 
     /**
      * Remove chosen workout from database and recycler data set.
-     * TODO: Refactor into delete and remove method?
      *
      * @param position Position of view holder chosen on recycler view to index workout array list.
      */
@@ -155,12 +168,59 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
     public void onDeleteClick(int position) {
         Workout chosenWorkout = mWorkoutArrayList.get(position);
 
-        // remove from database
-        app.workoutDao.deleteWorkout(chosenWorkout);
+        // remove from db async
+        DeleteDbRunnable runnable = new DeleteDbRunnable(chosenWorkout);
+        new Thread(runnable).start();
 
-        // remove from array list
+        // remove from workout array list
         mWorkoutArrayList.remove(position);
+
+        // update recycler view
         recyclerAdapter.notifyItemRemoved(position);
     }
+
+    /**
+     * Runnable inner class to access workouts from db.
+     */
+    private class AccessDbRunnable implements Runnable {
+
+        /**
+         * Get workout list from db on background thread to pass into recycler adaptor.
+         */
+        @Override
+        public void run() {
+           mWorkoutArrayList = getDatabaseWorkouts();
+           setUpRecyclerView();
+        }
+    }
+
+    /**
+     * Runnable inner class to delete workout from db.
+     */
+    private class DeleteDbRunnable implements Runnable {
+
+        /**
+         * Workout to be deleted from db.
+         */
+        Workout workout;
+
+        /**
+         * Runnable constructor.
+         *
+         * @param workout Workout chosen to be deleted.
+         */
+        DeleteDbRunnable(Workout workout) {
+            this.workout = workout;
+        }
+
+        /**
+         * Delete workout from db on background thread.
+         */
+        @Override
+        public void run() {
+            deleteDatabaseWorkout(workout);
+        }
+    }
+
 
 }

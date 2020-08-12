@@ -35,15 +35,13 @@ public abstract class AppDatabase extends RoomDatabase {
     /**
      * Get instance of the created database.
      *
-     * @param context current state of application
-     * @return AppDatabase instance
-     * TODO: change so it doesn't run on main thread
+     * @param context Current state of application.
+     * @return AppDatabase instance.
      */
     public static AppDatabase getInstance(Context context) {
         if (sInstance == null) {
             sInstance = Room.databaseBuilder(context.getApplicationContext(),
-                    AppDatabase.class, NAME).allowMainThreadQueries().build();
-
+                    AppDatabase.class, NAME).build();
         }
         return sInstance;
     }

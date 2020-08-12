@@ -156,8 +156,9 @@ public class CreateWorkoutActivity extends AppCompatActivity {
                             mWorkoutTitle, (int) calcTotalDuration(mExerciseArrayList),
                             mExerciseArrayList.size(), mExerciseArrayList);
 
-                    app.workoutDao.insertWorkout(newWorkout);
-                    launchWorkoutsActivity();
+                    // add workout to db async then launch workouts activity
+                    WriteDbRunnable runnable = new WriteDbRunnable(newWorkout);
+                    new Thread(runnable).start();
                 }
             }
         });
@@ -195,7 +196,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     /**
      * Check workout title input is valid.
      *
-     * @return True if title is valid. | False if title is empty or exceeds max length.
+     * @return True if title is valid. False if title is empty or exceeds max length.
      */
     private Boolean isValidWorkoutTitleInput(String title) {
         // Check title has been entered.
@@ -221,7 +222,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     /**
      * Check exercise array list is not empty.
      *
-     * @return True if not empty. | False if empty.
+     * @return True if not empty. False if empty.
      */
     private Boolean isValidExerciseArray() {
         if (mExerciseArrayList.size() != 0) {
@@ -320,7 +321,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
      *
      * @param inputDuration User inputted duration from dialogFragment.
      * @return True if a valid duration has been entered.
-     *        | False if duration is empty or workout duration exceeds 3 hours.
+     * False if duration is empty or workout duration exceeds 3 hours.
      */
     private boolean isDurationValid(long inputDuration) {
         // Check a duration has been inputted.
@@ -344,10 +345,38 @@ public class CreateWorkoutActivity extends AppCompatActivity {
             durationToast.show();
             return true;
         }
-
         // All checks pass.
         else {
             return true;
+        }
+    }
+
+    /**
+     * Runnable inner class to write a workout object to db.
+     */
+    private class WriteDbRunnable implements Runnable {
+
+        /**
+         * Workout instance created by user.
+         */
+        Workout newWorkout;
+
+        /**
+         * Runnable constructor.
+         *
+         * @param newWorkout Workout to written to db.
+         */
+        WriteDbRunnable(Workout newWorkout) {
+            this.newWorkout = newWorkout;
+        }
+
+        /**
+         * Insert workout object to db then launch workouts activity.
+         */
+        @Override
+        public void run() {
+            app.workoutDao.insertWorkout(newWorkout);
+            launchWorkoutsActivity();
         }
 
     }

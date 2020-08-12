@@ -20,6 +20,7 @@ public class Converter {
 
     /**
      * Convert List<Exercise> to string for database storage.
+     *
      * @param exerciseList exercises objects for conversion
      * @return string form of List<Exercise>
      */
@@ -37,8 +38,9 @@ public class Converter {
 
     /**
      * Convert string back to List<Exercise> when retrieving from database.
+     *
      * @param exercisesString string form of List<Exercise> to be converted back
-     * @return original List<Exercise> that was stored in com.dk.workouttimer.database
+     * @return original List<Exercise> that was stored in database
      */
     @TypeConverter
     public List<Exercise> stringToList(String exercisesString) {

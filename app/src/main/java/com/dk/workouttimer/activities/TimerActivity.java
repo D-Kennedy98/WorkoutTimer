@@ -223,6 +223,7 @@ public class TimerActivity extends AppCompatActivity {
 
             /**
              * Callback fired after each count down interval.
+             *
              * @param millisUntilFinished The amount of time left until countdown is finished.
              */
             @Override
@@ -337,8 +338,6 @@ public class TimerActivity extends AppCompatActivity {
             mIsPenultimateExercise = true;
             mNextExerciseTitleTxt.setVisibility(View.INVISIBLE);
             mNextExerciseTxt.setText(R.string.final_exercise);
-            // mNextExerciseTxt.setTypeface(Typeface.DEFAULT_BOLD);
-            // unsure how to change back to normal typeface
         }
     }
 

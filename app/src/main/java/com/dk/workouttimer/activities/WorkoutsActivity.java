@@ -190,7 +190,14 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
         @Override
         public void run() {
            mWorkoutArrayList = getDatabaseWorkouts();
-           setUpRecyclerView();
+
+           // updates recycler view therefore needs to run on main thread
+           runOnUiThread(new Runnable() {
+               @Override
+               public void run() {
+                   setUpRecyclerView();
+               }
+           });
         }
     }
 
@@ -202,7 +209,7 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
         /**
          * Workout to be deleted from db.
          */
-        Workout workout;
+        final Workout workout;
 
         /**
          * Runnable constructor.

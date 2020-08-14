@@ -88,7 +88,6 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         setUpDurationBtn();
         setUpSaveBtn();
         setUpBackBtn();
-
     }
 
     /**
@@ -359,7 +358,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         /**
          * Workout instance created by user.
          */
-        Workout newWorkout;
+        final Workout newWorkout;
 
         /**
          * Runnable constructor.

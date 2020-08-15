@@ -107,13 +107,13 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
     }
 
     /**
-     * Set onClickListener ****
-     * TODO: Create create btn
+     * Set onClickListener for create button which navigates
+     * user to create WO activity.
      */
     private void setWorkoutOnClick() {
-        TextView workouts = findViewById(R.id.workout_title);
+        ImageView create_btn = findViewById(R.id.create_btn);
 
-        workouts.setOnClickListener(new View.OnClickListener() {
+        create_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 launchCreateWorkoutActivity();

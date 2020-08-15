@@ -11,8 +11,8 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view"
-        android:layout_width="175dp"
-        android:layout_height="150dp"
+        android:layout_width="158dp"
+        android:layout_height="142dp"
         android:background="@color/snow"
         android:padding="2dp"
         app:cardCornerRadius="15sp"
@@ -49,31 +49,33 @@
                 app:layout_constraintTop_toBottomOf="@+id/workout_txt"
                 app:srcCompat="@drawable/ic_press_up" />
 
-            <TextView
-                android:id="@+id/workout_duration_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/duration_x"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.178"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/workout_img" />
 
             <TextView
                 android:id="@+id/number_exercises_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/number_of_exercises"
+                android:text="@string/exercises"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.206"
+                app:layout_constraintHorizontal_bias="0.362"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/workout_duration_txt" />
+                app:layout_constraintTop_toBottomOf="@+id/workout_img" />
+
+            <TextView
+                android:id="@+id/workout_duration_txt"
+                android:layout_width="104dp"
+                android:layout_height="21dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity=""
+                android:text="@string/duration_mmss"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.58"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/number_exercises_txt" />
 
             <Button
                 android:id="@+id/delete_btn"

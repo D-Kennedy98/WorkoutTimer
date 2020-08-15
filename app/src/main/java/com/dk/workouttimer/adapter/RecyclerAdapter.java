@@ -26,17 +26,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     /**
      * Data set binded to adapter.
      */
-    private final ArrayList<Workout> mWorkoutArrayList;
+    private ArrayList<Workout> mWorkoutArrayList;
 
     /**
      * Instantiates layout XML files to corresponding view objects.
      */
-    private final LayoutInflater layoutInflater;
+    private LayoutInflater layoutInflater;
 
     /**
      * OnWorkoutListener interface.
      */
-    private final OnWorkoutListener mWorkoutListener;
+    private OnWorkoutListener mWorkoutListener;
 
     /**
      * Recycler Adaptor constructor.
@@ -79,7 +79,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.duration.setText(String.format(Locale.getDefault(),
                 "Duration: %s", convertTime(workout.getTotalDuration())));
         holder.numberExercises.setText(String.format(Locale.getDefault(),
-                "No. of exercises: %d", workout.getNoExercises()));
+                "Exercises: %d", workout.getNoExercises()));
     }
 
     /**
@@ -109,21 +109,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      * new items become visible.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final Button deleteBtn;
-        final TextView workoutTitle, duration, numberExercises;
-        final OnWorkoutListener workoutListener;
+        Button deleteBtn;
+        TextView workoutTitle, duration, numberExercises;
+        OnWorkoutListener workoutListener;
 
         ViewHolder(@NonNull View itemView, OnWorkoutListener workoutListener) {
             super(itemView);
+            deleteBtn = itemView.findViewById(R.id.delete_btn);
             workoutTitle = itemView.findViewById(R.id.workout_txt);
             duration = itemView.findViewById(R.id.workout_duration_txt);
             numberExercises = itemView.findViewById(R.id.number_exercises_txt);
             this.workoutListener = workoutListener;
 
-            deleteBtn = itemView.findViewById(R.id.delete_btn);
-
             // this refers to onClickListener interface
-            workoutTitle.setOnClickListener(this);
+            itemView.setOnClickListener(this);
             deleteBtn.setOnClickListener(this);
         }
 
@@ -134,10 +133,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
          */
         @Override
         public void onClick(View v) {
-            // check which view is clicked
+            // check if delete btn is pressed
            if(deleteBtn.isPressed()) {
                workoutListener.onDeleteClick(getAdapterPosition());
-           } else if (workoutTitle.isPressed()){
+           } else if (itemView.isPressed()){
                workoutListener.onStartTimerClick(getAdapterPosition());
            }
         }
@@ -145,12 +144,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     /*
      * Interface to detect recycler view click
-     * and pass position of clicked item to WO activity.
+     * and pass position of clicked item to WOs activity.
      */
     public interface OnWorkoutListener {
 
         /**
-         * Detect click on *** and pass chosen view holder position to WO activity.
+         * Detect click on grid view and pass chosen view holder position to WOs activity.
          *
          * @param position position of view holder where *** is clicked
          */

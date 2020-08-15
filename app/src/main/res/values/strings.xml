@@ -5,8 +5,10 @@
     <string name="arms_chest">Arms / Chest</string>
     <string name="back_button">back button</string>
     <string name="begin_workout">Begin Workout</string>
+    <string name="create_button">Create Button</string>
     <string name="enter_workout_duration">seconds</string>
-    <string name="exercises">Exercises</string>
+    <string name="duration_mmss">Duration: 15:00</string>
+    <string name="exercises">Exercises: 5</string>
     <string name="final_exercise">Final Exercise</string>
     <string name="image_of_workout">Image of exercise</string>
     <string name="information_button">Information Button</string>
@@ -29,17 +31,13 @@
     <!-- App Information -->
     <string name="dk_info">Developed by:\nDominic Kennedy\n
         Newcastle University</string>
-
     <string name="user_manual">WorkoutTimer is a fitness application that allows users to time their workouts.
         Six workouts are provided which collectively target all the major muscle groups.\n\nFrom the home screen, choose a exercise to be navigated to the exercise screen.
         In the exercise screen, an image demonstrates the exercise.
         Enter a duration for the exercise <b>(value can not be above 6000 seconds / 100 minutes)</b> and tap the start exercise button.
         You will be directed to the timer screen where the countdown timer will begin.</string>
-
     <string name="info_attributions">Attributions</string>
-
     <string name="zapsplat_sound">Sound effects obtained from www.zapsplat.com</string>
-
 <!--    <string name="info_icons">Icons made by Pixel perfect from www.flaticon.com</string>-->
 
     <!-- Error check duration edit text -->
@@ -49,7 +47,7 @@
     <string name="workout_title">Workout Title</string>
     <string name="exercise_duration">exercise duration</string>
     <string name="exercise_name">exercise name</string>
-    <string name="duration_x">Duration %d</string>
+    <string name="duration_x">Duration</string>
     <string name="number_of_exercises">No. exercises</string>
     <string name="save_workout">Save Workout</string>
     <string name="duration">Duration</string>

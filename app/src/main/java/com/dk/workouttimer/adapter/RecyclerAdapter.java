@@ -93,6 +93,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     /**
+     * Get workout at chosen position on recycler view.
+     *
+     * @param position Position of view holder.
+     * @return Workout at chosen position.
+     */
+    public Workout getWorkoutAt(int position) {
+        return mWorkoutArrayList.get(position);
+    }
+
+    /**
      * Convert time in seconds to format ss:mm.
      *
      * @param time Time being converted.
@@ -109,9 +119,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      * new items become visible.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        Button deleteBtn;
-        TextView workoutTitle, duration, numberExercises;
-        OnWorkoutListener workoutListener;
+       private Button deleteBtn;
+       private TextView workoutTitle, duration, numberExercises;
+       private OnWorkoutListener workoutListener;
 
         ViewHolder(@NonNull View itemView, OnWorkoutListener workoutListener) {
             super(itemView);

@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
 
-
     defaultConfig {
         applicationId "com.dk.workouttimer"
         minSdkVersion 23
@@ -32,8 +31,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.google.android.material:material:1.2.0'
-    implementation 'com.google.code.gson:gson:2.8.6' // for type conversion
+    implementation 'com.google.android.material:material:1.3.0-alpha02'
+    implementation 'com.google.code.gson:gson:2.8.6' // for db type conversion
 
     implementation 'mobi.upod:time-duration-picker:1.1.3' // duration picker for exercises
 
@@ -45,9 +44,8 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
-    // Test helpers
+    // test helpers
     testImplementation "androidx.room:room-testing:$room_version"
-
 
 
 }

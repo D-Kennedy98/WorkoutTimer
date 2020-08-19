@@ -8,7 +8,6 @@ package com.dk.workouttimer.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -111,11 +110,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
 
                 if (isValidNameInput(name) && isDurationValid(mExerciseDuration)) {
                     mExerciseArrayList.add(new Exercise(name, mExerciseDuration));
-
-                    Context context = getApplicationContext();
-                    Toast addToast = Toast.makeText(context, R.string.exercise_added, Toast.LENGTH_SHORT);
-                    addToast.show();
-
+                    Toast.makeText(CreateWorkoutActivity.this, R.string.exercise_added, Toast.LENGTH_SHORT).show();
                     mNameInput.getText().clear();
                     mExerciseDuration = 0;
                 }
@@ -200,16 +195,12 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private Boolean isValidWorkoutTitleInput(String title) {
         // Check title has been entered.
         if (title.isEmpty()) {
-            Context contextWO = getApplicationContext();
-            Toast titleToast = Toast.makeText(contextWO, R.string.enter_workout_title, Toast.LENGTH_SHORT);
-            titleToast.show();
+            Toast.makeText(CreateWorkoutActivity.this, R.string.enter_workout_title, Toast.LENGTH_SHORT).show();
             return false;
 
           // Check title doesn't exceed max length.
         } else if (title.length() > MAX_WORKOUT_TITLE_LENGTH) {
-            Context contextWO = getApplicationContext();
-            Toast nameToast = Toast.makeText(contextWO, R.string.workout_title_exceed, Toast.LENGTH_SHORT);
-            nameToast.show();
+            Toast.makeText(CreateWorkoutActivity.this, R.string.workout_title_exceed, Toast.LENGTH_SHORT).show();
             return false;
 
         } else {
@@ -227,9 +218,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         if (mExerciseArrayList.size() != 0) {
             return true;
         } else {
-            Context contextExArray = getApplicationContext();
-            Toast ExArrayToast = Toast.makeText(contextExArray, R.string.workout_contain_exercise, Toast.LENGTH_SHORT);
-            ExArrayToast.show();
+            Toast.makeText(CreateWorkoutActivity.this, R.string.workout_contain_exercise, Toast.LENGTH_SHORT).show();
             return false;
         }
     }
@@ -255,16 +244,12 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private Boolean isValidNameInput(String name) {
         // Check name has been entered.
         if (name.isEmpty()) {
-            Context contextEx = getApplicationContext();
-            Toast nameToast = Toast.makeText(contextEx, R.string.enter_exercise_name, Toast.LENGTH_SHORT);
-            nameToast.show();
+            Toast.makeText(CreateWorkoutActivity.this, R.string.enter_exercise_name, Toast.LENGTH_SHORT).show();
             return false;
 
           // Check name doesn't exceed max length.
         } else if (name.length() > MAX_EXERCISE_NAME_LENGTH) {
-            Context contextEx = getApplicationContext();
-            Toast nameToast = Toast.makeText(contextEx, R.string.exercise_name_exceed, Toast.LENGTH_SHORT);
-            nameToast.show();
+            Toast.makeText(CreateWorkoutActivity.this, R.string.exercise_name_exceed, Toast.LENGTH_SHORT).show();
             return false;
 
         } else {
@@ -325,23 +310,17 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private boolean isDurationValid(long inputDuration) {
         // Check a duration has been inputted.
         if (inputDuration == 0) {
-            Context durationContext = getApplicationContext();
-            Toast durationToast = Toast.makeText(durationContext, R.string.enter_duration, Toast.LENGTH_SHORT);
-            durationToast.show();
+            Toast.makeText(CreateWorkoutActivity.this, R.string.enter_duration, Toast.LENGTH_SHORT).show();
             return false;
 
             // Check workout duration doesn't exceed 3 hours.
         }  else if (mTotalDuration > MAX_TOTAL_WORKOUT_DURATION) {
-            Context durationContext = getApplicationContext();
-            Toast durationToast = Toast.makeText(durationContext, R.string.total_duration_exceeds, Toast.LENGTH_LONG);
-            durationToast.show();
+            Toast.makeText(CreateWorkoutActivity.this, R.string.total_duration_exceeds, Toast.LENGTH_LONG).show();
             return false;
 
            // Notify user if total duration has been met.
         } else if (mTotalDuration == MAX_TOTAL_WORKOUT_DURATION) {
-            Context durationContext = getApplicationContext();
-            Toast durationToast = Toast.makeText(durationContext, R.string.max_duration_met, Toast.LENGTH_LONG);
-            durationToast.show();
+            Toast.makeText(CreateWorkoutActivity.this, R.string.max_duration_met, Toast.LENGTH_LONG).show();
             return true;
         }
         // All checks pass.

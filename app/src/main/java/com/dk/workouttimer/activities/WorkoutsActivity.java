@@ -10,15 +10,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dk.workouttimer.App;
 import com.dk.workouttimer.R;
 import com.dk.workouttimer.adapter.RecyclerAdapter;
 import com.dk.workouttimer.models.Workout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -40,6 +42,11 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
      */
     private RecyclerAdapter recyclerAdapter;
 
+    /**
+     * Recycler view to display list of workouts.
+     */
+    private RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,13 +58,10 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
         AccessDbRunnable runnable = new AccessDbRunnable();
         new Thread(runnable).start();
 
-      //  mWorkoutArrayList = getDatabaseWorkouts();
-
-      //  setUpRecyclerView();
-
         setWorkoutOnClick();
-
         setInfoOnClick();
+
+
 
     }
 
@@ -78,10 +82,10 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
     }
 
     /**
-     * Initialise recycler view.
+     * Set up recycler view.
      */
     private void setUpRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
 
         recyclerAdapter = new RecyclerAdapter(
                 this, mWorkoutArrayList, this);
@@ -89,15 +93,57 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
                 this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(recyclerAdapter);
+
+        setUpSwipeToDelete();
     }
 
     /**
-     * Set onClickListener for information button.
+     * Set up swipe to delete workout.
+     */
+    private void setUpSwipeToDelete() {
+
+        // create item touch helper
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            /**
+             * Delete workout when swiped to left or right.
+             *
+             * @param viewHolder View holder being swiped.
+             * @param direction Direction being swiped (left or right).
+             */
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Workout delWorkout = recyclerAdapter.getWorkoutAt(viewHolder.getAdapterPosition());
+                DeleteDbRunnable runnable = new DeleteDbRunnable(delWorkout);
+                new Thread(runnable).start();
+
+                // remove from workout array list
+                mWorkoutArrayList.remove(viewHolder.getAdapterPosition());
+
+                // update recycler view
+                recyclerAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+
+                Toast.makeText(WorkoutsActivity.this, "workout deleted", Toast.LENGTH_SHORT).show();
+            }
+
+            // drag and drop not required
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+        }).attachToRecyclerView(recyclerView);
+    }
+
+    /**
+     * Set onClickListener for information button which navigates
+     * user to information activity.
      */
     private void setInfoOnClick() {
         ImageView infoBtn = findViewById(R.id.info_btn);
 
-        // Launch information activity.
         infoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,7 +197,7 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
     /**
      * Start timer activity for chosen workout.
      *
-     * @param position position of view holder chosen on recycler view in index workout array list.
+     * @param position Position of view holder chosen on recycler view in index workout array list.
      */
     @Override
     public void onStartTimerClick(int position) {
@@ -228,6 +274,5 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
             deleteDatabaseWorkout(workout);
         }
     }
-
 
 }

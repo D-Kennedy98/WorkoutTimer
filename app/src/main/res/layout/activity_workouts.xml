@@ -30,6 +30,7 @@
             android:layout_marginEnd="14dp"
             android:layout_toEndOf="@+id/info_btn"
             android:layout_toStartOf="@+id/timer_img"
+            android:gravity="center_horizontal"
             android:text="@string/workout_timer"
             android:textColor="@color/snow"
             android:textSize="35sp" />
@@ -55,28 +56,24 @@
             android:id="@+id/workout_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="74dp"
-            android:layout_toStartOf="@+id/create_btn"
+            android:layout_centerInParent="true"
             android:paddingTop="7dp"
             android:text="@string/workouts"
             android:textColor="@color/black"
-            android:textSize="27sp" />
+            android:textSize="27sp"
+            tools:ignore="RelativeOverlap" />
 
         <ImageView
             android:id="@+id/create_btn"
             android:layout_width="30dp"
-            android:layout_height="34dp"
+            android:layout_height="27dp"
             android:layout_alignParentEnd="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginEnd="15dp"
-            android:layout_marginTop="6dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="14dp"
             android:contentDescription="@string/create_button"
             android:src="@drawable/ic_add" />
 
-
     </RelativeLayout>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

@@ -119,13 +119,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      * new items become visible.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-       private Button deleteBtn;
        private TextView workoutTitle, duration, numberExercises;
        private OnWorkoutListener workoutListener;
 
         ViewHolder(@NonNull View itemView, OnWorkoutListener workoutListener) {
             super(itemView);
-            deleteBtn = itemView.findViewById(R.id.delete_btn);
             workoutTitle = itemView.findViewById(R.id.workout_txt);
             duration = itemView.findViewById(R.id.workout_duration_txt);
             numberExercises = itemView.findViewById(R.id.number_exercises_txt);
@@ -133,23 +131,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             // this refers to onClickListener interface
             itemView.setOnClickListener(this);
-            deleteBtn.setOnClickListener(this);
         }
 
         /**
-         * Gets position of item in adapter when clicked.
+         * Get position of item in adapter when clicked to start timer activity
+         * for that workout.
          *
          * @param v view
          */
         @Override
         public void onClick(View v) {
-            // check if delete btn is pressed
-           if(deleteBtn.isPressed()) {
-               workoutListener.onDeleteClick(getAdapterPosition());
-           } else if (itemView.isPressed()){
-               workoutListener.onStartTimerClick(getAdapterPosition());
-           }
+            workoutListener.onStartTimerClick(getAdapterPosition());
         }
+
     }
 
     /*
@@ -165,12 +159,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
          */
         void onStartTimerClick(int position);
 
-        /**
-         * Detect click on delete button and pass chosen view holder position to WO activity.
-         *
-         * @param position position of view holder where delete button is clicked
-         */
-        void onDeleteClick(int position);
     }
 
 }

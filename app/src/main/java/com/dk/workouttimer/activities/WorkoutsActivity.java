@@ -61,8 +61,6 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
         setWorkoutOnClick();
         setInfoOnClick();
 
-
-
     }
 
     /**
@@ -205,25 +203,6 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
         launchTimerActivity(chosenWorkout);
     }
 
-    /**
-     * Remove chosen workout from database and recycler data set.
-     *
-     * @param position Position of view holder chosen on recycler view to index workout array list.
-     */
-    @Override
-    public void onDeleteClick(int position) {
-        Workout chosenWorkout = mWorkoutArrayList.get(position);
-
-        // remove from db async
-        DeleteDbRunnable runnable = new DeleteDbRunnable(chosenWorkout);
-        new Thread(runnable).start();
-
-        // remove from workout array list
-        mWorkoutArrayList.remove(position);
-
-        // update recycler view
-        recyclerAdapter.notifyItemRemoved(position);
-    }
 
     /**
      * Runnable inner class to access workouts from db.
@@ -248,7 +227,7 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
     }
 
     /**
-     * Runnable inner class to delete workout from db.
+     * Runnable inner class to async delete workout from db.
      */
     private class DeleteDbRunnable implements Runnable {
 

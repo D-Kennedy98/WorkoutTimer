@@ -36,7 +36,7 @@ public class Workout implements Parcelable {
     /**
      * Total duration of all the exercises contained in exercise list field.
      */
-    private int mTotalDuration;
+    private long mTotalDuration;
 
     /**
      * Number of exercises contained in exercise list field.
@@ -60,7 +60,7 @@ public class Workout implements Parcelable {
      * @param mExerciseList List of exercises included in workout.
      */
     @Ignore
-    public Workout(String mTitle, int mTotalDuration, int mNoExercises, List<Exercise> mExerciseList) {
+    public Workout(String mTitle, long mTotalDuration, int mNoExercises, List<Exercise> mExerciseList) {
         this.mTitle = mTitle;
         this.mTotalDuration = mTotalDuration;
         this.mNoExercises = mNoExercises;
@@ -76,7 +76,7 @@ public class Workout implements Parcelable {
      * @param mNoExercises Number of exercises in the workout.
      * @param mExerciseList List of exercises included in workout.
      */
-    public Workout(int id, String mTitle, int mTotalDuration, int mNoExercises, List<Exercise> mExerciseList) {
+    public Workout(int id, String mTitle, long mTotalDuration, int mNoExercises, List<Exercise> mExerciseList) {
         this.id = id;
         this.mTitle = mTitle;
         this.mTotalDuration = mTotalDuration;
@@ -91,7 +91,7 @@ public class Workout implements Parcelable {
      */
     private Workout(Parcel in) {
         mTitle = in.readString();
-        mTotalDuration = in.readInt();
+        mTotalDuration = in.readLong();
         mNoExercises = in.readInt();
         mExerciseList = in.createTypedArrayList(Exercise.CREATOR);
     }
@@ -144,7 +144,7 @@ public class Workout implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mTitle);
-        dest.writeInt(mTotalDuration);
+        dest.writeLong(mTotalDuration);
         dest.writeInt(mNoExercises);
         dest.writeTypedList(mExerciseList);
     }
@@ -182,7 +182,7 @@ public class Workout implements Parcelable {
      *
      * @return Total duration field of workout instance.
      */
-    public int getTotalDuration() {
+    public long getTotalDuration() {
         return mTotalDuration;
     }
 
@@ -218,9 +218,9 @@ public class Workout implements Parcelable {
 //    /**
 //     * Set total duration field of workout instance.
 //     *
-//     * @param mTotalDuration Int that total duration field is set to.
+//     * @param mTotalDuration Long that total duration field is set to.
 //     */
-//    public void setTotalDuration(int mTotalDuration) {
+//    public void setTotalDuration(Long mTotalDuration) {
 //        this.mTotalDuration = mTotalDuration;
 //    }
 

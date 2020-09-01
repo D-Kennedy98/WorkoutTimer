@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dk.workouttimer.App;
@@ -23,6 +24,7 @@ import com.dk.workouttimer.models.Exercise;
 import com.dk.workouttimer.models.Workout;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CreateWorkoutActivity extends AppCompatActivity {
 
@@ -74,6 +76,9 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private EditText mWorkoutTitleInput;
     private EditText mNameInput;
 
+    private TextView mExercisesCountTxt;
+    private TextView mDurationCountTxt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +100,9 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private void setUpViews() {
         mWorkoutTitleInput = findViewById(R.id.workout_title_input);
         mNameInput = findViewById(R.id.name_input);
+        mExercisesCountTxt = findViewById(R.id.exercises_count_txt);
+        mDurationCountTxt = findViewById(R.id.duration_count_txt);
+
     }
 
     /**
@@ -113,6 +121,11 @@ public class CreateWorkoutActivity extends AppCompatActivity {
                     Toast.makeText(CreateWorkoutActivity.this, R.string.exercise_added, Toast.LENGTH_SHORT).show();
                     mNameInput.getText().clear();
                     mExerciseDuration = 0;
+
+                    mExercisesCountTxt.setText(String.valueOf(mExerciseArrayList.size()));
+                    mDurationCountTxt.setText(convertTime(calcTotalDuration(mExerciseArrayList)));
+
+
                 }
             }
         });
@@ -147,7 +160,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
                 if (isValidWorkoutTitleInput(getWorkoutTitleInput())
                         && isValidExerciseArray()) {
                     Workout newWorkout = new Workout(
-                            mWorkoutTitle, (int) calcTotalDuration(mExerciseArrayList),
+                            mWorkoutTitle, calcTotalDuration(mExerciseArrayList),
                             mExerciseArrayList.size(), mExerciseArrayList);
 
                     // add workout to db async then launch workouts activity
@@ -310,17 +323,20 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private boolean isDurationValid(long inputDuration) {
         // Check a duration has been inputted.
         if (inputDuration == 0) {
-            Toast.makeText(CreateWorkoutActivity.this, R.string.enter_duration, Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateWorkoutActivity.this,
+                    R.string.enter_duration, Toast.LENGTH_SHORT).show();
             return false;
 
             // Check workout duration doesn't exceed 3 hours.
         }  else if (mTotalDuration > MAX_TOTAL_WORKOUT_DURATION) {
-            Toast.makeText(CreateWorkoutActivity.this, R.string.total_duration_exceeds, Toast.LENGTH_LONG).show();
+            Toast.makeText(CreateWorkoutActivity.this,
+                    R.string.total_duration_exceeds, Toast.LENGTH_LONG).show();
             return false;
 
            // Notify user if total duration has been met.
         } else if (mTotalDuration == MAX_TOTAL_WORKOUT_DURATION) {
-            Toast.makeText(CreateWorkoutActivity.this, R.string.max_duration_met, Toast.LENGTH_LONG).show();
+            Toast.makeText(CreateWorkoutActivity.this,
+                    R.string.max_duration_met, Toast.LENGTH_LONG).show();
             return true;
         }
         // All checks pass.
@@ -328,6 +344,20 @@ public class CreateWorkoutActivity extends AppCompatActivity {
             return true;
         }
     }
+
+    /**
+     * Convert time remaining in millis to format ss:mm.
+     * Implements TimeConverter interface.
+     *
+     * @param time Time being converted in milli seconds.
+     * @return Time in string format of ss:mm.
+     */
+    private String convertTime(long time) {
+        int mins = (int) time / 60;
+        int secs = (int) time % 60;
+        return String.format(Locale.getDefault(), "%02d:%02d", mins, secs);
+    }
+
 
     /**
      * Runnable inner class to write a workout object to db.

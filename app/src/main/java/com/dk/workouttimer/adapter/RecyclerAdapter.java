@@ -9,7 +9,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.dk.workouttimer.R;
@@ -147,8 +146,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     /*
-     * Interface to detect recycler view click
-     * and pass position of clicked item to WOs activity.
+     * Interface to detect recycler view click and pass
+     * position of clicked view holder to WOs activity.
      */
     public interface OnWorkoutListener {
 

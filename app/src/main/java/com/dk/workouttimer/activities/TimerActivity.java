@@ -17,13 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dk.workouttimer.R;
+import com.dk.workouttimer.TimeFormatConverter;
 import com.dk.workouttimer.models.Exercise;
 import com.dk.workouttimer.models.Workout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class TimerActivity extends AppCompatActivity {
 
@@ -160,7 +160,7 @@ public class TimerActivity extends AppCompatActivity {
         updateNextExerciseTxt();
 
         // Set timer value to duration of first exercise.
-        mTimerValueTxt.setText(convertTime(mFirstDuration * CONVERT_MILLIS_SECONDS));
+        mTimerValueTxt.setText(new TimeFormatConverter().convertSecondsTime(mFirstDuration));
     }
 
     /**
@@ -228,7 +228,7 @@ public class TimerActivity extends AppCompatActivity {
              */
             @Override
             public void onTick(long millisUntilFinished) {
-                mTimerValueTxt.setText(convertTime(millisUntilFinished));
+                mTimerValueTxt.setText(new TimeFormatConverter().convertMilliTime(millisUntilFinished));
                 updateCurrentExerciseTxt();
                 updateNextExerciseTxt();
                 mMillisRemaining = millisUntilFinished;
@@ -285,7 +285,7 @@ public class TimerActivity extends AppCompatActivity {
         sOnFinishCount = 0;
         pauseTimer();
         mMillisRemaining = mFirstDuration * CONVERT_MILLIS_SECONDS;
-        mTimerValueTxt.setText(convertTime(mFirstDuration * CONVERT_MILLIS_SECONDS));
+        mTimerValueTxt.setText(new TimeFormatConverter().convertSecondsTime(mFirstDuration));
         updateCurrentExerciseTxt();
         updateNextExerciseTxt();
         mStopBtn.setText(R.string.stop);
@@ -381,19 +381,6 @@ public class TimerActivity extends AppCompatActivity {
         super.onDestroy();
         mSoundPool.release();
         mSoundPool = null;
-    }
-
-    /**
-     * Convert time remaining in millis to format ss:mm.
-     * Implements TimeConverter interface.
-     *
-     * @param time Time being converted in milli seconds.
-     * @return Time in string format of ss:mm.
-     */
-    private String convertTime(long time) {
-        int mins = (int) (time / 1000) / 60;
-        int secs = (int) (time / 1000) % 60;
-        return String.format(Locale.getDefault(), "%02d:%02d", mins, secs);
     }
 
 }

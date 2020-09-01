@@ -19,12 +19,12 @@ import android.widget.Toast;
 
 import com.dk.workouttimer.App;
 import com.dk.workouttimer.R;
+import com.dk.workouttimer.TimeFormatConverter;
 import com.dk.workouttimer.fragment.DurationDialogFragment;
 import com.dk.workouttimer.models.Exercise;
 import com.dk.workouttimer.models.Workout;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class CreateWorkoutActivity extends AppCompatActivity {
 
@@ -119,13 +119,10 @@ public class CreateWorkoutActivity extends AppCompatActivity {
                 if (isValidNameInput(name) && isDurationValid(mExerciseDuration)) {
                     mExerciseArrayList.add(new Exercise(name, mExerciseDuration));
                     Toast.makeText(CreateWorkoutActivity.this, R.string.exercise_added, Toast.LENGTH_SHORT).show();
+                    mExercisesCountTxt.setText(String.valueOf(mExerciseArrayList.size()));
+                    mDurationCountTxt.setText(new TimeFormatConverter().convertSecondsTime(calcTotalDuration(mExerciseArrayList)));
                     mNameInput.getText().clear();
                     mExerciseDuration = 0;
-
-                    mExercisesCountTxt.setText(String.valueOf(mExerciseArrayList.size()));
-                    mDurationCountTxt.setText(convertTime(calcTotalDuration(mExerciseArrayList)));
-
-
                 }
             }
         });
@@ -344,20 +341,6 @@ public class CreateWorkoutActivity extends AppCompatActivity {
             return true;
         }
     }
-
-    /**
-     * Convert time remaining in millis to format ss:mm.
-     * Implements TimeConverter interface.
-     *
-     * @param time Time being converted in milli seconds.
-     * @return Time in string format of ss:mm.
-     */
-    private String convertTime(long time) {
-        int mins = (int) time / 60;
-        int secs = (int) time % 60;
-        return String.format(Locale.getDefault(), "%02d:%02d", mins, secs);
-    }
-
 
     /**
      * Runnable inner class to write a workout object to db.

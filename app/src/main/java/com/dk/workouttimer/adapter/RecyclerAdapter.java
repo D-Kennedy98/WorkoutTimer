@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dk.workouttimer.R;
+import com.dk.workouttimer.TimeFormatConverter;
 import com.dk.workouttimer.models.Workout;
 
 import androidx.annotation.NonNull;
@@ -76,7 +77,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         Workout workout = mWorkoutArrayList.get(position);
         holder.workoutTitle.setText(workout.getTitle());
         holder.duration.setText(String.format(Locale.getDefault(),
-                "Duration: %s", convertTime(workout.getTotalDuration())));
+                "Duration: %s", new TimeFormatConverter().convertSecondsTime(workout.getTotalDuration())));
         holder.numberExercises.setText(String.format(Locale.getDefault(),
                 "Exercises: %d", workout.getNoExercises()));
     }
@@ -99,18 +100,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      */
     public Workout getWorkoutAt(int position) {
         return mWorkoutArrayList.get(position);
-    }
-
-    /**
-     * Convert time in seconds to format ss:mm.
-     *
-     * @param time Time being converted.
-     * @return String of time in format ss:mm.
-     */
-    private String convertTime(long time) {
-        int mins = (int) time / 60;
-        int secs = (int) time % 60;
-        return  String.format(Locale.getDefault(), "%02d:%02d", mins, secs);
     }
 
     /**

@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.dk.workouttimer.App;
 import com.dk.workouttimer.R;
-import com.dk.workouttimer.TimeFormatConverter;
+import com.dk.workouttimer.utilities.TimeFormatConverter;
 import com.dk.workouttimer.fragment.DurationDialogFragment;
 import com.dk.workouttimer.models.Exercise;
 import com.dk.workouttimer.models.Workout;
@@ -120,7 +120,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
                     mExerciseArrayList.add(new Exercise(name, mExerciseDuration));
                     Toast.makeText(CreateWorkoutActivity.this, R.string.exercise_added, Toast.LENGTH_SHORT).show();
                     mExercisesCountTxt.setText(String.valueOf(mExerciseArrayList.size()));
-                    mDurationCountTxt.setText(new TimeFormatConverter().convertSecondsTime(calcTotalDuration(mExerciseArrayList)));
+                    mDurationCountTxt.setText(TimeFormatConverter.convertSecondsTime(calcTotalDuration(mExerciseArrayList)));
                     mNameInput.getText().clear();
                     mExerciseDuration = 0;
                 }

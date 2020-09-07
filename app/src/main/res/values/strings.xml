@@ -8,7 +8,7 @@
     <string name="create_button">Create Button</string>
     <string name="enter_workout_duration">seconds</string>
     <string name="duration_mmss">Duration: 15:00</string>
-    <string name="exercises">Exercises: 5</string>
+    <string name="exercises_5">Exercises: 5</string>
     <string name="final_exercise">Final Exercise</string>
     <string name="image_of_workout">Image of exercise</string>
     <string name="information_button">Information Button</string>
@@ -46,7 +46,7 @@
     <string name="add_exercise">Add Exercise</string>
     <string name="workout_title">Workout Title</string>
     <string name="exercise_duration">exercise duration</string>
-    <string name="exercise_name">exercise name</string>
+    <string name="exercise_name">Exercise Name</string>
     <string name="duration_x">Duration</string>
     <string name="number_of_exercises">No. exercises</string>
     <string name="save_workout">Save Workout</string>
@@ -64,6 +64,9 @@
     <string name="total_duration_exceeds">Total workout duration now exceeds the max workout duration (3 hours).\nEnter a shorter duration!"</string>
     <string name="workout_contain_exercise">Workout must contain at least 1 exercise!</string>
     <string name="workout_title_exceed">Workout title must not exceed 35 characters</string>
+    <string name="exercises">Exercises</string>
+    <string name="_0min">00:00</string>
+    <string name="_0">0</string>
 
 
 </resources>

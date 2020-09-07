@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dk.workouttimer.R;
-import com.dk.workouttimer.TimeFormatConverter;
+import com.dk.workouttimer.utilities.TimeFormatConverter;
 import com.dk.workouttimer.models.Exercise;
 import com.dk.workouttimer.models.Workout;
 
@@ -160,7 +160,7 @@ public class TimerActivity extends AppCompatActivity {
         updateNextExerciseTxt();
 
         // Set timer value to duration of first exercise.
-        mTimerValueTxt.setText(new TimeFormatConverter().convertSecondsTime(mFirstDuration));
+        mTimerValueTxt.setText(TimeFormatConverter.convertSecondsTime(mFirstDuration));
     }
 
     /**
@@ -228,7 +228,7 @@ public class TimerActivity extends AppCompatActivity {
              */
             @Override
             public void onTick(long millisUntilFinished) {
-                mTimerValueTxt.setText(new TimeFormatConverter().convertMilliTime(millisUntilFinished));
+                mTimerValueTxt.setText(TimeFormatConverter.convertMilliTime(millisUntilFinished));
                 updateCurrentExerciseTxt();
                 updateNextExerciseTxt();
                 mMillisRemaining = millisUntilFinished;
@@ -285,7 +285,7 @@ public class TimerActivity extends AppCompatActivity {
         sOnFinishCount = 0;
         pauseTimer();
         mMillisRemaining = mFirstDuration * CONVERT_MILLIS_SECONDS;
-        mTimerValueTxt.setText(new TimeFormatConverter().convertSecondsTime(mFirstDuration));
+        mTimerValueTxt.setText(TimeFormatConverter.convertSecondsTime(mFirstDuration));
         updateCurrentExerciseTxt();
         updateNextExerciseTxt();
         mStopBtn.setText(R.string.stop);

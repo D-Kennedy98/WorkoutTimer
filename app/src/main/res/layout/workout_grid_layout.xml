@@ -57,7 +57,7 @@
                 android:layout_height="18dp"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_vertical"
-                android:text="@string/exercises"
+                android:text="@string/exercises_5"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@+id/workout_duration_txt"

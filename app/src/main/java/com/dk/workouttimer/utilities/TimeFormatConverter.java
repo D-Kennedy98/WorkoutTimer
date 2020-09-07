@@ -4,7 +4,7 @@
  * to the format mm:ss for cleaner UI display.
  */
 
-package com.dk.workouttimer;
+package com.dk.workouttimer.utilities;
 
 import java.util.Locale;
 
@@ -16,7 +16,7 @@ public class TimeFormatConverter {
      * @param time Time being converted in milli seconds.
      * @return Time in string format of ss:mm.
      */
-    public String convertMilliTime(long time) {
+    public static String convertMilliTime(long time) {
         int mins = (int) (time / 1000) / 60;
         int secs = (int) (time / 1000) % 60;
         return String.format(Locale.getDefault(), "%02d:%02d", mins, secs);
@@ -28,7 +28,7 @@ public class TimeFormatConverter {
      * @param time Time being converted.
      * @return String of time in format ss:mm.
      */
-    public String convertSecondsTime(long time) {
+    public static String convertSecondsTime(long time) {
         int mins = (int) time / 60;
         int secs = (int) time % 60;
         return  String.format(Locale.getDefault(), "%02d:%02d", mins, secs);

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dk.workouttimer.R;
-import com.dk.workouttimer.TimeFormatConverter;
+import com.dk.workouttimer.utilities.TimeFormatConverter;
 import com.dk.workouttimer.models.Workout;
 
 import androidx.annotation.NonNull;
@@ -77,7 +77,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         Workout workout = mWorkoutArrayList.get(position);
         holder.workoutTitle.setText(workout.getTitle());
         holder.duration.setText(String.format(Locale.getDefault(),
-                "Duration: %s", new TimeFormatConverter().convertSecondsTime(workout.getTotalDuration())));
+                "Duration: %s", TimeFormatConverter.convertSecondsTime(workout.getTotalDuration())));
         holder.numberExercises.setText(String.format(Locale.getDefault(),
                 "Exercises: %d", workout.getNoExercises()));
     }

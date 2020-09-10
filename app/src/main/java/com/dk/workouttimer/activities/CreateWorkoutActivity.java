@@ -82,6 +82,9 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private TextView mExercisesCountTxt;
     private TextView mDurationCountTxt;
 
+    /**
+     * Text view for displaying inputted duration from fragment.
+     */
     private TextView mDurationInputTxt;
 
     @Override
@@ -96,7 +99,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         setUpAddExerciseBtn();
         setUpDurationBtn();
         setUpSaveBtn();
-        setUpBackBtn();
+        setUpCancelBtn();
     }
 
     /**
@@ -176,14 +179,14 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     }
 
     /**
-     * Set up back button which navigates user back to
+     * Set up cancel button which navigates user back to
      * workouts activity without saving.
      * TODO: Confirmation btn
      */
-    private void setUpBackBtn() {
-        ImageView mBackBtn = findViewById(R.id.back_btn_cw);
+    private void setUpCancelBtn() {
+        ImageView mCancelBtn = findViewById(R.id.cancel_btn);
 
-        mBackBtn.setOnClickListener(new View.OnClickListener() {
+        mCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 launchWorkoutsActivity();

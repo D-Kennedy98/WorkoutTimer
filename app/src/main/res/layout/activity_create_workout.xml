@@ -16,13 +16,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/back_btn_cw"
+            android:id="@+id/cancel_btn"
             android:layout_width="35dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="13dp"
             android:contentDescription="@string/back_button"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_cancel" />
 
         <ImageView
             android:id="@+id/timer_img"
@@ -47,23 +47,40 @@
     </RelativeLayout>
 
 
-    <EditText
-        android:id="@+id/workout_title_input"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/titles_linear"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@color/black"
-        android:ems="8"
-        android:hint="@string/workout_title"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header" />
+        android:layout_marginTop="7dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_workout"
+            android:textColor="@color/black"
+            android:textSize="27sp" />
+
+        <EditText
+            android:id="@+id/workout_title_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/black"
+            android:ems="8"
+            android:hint="@string/workout_title"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="25sp" />
+
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/workout_count_relative"
@@ -71,7 +88,7 @@
         android:layout_height="wrap_content"
         android:paddingVertical="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/workout_title_input">
+        app:layout_constraintTop_toBottomOf="@+id/titles_linear">
 
         <TextView
             android:id="@+id/exercises_count_title"
@@ -123,17 +140,17 @@
 
     </RelativeLayout>
 
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="20dp"
         android:background="@drawable/black_border_vertical"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:paddingVertical="20dp"
         android:paddingBottom="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/workout_count_relative">
 
@@ -142,13 +159,13 @@
             android:layout_height="wrap_content"
             android:text="@string/exercise"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/name_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:backgroundTint="@color/black"
             android:ems="10"
             android:hint="@string/name"
@@ -168,12 +185,13 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/duration_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="50dp"
-                android:text="@string/duration" />
+                android:text="@string/duration"
+                app:cornerRadius="6dp" />
 
             <TextView
                 android:id="@+id/duration_input_txt"
@@ -191,22 +209,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/add_exercise"
-            app:cornerRadius="8dp"
-            app:strokeColor="@color/black"
-            app:strokeWidth="0.75dp"
+            app:cornerRadius="6dp"
             app:layout_constraintBottom_toTopOf="@+id/save_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/black" />
 
     </LinearLayout>
 
     <ImageView
         android:id="@+id/save_btn"
-        android:layout_width="85dp"
-        android:layout_height="41dp"
+        android:layout_width="69dp"
+        android:layout_height="36dp"
         android:contentDescription="@string/save_workout_button"
         android:src="@drawable/ic_save"
         android:text="@string/save_workout"
@@ -215,9 +229,7 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.547" />
-
-
+        app:layout_constraintVertical_bias="0.508" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

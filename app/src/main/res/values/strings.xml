@@ -65,8 +65,11 @@
     <string name="workout_contain_exercise">Workout must contain at least 1 exercise!</string>
     <string name="workout_title_exceed">Workout title must not exceed 35 characters</string>
     <string name="exercises">Exercises</string>
-    <string name="_0min">00:00</string>
+    <string name="_0_min">00:00</string>
     <string name="_0">0</string>
+    <string name="exercise">Exercise</string>
+    <string name="name">Name</string>
+    <string name="save_workout_button">Save Workout Button</string>
 
 
 </resources>

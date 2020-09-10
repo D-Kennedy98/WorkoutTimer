@@ -15,7 +15,7 @@ public class DurationDialogFragment extends TimeDurationPickerDialogFragment {
      * Interface to pass duration to CreateWO activity from the dialogFragment.
      */
     public interface DurationListener {
-        void onDurationFinished(long duration);
+        void onDurationFinished(long durationMillis);
     }
 
     /**
@@ -48,11 +48,11 @@ public class DurationDialogFragment extends TimeDurationPickerDialogFragment {
      * to CreateWO activity.
      *
      * @param view Picker view.
-     * @param duration Duration that was entered.
+     * @param durationMillis Duration that was entered.
      */
     @Override
-    public void onDurationSet(TimeDurationPicker view, long duration) {
-            mDurationListener.onDurationFinished(duration);
+    public void onDurationSet(TimeDurationPicker view, long durationMillis) {
+            mDurationListener.onDurationFinished(durationMillis);
     }
 
 }

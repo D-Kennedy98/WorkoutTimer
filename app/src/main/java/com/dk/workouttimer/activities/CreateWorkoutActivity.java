@@ -76,8 +76,13 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private EditText mWorkoutTitleInput;
     private EditText mNameInput;
 
+    /**
+     * Text views for displaying the current exercise/duration count.
+     */
     private TextView mExercisesCountTxt;
     private TextView mDurationCountTxt;
+
+    private TextView mDurationInputTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +107,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         mNameInput = findViewById(R.id.name_input);
         mExercisesCountTxt = findViewById(R.id.exercises_count_txt);
         mDurationCountTxt = findViewById(R.id.duration_count_txt);
+        mDurationInputTxt = findViewById(R.id.duration_input_txt);
 
     }
 
@@ -122,6 +128,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
                     mExercisesCountTxt.setText(String.valueOf(mExerciseArrayList.size()));
                     mDurationCountTxt.setText(TimeFormatConverter.convertSecondsTime(calcTotalDuration(mExerciseArrayList)));
                     mNameInput.getText().clear();
+                    mDurationInputTxt.setText(R.string._0_min);
                     mExerciseDuration = 0;
                 }
             }
@@ -149,7 +156,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
      * adds it to the database then launches workouts activity.
      */
     private void setUpSaveBtn() {
-        Button mSaveBtn = findViewById(R.id.save_btn);
+        ImageView mSaveBtn = findViewById(R.id.save_btn);
 
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,10 +309,16 @@ public class CreateWorkoutActivity extends AppCompatActivity {
 
         // Implement DurationListener interface to retrieve duration from fragment.
         durationDialogFragment.setDurationListener(new DurationDialogFragment.DurationListener() {
+
+            /**
+             * Update duration text view and duration fields
+             * @param durationMillis duration entered in fragment.
+             */
             @Override
-            public void onDurationFinished(long duration) {
-            mExerciseDuration =  (duration / 1000);
-            mTotalDuration += duration;
+            public void onDurationFinished(long durationMillis) {
+                mExerciseDuration =  durationMillis / 1000;
+                mTotalDuration += durationMillis;
+                mDurationInputTxt.setText(TimeFormatConverter.convertMilliTime(durationMillis));
             }
         });
     }

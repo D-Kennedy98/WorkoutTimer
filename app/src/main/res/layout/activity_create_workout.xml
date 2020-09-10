@@ -46,58 +46,32 @@
 
     </RelativeLayout>
 
-    <!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="4dp"-->
-<!--        android:text="@string/exercises"-->
-<!--        android:textSize="20sp"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/exercises_count_txt"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.127"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-<!--    <TextView-->
-<!--        android:id="@+id/exercises_count_txt"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="132dp"-->
-<!--        android:text="5"-->
-<!--        android:textSize="20sp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.184"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/header" />-->
-
-    <!--    <TextView-->
-<!--        android:id="@+id/textView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="4dp"-->
-<!--        android:text="@string/duration"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/duration_count_txt"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.914"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/duration_count_txt"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="132dp"-->
-<!--        android:text="05:00"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.888"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/header" />-->
+    <EditText
+        android:id="@+id/workout_title_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/black"
+        android:ems="8"
+        android:hint="@string/workout_title"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <RelativeLayout
         android:id="@+id/workout_count_relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
+        android:paddingVertical="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/workout_title_input">
 
         <TextView
             android:id="@+id/exercises_count_title"
@@ -105,9 +79,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginStart="50dp"
-            android:layout_marginEnd="94dp"
-            android:layout_toStartOf="@+id/duration_count_title"
             android:text="@string/exercises"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
         <TextView
@@ -120,6 +93,7 @@
             android:layout_marginTop="4dp"
             android:gravity="center"
             android:text="@string/_0"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
 
@@ -127,11 +101,12 @@
             android:id="@+id/duration_count_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_marginEnd="50dp"
             android:text="@string/duration"
+            android:textColor="@color/black"
             android:textSize="20sp"
-            android:layout_alignParentEnd="true"
-         />
+            tools:ignore="RelativeOverlap" />
 
         <TextView
             android:id="@+id/duration_count_txt"
@@ -142,82 +117,105 @@
             android:layout_alignEnd="@+id/duration_count_title"
             android:layout_marginTop="4dp"
             android:gravity="center"
-            android:text="@string/_0min"
-            android:textSize="20sp"
-            />
-
+            android:text="@string/_0_min"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/workout_title_input"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="@color/black"
-        android:ems="8"
-        android:hint="@string/workout_title"
-        android:inputType="text"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="25sp"
+        android:paddingVertical="20dp"
+        android:background="@drawable/black_border_vertical"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header" />
+        app:layout_constraintTop_toBottomOf="@+id/workout_count_relative">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/exercise_name"
-        app:layout_constraintBottom_toTopOf="@+id/name_input"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exercise"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/name_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="228dp"
-        android:ems="10"
-        android:hint="@string/exercise_name"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header" />
+        <EditText
+            android:id="@+id/name_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/black"
+            android:ems="10"
+            android:hint="@string/name"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/workout_count_relative" />
 
-    <Button
-        android:id="@+id/duration_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:layout_marginBottom="57dp"
-        android:text="@string/duration"
-        app:layout_constraintBottom_toTopOf="@+id/add_exercise_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_input" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/add_exercise_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="68dp"
-        android:text="@string/add_exercise"
-        app:layout_constraintBottom_toTopOf="@+id/save_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <Button
+                android:id="@+id/duration_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:text="@string/duration" />
 
-    <Button
+            <TextView
+                android:id="@+id/duration_input_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_0_min"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_exercise_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/add_exercise"
+            app:cornerRadius="8dp"
+            app:strokeColor="@color/black"
+            app:strokeWidth="0.75dp"
+            app:layout_constraintBottom_toTopOf="@+id/save_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
+    </LinearLayout>
+
+    <ImageView
         android:id="@+id/save_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_width="85dp"
+        android:layout_height="41dp"
+        android:contentDescription="@string/save_workout_button"
+        android:src="@drawable/ic_save"
         android:text="@string/save_workout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.547" />
 
 
 

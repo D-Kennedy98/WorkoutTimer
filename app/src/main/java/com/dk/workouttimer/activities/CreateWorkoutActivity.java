@@ -106,12 +106,11 @@ public class CreateWorkoutActivity extends AppCompatActivity {
      * Set up UI views.
      */
     private void setUpViews() {
-        mWorkoutTitleInput = findViewById(R.id.workout_title_input);
-        mNameInput = findViewById(R.id.name_input);
         mExercisesCountTxt = findViewById(R.id.exercises_count_txt);
         mDurationCountTxt = findViewById(R.id.duration_count_txt);
         mDurationInputTxt = findViewById(R.id.duration_input_txt);
-
+        mNameInput = findViewById(R.id.name_input);
+        mWorkoutTitleInput = findViewById(R.id.workout_title_input);
     }
 
     /**

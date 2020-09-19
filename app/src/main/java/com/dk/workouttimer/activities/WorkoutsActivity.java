@@ -1,8 +1,7 @@
 /*
- * Author: Dominic Kennedy
- * Purpose: Implements home screen activity where a user can
- * choose a workout to start or delete a workout.
- */
+Author: Dominic Kennedy
+Purpose: Implements home activity where a user can choose a workout to start or delete a workout.
+*/
 
 package com.dk.workouttimer.activities;
 
@@ -47,6 +46,10 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
      */
     private RecyclerView recyclerView;
 
+    /**
+     * Called when the activity is starting.
+     * @param savedInstanceState Contains data from recent call to OnSavedInstanceState(). Null if first time.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +57,12 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
 
         app = (App)getApplication();
 
-        // Access db on background thread
+        // Access db on background thread.
         AccessDbRunnable runnable = new AccessDbRunnable();
         new Thread(runnable).start();
 
         setWorkoutOnClick();
         setInfoOnClick();
-
     }
 
     /**
@@ -100,7 +102,7 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
      */
     private void setUpSwipeToDelete() {
 
-        // create item touch helper
+        // Create item touch helper.
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -116,13 +118,14 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
                 DeleteDbRunnable runnable = new DeleteDbRunnable(delWorkout);
                 new Thread(runnable).start();
 
-                // remove from workout array list
+                // Remove from workout array list.
                 mWorkoutArrayList.remove(viewHolder.getAdapterPosition());
 
-                // update recycler view
+                // Update recycler view
                 recyclerAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 
-                Toast.makeText(WorkoutsActivity.this, "workout deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(WorkoutsActivity.this, "workout deleted",
+                        Toast.LENGTH_SHORT).show();
             }
 
             // drag and drop not required
@@ -136,8 +139,7 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
     }
 
     /**
-     * Set onClickListener for information button which navigates
-     * user to information activity.
+     * Set onClickListener for information button which navigates user to information activity.
      */
     private void setInfoOnClick() {
         ImageView infoBtn = findViewById(R.id.info_btn);
@@ -216,7 +218,7 @@ public class WorkoutsActivity extends AppCompatActivity implements RecyclerAdapt
         public void run() {
            mWorkoutArrayList = getDatabaseWorkouts();
 
-           // updates recycler view therefore needs to run on main thread
+           // Updates recycler view therefore needs to run on main thread.
            runOnUiThread(new Runnable() {
                @Override
                public void run() {

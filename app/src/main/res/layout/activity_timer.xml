@@ -33,7 +33,7 @@
             android:src="@drawable/ic_stopwatch_rush" />
 
         <TextView
-            android:id="@+id/heading_title"
+            android:id="@+id/heading_title_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -45,7 +45,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/workout_title_timer"
+        android:id="@+id/workout_title_timer_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
@@ -54,7 +54,7 @@
         android:textSize="27sp" />
 
     <TextView
-        android:id="@+id/current_exercise_title"
+        android:id="@+id/current_exercise_title_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
@@ -63,7 +63,7 @@
         android:textSize="50sp" />
 
     <TextView
-        android:id="@+id/timer_value"
+        android:id="@+id/timer_value_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/time"
@@ -72,7 +72,7 @@
         android:textSize="130sp" />
 
     <TextView
-        android:id="@+id/next_exercise_title"
+        android:id="@+id/next_exercise_title_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -81,7 +81,7 @@
         android:textSize="30sp" />
 
     <TextView
-        android:id="@+id/next_exercise"
+        android:id="@+id/next_exercise_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/yoga"
@@ -89,6 +89,7 @@
         android:textSize="30sp" />
 
     <LinearLayout
+        android:id="@+id/start_stop_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"

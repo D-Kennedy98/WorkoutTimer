@@ -22,14 +22,14 @@
             android:src="@drawable/ic_information" />
 
         <TextView
-            android:id="@+id/heading_title"
+            android:id="@+id/heading_title_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="14dp"
             android:layout_marginEnd="14dp"
-            android:layout_toEndOf="@+id/info_btn"
             android:layout_toStartOf="@+id/timer_img"
+            android:layout_toEndOf="@+id/info_btn"
             android:gravity="center_horizontal"
             android:text="@string/workout_timer"
             android:textColor="@color/snow"
@@ -48,12 +48,13 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/title_create_relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/workout_title"
+            android:id="@+id/workout_title_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

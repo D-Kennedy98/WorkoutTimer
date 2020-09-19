@@ -1,8 +1,8 @@
 /*
- * Author: Dominic Kennedy
- * Purpose: Allow user to create exercises which are used
- * to create workout objects.
- */
+Author: Dominic Kennedy
+Purpose: Implements Create Workout activity which allow user to create exercise objects
+which are stored in an array list field of a workout object.
+*/
 
 package com.dk.workouttimer.activities;
 
@@ -33,14 +33,13 @@ public class CreateWorkoutActivity extends AppCompatActivity {
      */
     private App app;
 
-    // TODO: appropriate max lengths
     /**
      * Store max length of workout title.
      */
     public static final int MAX_EXERCISE_NAME_LENGTH = 30;
 
     /**
-     * Store max length of workout (3 hours) in milliseconds.
+     * Store max length of workout (180 mins / 3 hours) in milliseconds.
      */
     public static final int MAX_TOTAL_WORKOUT_DURATION = 10800000;
 
@@ -87,6 +86,10 @@ public class CreateWorkoutActivity extends AppCompatActivity {
      */
     private TextView mDurationInputTxt;
 
+    /**
+     * Called when the activity is starting.
+     * @param savedInstanceState Contains data from recent call to OnSavedInstanceState(). Null if first time.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +117,8 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     }
 
     /**
-     * Create new exercise object from edit text values and add to array list.
+     * Set up add exercise button which creates a new exercise object from edit text inputs and then
+     * add it to array an list.
      */
     private void setUpAddExerciseBtn() {
         Button mAddExerciseBtn = findViewById(R.id.add_exercise_btn);
@@ -138,8 +142,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     }
 
     /**
-     * Set up duration button which opens a duration dialog fragment
-     * for inputting exercise duration.
+     * Set up duration button which opens a duration dialog fragment for inputting exercise duration.
      */
     private void setUpDurationBtn() {
         Button mDurationBtn = findViewById(R.id.duration_btn);
@@ -154,8 +157,8 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     }
 
     /**
-     * Set up save button which creates a workout object,
-     * adds it to the database then launches workouts activity.
+     * Set up save button which creates a workout object, adds it to the database
+     * then launches workouts activity.
      */
     private void setUpSaveBtn() {
         ImageView mSaveBtn = findViewById(R.id.save_btn);
@@ -178,8 +181,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     }
 
     /**
-     * Set up cancel button which navigates user back to
-     * workouts activity without saving.
+     * Set up cancel button which navigates user back to workouts activity without saving.
      * TODO: Confirmation btn
      */
     private void setUpCancelBtn() {
@@ -214,12 +216,14 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private Boolean isValidWorkoutTitleInput(String title) {
         // Check title has been entered.
         if (title.isEmpty()) {
-            Toast.makeText(CreateWorkoutActivity.this, R.string.enter_workout_title, Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateWorkoutActivity.this, R.string.enter_workout_title,
+                    Toast.LENGTH_SHORT).show();
             return false;
 
           // Check title doesn't exceed max length.
         } else if (title.length() > MAX_WORKOUT_TITLE_LENGTH) {
-            Toast.makeText(CreateWorkoutActivity.this, R.string.workout_title_exceed, Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateWorkoutActivity.this, R.string.workout_title_exceed,
+                    Toast.LENGTH_SHORT).show();
             return false;
 
         } else {
@@ -237,7 +241,8 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         if (mExerciseArrayList.size() != 0) {
             return true;
         } else {
-            Toast.makeText(CreateWorkoutActivity.this, R.string.workout_contain_exercise, Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateWorkoutActivity.this, R.string.workout_contain_exercise,
+                    Toast.LENGTH_SHORT).show();
             return false;
         }
     }
@@ -263,12 +268,14 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     private Boolean isValidNameInput(String name) {
         // Check name has been entered.
         if (name.isEmpty()) {
-            Toast.makeText(CreateWorkoutActivity.this, R.string.enter_exercise_name, Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateWorkoutActivity.this, R.string.enter_exercise_name,
+                    Toast.LENGTH_SHORT).show();
             return false;
 
           // Check name doesn't exceed max length.
         } else if (name.length() > MAX_EXERCISE_NAME_LENGTH) {
-            Toast.makeText(CreateWorkoutActivity.this, R.string.exercise_name_exceed, Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateWorkoutActivity.this, R.string.exercise_name_exceed,
+                    Toast.LENGTH_SHORT).show();
             return false;
 
         } else {

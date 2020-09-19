@@ -1,9 +1,7 @@
 /*
- * Author: Dominic Kennedy 160304253
- * Purpose: Defines workout objects used to store exercise data.
- * Implements parcelable to allow workout objects to be passed as intent
- * (field of workout is List<Exercise>).
- */
+Author: Dominic Kennedy 160304253
+Purpose: Defines workout objects used to store exercise data.
+*/
 
 package com.dk.workouttimer.models;
 
@@ -103,17 +101,6 @@ public class Exercise implements Parcelable {
         return mName;
     }
 
-// --Commented out by Inspection START (14/08/2020, 12:07):
-//    /**
-//     * Set name field of exercise instance.
-//     *
-//     * @param name String that name field is set to.
-//     */
-//    public void setName(String name) {
-//        this.mName = name;
-//    }
-// --Commented out by Inspection STOP (14/08/2020, 12:07)
-
     /**
      * Get duration field of exercise instance.
      *
@@ -122,14 +109,5 @@ public class Exercise implements Parcelable {
     public long getDuration() {
         return mDuration;
     }
-
-//    /**
-//     * Set duration field of exercise instance.
-//     *
-//     * @param duration Int that duration field is set to.
-//     */
-//    public void setDuration(int duration) {
-//        this.mDuration = duration;
-//    }
 
 }

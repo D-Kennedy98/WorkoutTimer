@@ -27,7 +27,6 @@
     <string name="workout_timer">WorkoutTimer</string>
     <string name="yoga">Yoga</string>
 
-
     <!-- App Information -->
     <string name="dk_info">Developed by:\nDominic Kennedy</string>
     <string name="intro_info">WorkoutTimer is a fitness application that allows users to create and time their custom workouts.
@@ -36,14 +35,11 @@
         From the Create Workout Screen, enter a title for the workout (max 35 characters). Exercises are then added to the
         workout by entering an exercise name (max 30 characters) and a duration (max 90 mins),
         and then tapping the \'Add Exercise\' button. The max duration for a workout is 300 mins.
-        Once you have added all the exercises that you require, tap the save icon.
-    </string>
+        Once you have added all the exercises that you require, tap the save icon.</string>
     <string name="doing_workout"><b>Doing the Workout: </b>Tap the workout tile to navigate the TimerScreen. Once in the timer screen
         tap the start button to start the Workout Timer. You may also start, stop or restart the workout at any time.
-        Use the back button at the top of the screen to navigate back to the Workouts screen.
-    </string>
-    <string name="deleting_workout"><b>Deleting a Workout: </b>In the Workouts screen, swipe any workout tile off the screen to delete it.
-    </string>
+        Use the back button at the top of the screen to navigate back to the Workouts screen.</string>
+    <string name="deleting_workout"><b>Deleting a Workout: </b>In the Workouts screen, swipe any workout tile off the screen to delete it.</string>
     <string name="info_attributions">Attributions</string>
     <string name="zapsplat_sound">Sound effects obtained from www.zapsplat.com</string>
     <string name="info_icons">Icons made by Pixel perfect from www.flaticon.com</string>
@@ -79,6 +75,5 @@
     <string name="name">Name</string>
     <string name="save_workout_button">Save Workout Button</string>
     <string name="create_workout">Create Workout</string>
-
 
 </resources>

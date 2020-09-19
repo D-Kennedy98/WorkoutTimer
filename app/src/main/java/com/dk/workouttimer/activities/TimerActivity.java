@@ -1,7 +1,7 @@
 /*
- Author: Dominic Kennedy 160304253
- Purpose: Implements Timer screen which displays the workout timer.
- */
+Author: Dominic Kennedy 160304253
+Purpose: Implements timer activity which displays the workout countdown timer.
+*/
 
 package com.dk.workouttimer.activities;
 
@@ -118,6 +118,10 @@ public class TimerActivity extends AppCompatActivity {
     private Button mStartPauseBtn;
     private Button mStopBtn;
 
+    /**
+     * Called when the activity is starting.
+     * @param savedInstanceState Contains data from recent call to OnSavedInstanceState(). Null if first time.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +132,7 @@ public class TimerActivity extends AppCompatActivity {
         workout = workoutIntent.getParcelableExtra("workout");
 
         // Get data from WO object.
+        assert workout != null;
         mExerciseArrayList = (ArrayList<Exercise>) workout.getExerciseList();
         mFirstDuration = mExerciseArrayList.get(0).getDuration();
 
@@ -148,11 +153,11 @@ public class TimerActivity extends AppCompatActivity {
      * Initialise UI views.
      */
     private void setUpViews() {
-        TextView mWorkoutTitleTxt = findViewById(R.id.workout_title_timer);
-        mCurrentExerciseTxt = findViewById(R.id.current_exercise_title);
-        mNextExerciseTxt = findViewById(R.id.next_exercise);
-        mNextExerciseTitleTxt = findViewById(R.id.next_exercise_title);
-        mTimerValueTxt = findViewById(R.id.timer_value);
+        TextView mWorkoutTitleTxt = findViewById(R.id.workout_title_timer_txt);
+        mCurrentExerciseTxt = findViewById(R.id.current_exercise_title_txt);
+        mNextExerciseTxt = findViewById(R.id.next_exercise_txt);
+        mNextExerciseTitleTxt = findViewById(R.id.next_exercise_title_txt);
+        mTimerValueTxt = findViewById(R.id.timer_value_txt);
 
         // Set text using data from workout object.
         mWorkoutTitleTxt.setText(workout.getTitle());
@@ -364,10 +369,10 @@ public class TimerActivity extends AppCompatActivity {
             mSoundPool.play(mAlarmSound, 1, 1, 1, 0, 2);
             mIsAlarmPlaying = true;
 
-           /* If alarm has been paused after a workout is completed,
-            * then the exercise is restarted and completed again,
-            * the alarm must be resumed (not played).
-            */
+           /*
+           If alarm has been paused after a workout is completed, then the exercise is restarted
+           and completed again, the alarm must be resumed (not played).
+           */
         } else {
             mSoundPool.resume(mAlarmSound);
         }

@@ -1,9 +1,8 @@
 /*
- * Author: Dominic Kennedy
- * Purpose: Define type converter methods for converting List<Exercise> into strings
- * so that they can be stored as a Workout attribute in the database.
- *
- */
+Author: Dominic Kennedy
+Purpose: Define type converter methods for converting List<Exercise> into strings so that they can
+be stored as a Workout attribute in the database.
+*/
 
 package com.dk.workouttimer.database;
 

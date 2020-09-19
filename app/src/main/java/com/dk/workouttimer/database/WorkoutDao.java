@@ -1,7 +1,7 @@
 /*
- * Author: Dominic Kennedy
- * Purpose: Define data access object interface for interacting with database.
- */
+Author: Dominic Kennedy
+Purpose: Define data access object interface for interacting with database.
+*/
 
 package com.dk.workouttimer.database;
 
@@ -19,6 +19,7 @@ public interface WorkoutDao {
 
     /**
      * Insert workout to db.
+     *
      * @param workout Workout object to be inserted to db.
      */
     @Insert
@@ -26,6 +27,7 @@ public interface WorkoutDao {
 
     /**
      * Deletes workout object from db.
+     *
      * @param workout Workout object to be deleted.
      */
     @Delete
@@ -33,25 +35,10 @@ public interface WorkoutDao {
 
     /**
      * Returns all workout objects stored in db as list.
+     *
      * @return List of all workout objects.
      */
     @Query("SELECT * FROM workoutTable ORDER BY id")
     List<Workout> loadAllWorkouts();
-
-
-//    /**
-//     * Deletes all workout objects from db table.
-//     */
-//    @Query("DELETE FROM workoutTable")
-//    void clearTable();
-
-//    /**
-//     * Updates stored workout object params.
-//     * If object doesn't exist in db, then db is not updated.
-//     * @param workout Workout object to be updated.
-//     */
-//    @Update
-//    void updateWorkout(Workout workout);
-
 
 }

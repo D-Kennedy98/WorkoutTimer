@@ -1,7 +1,7 @@
 /*
- Author: Dominic Kennedy
- Purpose: Creates view holders and binds workout data to them.
- */
+Author: Dominic Kennedy
+Purpose: Implements recycler adapter for creating view holders and binding workout data to them.
+*/
 
 package com.dk.workouttimer.adapter;
 
@@ -135,8 +135,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     /*
-     * Interface to detect recycler view click and pass
-     * position of clicked view holder to WOs activity.
+     * Interface to detect recycler view click and pass position of clicked view holder to WOs activity.
      */
     public interface OnWorkoutListener {
 

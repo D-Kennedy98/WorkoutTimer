@@ -1,8 +1,7 @@
 /*
- * Author: Dominic Kennedy
- * Purpose: Defines workout object which is used to store data about a list of exercises.
- * Implements parcelable interface so that workout instances can be passed as intent.
- */
+Author: Dominic Kennedy
+Purpose: Defines workout object which is used to store data about a list of exercises.
+*/
 
 package com.dk.workouttimer.models;
 
@@ -149,7 +148,6 @@ public class Workout implements Parcelable {
         dest.writeTypedList(mExerciseList);
     }
 
-
     /**
      * Get id field of workout instance.
      *
@@ -203,44 +201,5 @@ public class Workout implements Parcelable {
     public List<Exercise> getExerciseList() {
         return mExerciseList;
     }
-
-
-
-//    /**
-//     * Set title field of workout instance.
-//     *
-//     * @param mTitle String that title field is set to.
-//     */
-//    public void setTitle(String mTitle) {
-//        this.mTitle = mTitle;
-//    }
-
-//    /**
-//     * Set total duration field of workout instance.
-//     *
-//     * @param mTotalDuration Long that total duration field is set to.
-//     */
-//    public void setTotalDuration(Long mTotalDuration) {
-//        this.mTotalDuration = mTotalDuration;
-//    }
-
-//    /**
-//     * Set number of exercises field of workout instance.
-//     *
-//     * @param mNoExercises Int that number of exercises field is set to.
-//     */
-//    public void setNoExercises(int mNoExercises) {
-//        this.mNoExercises = mNoExercises;
-//    }
-
-//    /**
-//     * Set the list of exercises field of workout instance.
-//     *
-//     * @param exerciseList Exercise list that field is set to.
-//     */
-//    public void setExerciseList(List<Exercise> exerciseList) {
-//        this.mExerciseList = exerciseList;
-//    }
-
 
 }

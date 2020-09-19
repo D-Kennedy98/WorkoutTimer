@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -37,7 +37,7 @@
                 android:src="@drawable/ic_stopwatch_rush" />
 
             <TextView
-                android:id="@+id/heading_title"
+                android:id="@+id/heading_title_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -128,7 +128,7 @@
 
         <TextView
             android:id="@+id/fav_icons"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:paddingHorizontal="10dp"

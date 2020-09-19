@@ -1,8 +1,7 @@
 /*
- * Author: Dominic Kennedy
- * Purpose: Implement TimeDurationPickerDialogFragment methods for inputting exercise duration.
- * Define DurationListener interface to pass data from fragment to CreateWO activity.
- */
+Author: Dominic Kennedy
+Purpose: Implement TimeDurationPickerDialogFragment methods for inputting exercise duration.
+*/
 
 package com.dk.workouttimer.fragment;
 

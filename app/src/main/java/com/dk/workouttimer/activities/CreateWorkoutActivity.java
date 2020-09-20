@@ -36,17 +36,17 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     /**
      * Store max length of workout title.
      */
-    public static final int MAX_EXERCISE_NAME_LENGTH = 30;
+    private static final int MAX_EXERCISE_NAME_LENGTH = 30;
 
     /**
      * Store max length of workout (180 mins / 3 hours) in milliseconds.
      */
-    public static final int MAX_TOTAL_WORKOUT_DURATION = 10800000;
+    private static final int MAX_TOTAL_WORKOUT_DURATION = 10800000;
 
     /**
      * Store max length that of exercise name.
      */
-    public static final int MAX_WORKOUT_TITLE_LENGTH = 14;
+    private static final int MAX_WORKOUT_TITLE_LENGTH = 14;
 
     /**
      * Store duration entered in duration dialog fragment.

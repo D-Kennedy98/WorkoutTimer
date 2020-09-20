@@ -2,15 +2,11 @@
 
     <!-- General -->
     <string name="app_name">WorkoutTimer</string>
-    <string name="arms_chest">Arms / Chest</string>
     <string name="back_button">back button</string>
-    <string name="begin_workout">Begin Workout</string>
     <string name="create_button">Create Button</string>
-    <string name="enter_workout_duration">seconds</string>
     <string name="duration_mmss">Duration: 15:00</string>
     <string name="exercises_5">Exercises: 5</string>
     <string name="final_exercise">Final Exercise</string>
-    <string name="image_of_workout">Image of exercise</string>
     <string name="information_button">Information Button</string>
     <string name="next_exercise">Next Exercise</string>
     <string name="pause">Pause</string>
@@ -22,15 +18,13 @@
     <string name="timer_icon">Timer Icon</string>
     <string name="workouts">Workouts</string>
     <string name="workout_complete">Workout Complete!</string>
-    <string name="workout_duration_seconds">Workout Duration</string>
     <string name="workout_icon">Workout Icon</string>
     <string name="workout_timer">WorkoutTimer</string>
     <string name="yoga">Yoga</string>
 
     <!-- App Information -->
     <string name="dk_info">Developed by:\nDominic Kennedy</string>
-    <string name="intro_info">WorkoutTimer is a fitness application that allows users to create and time their custom workouts.
-    </string>
+    <string name="intro_info">WorkoutTimer is a fitness application that allows users to create and time their custom workouts.</string>
     <string name="creating_workout"><b>Creating a Workout: </b>In the Workouts screen,  tap the \'+\' icon to naviagate to the Create Workout Screen.
         From the Create Workout Screen, enter a title for the workout (max 35 characters). Exercises are then added to the
         workout by entering an exercise name (max 30 characters) and a duration (max 90 mins),
@@ -45,17 +39,10 @@
     <string name="info_icons">Icons made by Pixel perfect from www.flaticon.com</string>
 
     <!-- Error check duration edit text -->
-    <string name="value_too_high">Duration can\'t be above 6000s (100mins)</string>
-    <string name="add_workout">Add Workout</string>
     <string name="add_exercise">Add Exercise</string>
     <string name="workout_title">Workout Title</string>
-    <string name="exercise_duration">exercise duration</string>
-    <string name="exercise_name">Exercise Name</string>
-    <string name="duration_x">Duration</string>
-    <string name="number_of_exercises">No. exercises</string>
     <string name="save_workout">Save Workout</string>
     <string name="duration">Duration</string>
-    <string name="delete">Delete</string>
     <string name="stop">Stop</string>
 
     <!-- Create Workout Activity -->

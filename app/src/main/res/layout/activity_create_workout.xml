@@ -152,7 +152,7 @@
         app:layout_constraintTop_toBottomOf="@+id/workout_count_relative">
 
         <TextView
-            android:id="@+id/exericse_title_txt"
+            android:id="@+id/exercise_title_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/exercise"

@@ -30,12 +30,12 @@ public class TimerActivity extends AppCompatActivity {
     /**
      * Stores milliseconds to seconds conversion.
      */
-    public static final int CONVERT_MILLIS_SECONDS = 1000;
+    private static final int CONVERT_MILLIS_SECONDS = 1000;
 
     /**
      * Stores interval between onTick calls in milliseconds.
      */
-    public static final long COUNT_DOWN_INTERVAL = 1000;
+    private static final long COUNT_DOWN_INTERVAL = 1000;
 
     /**
      * TAG for logging.

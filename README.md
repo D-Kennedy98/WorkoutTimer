@@ -1,7 +1,7 @@
 # WorkoutTimer
 
-I initially developed WorkoutTimer as part my Mobile Application Development course at the University of Newcastle. I have since improved my design by implementing dynamic features which allow the user to create their own custom workouts.
-The workouts are composed of sets of exercises in which the user customise their name and length. This allows for a completely personalised experience which caters for the any user's workout requirements. The workouts are saved locally using the Room Persistence Library, enabling users to return to their workouts any time.
+WorkoutTimer is an Andorid Mobile Application for timing workouts. I initially developed WorkoutTimer as part my Mobile Application Development course at the University of Newcastle. I have since improved my design by implementing dynamic features which allow the user to create their own custom workouts.
+The workouts are composed of sets of exercises in which the user can customise their name and length. This allows for a completely personalised experience which caters for any user's workout requirements. The workouts are saved locally using the Room Persistence Library, enabling users to return to their workouts any time.
 
 **Creating a Workout**
 1. In the Workouts screen, tap the '+' button to navigate to the Create Workout screen.
@@ -16,3 +16,10 @@ The workouts are composed of sets of exercises in which the user customise their
 
 **Deleting a Workout**
 1. In the Workouts screen, swipe any workout tile off the screen to delete it. This will permanently remove it from the database.
+
+
+
+
+Min SDK Version: 23 (API 23: Android 6.0 Marshmallow)
+
+Target SDK Version: 29 (API 29: Android 10.0 Q)

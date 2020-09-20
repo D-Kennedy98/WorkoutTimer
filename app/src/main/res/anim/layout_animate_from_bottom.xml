@@ -2,7 +2,5 @@
 <layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
     android:animation="@anim/animate_from_bottom"
     android:animationOrder="normal"
-    android:delay="30%"
-    >
-
+    android:delay="30%">
 </layoutAnimation>

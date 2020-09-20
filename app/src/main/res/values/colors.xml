@@ -5,6 +5,7 @@
     <color name="colorPrimaryDark">#930017</color>
     <color name="colorAccent">#090909</color>
     <color name="black">#000000</color>
+    <color name="grey">#595959</color>
     <color name="snow">#F9F9F9</color>
 
 </resources>
